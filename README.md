@@ -7,10 +7,9 @@ This resource is made available to provide a normalization target for baboon dat
 
 <div class="row">
   <div class="col-md-8" markdown="1">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T1w_snap.gif" width="200" height="40" />
-  ![]()
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T1w_snap.gif" width="200" height="75" />
   </div>
   <div class="col-md-4" markdown="1">
-  <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T2w_snap.gif" width="200" height="40" />
+  <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T2w_snap.gif" width="200" height="75" />
   </div>
 </div>
