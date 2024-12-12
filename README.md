@@ -6,16 +6,30 @@ This resource is made available to provide a normalization target for baboon dat
 
 <table>
 <tr>
-<td align="center">
-<img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T1w_snap.gif" width="400" height="150" />
-</td>
-<td align="center">
-<img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T2w_snap.gif" width="400" height="150" />
-</td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T1w_snap.gif" width="400" height="150" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T2w_snap.gif" width="400" height="150" />
+    </td>
 </tr>
 <tr> 
     <td align="center">T1w</td> 
     <td align="center">T2w</td> 
 </tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/WM_snap.gif" width="400" height="150" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/WM_gii_snap.gif" width="150" height="150" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">WM priors maps</td> 
+    <td align="center">Cortical Surface</td> 
+</tr>
   
 </table>
+
+# steps for BaBa21 template pipeline
