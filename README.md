@@ -4,5 +4,5 @@ We present the BABACOOL (BAby Brain Atlas COnstruction for Optimized Labeled seg
 
 This resource is made available to provide a normalization target for baboon data across the lifespan, and further, facilitate neuroimaging research in baboons, comparative research with humans and nonhuman primate species for which developmental templates are available (e.g., macaques). 
 
-![](https://github.com/arnaudletroter/BABACOOL/blob/main/animations/WM_gii_snap.gif)
+![](https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T1w_snap.gif)
 
