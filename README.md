@@ -4,13 +4,17 @@ We present the BABACOOL (BAby Brain Atlas COnstruction for Optimized Labeled seg
 
 This resource is made available to provide a normalization target for baboon data across the lifespan, and further, facilitate neuroimaging research in baboons, comparative research with humans and nonhuman primate species for which developmental templates are available (e.g., macaques). 
 
+|  T1w | T2w| WM surface |
+| <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T1w_snap.gif" width="400" height="150" /> | <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T2w_snap.gif" width="400" height="150" />  |
+
+
 <table>
 <tr>
 <td align="center">
-<img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T1w_snap.gif" width="200" height="75" />
+<img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T1w_snap.gif" width="400" height="150" />
 </td>
 <td align="center">
-<img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T2w_snap.gif" width="200" height="75" />
+<img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/T2w_snap.gif" width="400" height="150" />
 </td>
 </tr>
 </table>
