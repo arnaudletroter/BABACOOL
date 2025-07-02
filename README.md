@@ -84,10 +84,10 @@ for example:\
 session_id	age\
 ses-0	    35\
 ses-1	    274\
-ses-2	    764\
+ses-2	    764
 
-### Command-Line Arguments
-```bash
+### parse_dataset.py description
+```
 Argument	Description
 -i, --input	(required) Path to the BIDS root directory.
 -o, --output	Output CSV filename (default: subjects_sessions.csv).
