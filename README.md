@@ -1,7 +1,6 @@
 # the BABACOOL project
 
-We present the BABACOOL (BAby Brain Atlas COnstruction for Optimized Labeled segmentation) approach for creating multi-modal developmental atlases, which we used to produce BaBa21, a population-based longitudinal developmental baboon template. BaBa21 consists of structural (T1- and T2-weighted) images and tissue probability maps from a population of 21 baboons (Papio anubis) scanned at 4 timepoints beginning from 2 weeks after birth and continuing to sexual maturity (5 years). 
-
+We present the BABACOOL (BAby Brain Atlas COnstruction for Optimized Labeled segmentation) approach for creating multi-modal developmental atlases, which we used to produce BaBa21, a population-based longitudinal developmental baboon template. BaBa21 consists of structural (T1- and T2-weighted) images and tissue probability maps from a population of 21 baboons (Papio anubis) scanned at 4 timepoints beginning from 2 weeks after birth and continuing to sexual maturity (5 years).
 This resource is made available to provide a normalization target for baboon data across the lifespan, and further, facilitate neuroimaging research in baboons, comparative research with humans and nonhuman primate species for which developmental templates are available (e.g., macaques). 
 
 <table>
@@ -37,10 +36,11 @@ This resource is made available to provide a normalization target for baboon dat
 ## Requirements
 
 This pipeline is mainly written in `bash` and `python` scripts, and requires [ANTs](https://github.com/ANTsX/ANTs), [FSL](https://fsl.fmrib.ox.ac.uk/fsl/docs/#/)
-(Optional) advanced averaging options are provided by a python scripts which require
-[NumPy](https://numpy.org/), [SciPy](https://scipy.org/)
 
-## STEP1: Download the full BaBa21 template and subject BIDS dataset from openneuro (ID=ds005424)
+and python scripts which require
+**[NumPy](https://numpy.org/), [SciPy](https://scipy.org/)**
+
+## STEP1: Download the partial subject BIDS dataset from openneuro (ID=ds005424)
 
 This dataset contains 21 subjects (4 sessions), and the resulting template sub-BaBa21, and probabilistic atlas (TPM WM,GM,CSF) . 
 The T1w and T2w anatomical volumes and manual segmentations (WM,GM,CSF) of a single subject (sub-Prune) are published without embargo. Other twenty subjects can be retrieved on request from the authors and will be published in a next version.
@@ -66,7 +66,7 @@ It helps you generate a CSV listing each subject’s sessions and their recorded
   - Exports to CSV
   - Prints summary statistics (number of subjects, mean and standard deviation of age)
 
-### Expected Dataset Layout
+### output Dataset org
 ```bash
 ├── /path/to/bids/
 │   ├── sub-01/
@@ -79,14 +79,15 @@ It helps you generate a CSV listing each subject’s sessions and their recorded
 │   │   └── ses-1/
 │   │...
 ```
-
-Each sub-*_sessions.tsv file contains, for example:
-session_id	age
-ses-0	    35
-ses-1	    274
-ses-2	    764
+Each sub-*_sessions.tsv file contains, 
+for example:\
+session_id	age\
+ses-0	    35\
+ses-1	    274\
+ses-2	    764\
 
 ### Command-Line Arguments
+```bash
 Argument	Description
 -i, --input	(required) Path to the BIDS root directory.
 -o, --output	Output CSV filename (default: subjects_sessions.csv).
@@ -94,7 +95,7 @@ Argument	Description
 --age-min	Minimum age filter.
 --age-max	Maximum age filter.
 --exclude-subjects	List of subject IDs to exclude (e.g., sub-01 sub-02).
-
+```
 ### BaBA21 Usage
 
 _for timepoint 0_ 
