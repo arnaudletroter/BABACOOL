@@ -32,4 +32,91 @@ This resource is made available to provide a normalization target for baboon dat
   
 </table>
 
-# The pipeline steps for (4D+t) BaBa21 template generation
+# PART1: The pipeline steps for **3D** BaBa21 template construction 
+
+## STEP1: Download the full BaBa21 template and subject BIDS dataset from openneuro (ID=ds005424)
+
+This dataset contains 21 subjects (4 sessions), and the resulting template sub-BaBa21, and probabilistic atlas (TPM WM,GM,CSF) . 
+The T1w and T2w anatomical volumes and manual segmentations (WM,GM,CSF) of a single subject (sub-Prune) are published without embargo. Other twenty subjects can be retrieved on request from the authors and will be published in a next version.
+
+# You can use git clone...
+git clone https://openneuro.org/git/3/ds005424
+# Or datalad install
+datalad install https://openneuro.org/git/3/ds005424
+
+## STEP2: BIDS Session-Age CSV Exporter
+
+This command-line Python script extracts, filters, and exports subject-session-age data from a BIDS dataset.
+It helps you generate a CSV listing each subject’s sessions and their recorded ages, with flexible filtering options for easy analysis.
+
+###Features 
+  Reads BIDS-compliant dataset structure
+  Extracts session-age info from sub-*_sessions.tsv files
+  Filters by:
+    Session name
+      Age range
+      Excluded subjects
+  Exports to CSV
+  Prints summary statistics (number of subjects, mean and standard deviation of age)
+
+###Expected Dataset Layout
+/path/to/bids/
+  sub-01/
+    sub-01_sessions.tsv
+    ses-0/
+    ses-1/
+  sub-02/
+    sub-02_sessions.tsv
+    ses-0/
+    ses-1/
+  ...
+Each sub-*_sessions.tsv file contains, for example:
+session_id	age
+ses-0	    35
+ses-1	    274
+ses-2	    764
+
+### How It Works
+
+Parses all sub-* folders in the BIDS root.
+Reads each subject’s sub-*_sessions.tsv to get session IDs and ages.
+Applies filters if specified.
+Outputs a CSV file with:
+subject	session	age
+sub-01	ses-0	35
+sub-01	ses-1	274
+...	...	...
+Prints summary statistics at the end:
+CSV file generated: subjects_sessions.csv
+
+Requirements: Python 3.7+ pandas
+
+⚙️ Command-Line Arguments
+Argument	Description
+-i, --input	(required) Path to the BIDS root directory.
+-o, --output	Output CSV filename (default: subjects_sessions.csv).
+-f, --filter-session	Include only sessions whose names contain this substring.
+--age-min	Minimum age filter.
+--age-max	Maximum age filter.
+--exclude-subjects	List of subject IDs to exclude (e.g., sub-01 sub-02).
+
+🛠️ BaBA21 Usage
+python parse_dataset.py -i BaBa21_openneuro -o subjects_ses-0.csv \
+--age-min 0 --age-max 100  -f ses-0 \
+--exclude-subjects sub-BaBa21 sub-Noe sub-Oz sub-Ozy
+
+python parse_dataset.py -i BaBa21_openneuro -o subjects_ses-1.csv \
+--age-min 0 --age-max 100  -f ses-1 \
+--exclude-subjects sub-BaBa21 sub-Noe sub-Oz sub-Ozy
+
+python parse_dataset.py -i BaBa21_openneuro -o subjects_ses-2.csv \
+--age-min 0 --age-max 100  -f ses-2 \
+--exclude-subjects sub-BaBa21 sub-Noe sub-Oz sub-Ozy
+
+python parse_dataset.py -i BaBa21_openneuro -o subjects_ses-3.csv \
+--age-min 0 --age-max 100  -f ses-3 \
+--exclude-subjects sub-BaBa21 sub-Noe sub-Oz sub-Ozy
+
+# PART2: The pipeline steps for **(4D+t)** longitudinal BaBa21 template interpolation
+
+
