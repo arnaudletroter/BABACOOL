@@ -39,9 +39,9 @@ This resource is made available to provide a normalization target for baboon dat
 This dataset contains 21 subjects (4 sessions), and the resulting template sub-BaBa21, and probabilistic atlas (TPM WM,GM,CSF) . 
 The T1w and T2w anatomical volumes and manual segmentations (WM,GM,CSF) of a single subject (sub-Prune) are published without embargo. Other twenty subjects can be retrieved on request from the authors and will be published in a next version.
 
-# You can use git clone...
+### You can use git clone...
 git clone https://openneuro.org/git/3/ds005424
-# Or datalad install
+### Or datalad install
 datalad install https://openneuro.org/git/3/ds005424
 
 ## STEP2: BIDS Session-Age CSV Exporter
@@ -49,7 +49,7 @@ datalad install https://openneuro.org/git/3/ds005424
 This command-line Python script extracts, filters, and exports subject-session-age data from a BIDS dataset.
 It helps you generate a CSV listing each subject’s sessions and their recorded ages, with flexible filtering options for easy analysis.
 
-###Features 
+### Features 
   Reads BIDS-compliant dataset structure
   Extracts session-age info from sub-*_sessions.tsv files
   Filters by:
@@ -59,7 +59,7 @@ It helps you generate a CSV listing each subject’s sessions and their recorded
   Exports to CSV
   Prints summary statistics (number of subjects, mean and standard deviation of age)
 
-###Expected Dataset Layout
+### Expected Dataset Layout
 /path/to/bids/
   sub-01/
     sub-01_sessions.tsv
@@ -91,7 +91,7 @@ CSV file generated: subjects_sessions.csv
 
 Requirements: Python 3.7+ pandas
 
-⚙️ Command-Line Arguments
+### Command-Line Arguments
 Argument	Description
 -i, --input	(required) Path to the BIDS root directory.
 -o, --output	Output CSV filename (default: subjects_sessions.csv).
@@ -100,7 +100,7 @@ Argument	Description
 --age-max	Maximum age filter.
 --exclude-subjects	List of subject IDs to exclude (e.g., sub-01 sub-02).
 
-🛠️ BaBA21 Usage
+### BaBA21 Usage
 python parse_dataset.py -i BaBa21_openneuro -o subjects_ses-0.csv \
 --age-min 0 --age-max 100  -f ses-0 \
 --exclude-subjects sub-BaBa21 sub-Noe sub-Oz sub-Ozy
