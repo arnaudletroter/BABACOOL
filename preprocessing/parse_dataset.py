@@ -100,6 +100,16 @@ def main():
         print(f"Error: the provided path does not exist or is not a directory: {bids_root}")
         exit(1)
 
+    # Check if the output folder exists, create it if necessary
+    output_dir = os.path.dirname(output_csv)
+    if output_dir and not os.path.exists(output_dir):
+        try:
+            os.makedirs(output_dir)
+            print(f"Created output directory: {output_dir}")
+        except Exception as e:
+            print(f"Error: Could not create output directory '{output_dir}': {e}")
+            exit(1)
+
     data = parse_bids_dataset(
         bids_root,
         session_filter=args.filter_session,
