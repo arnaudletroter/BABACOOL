@@ -121,7 +121,6 @@ _for timepoint 3_ (N=21 subjects)
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-3.csv \
 --age-min 1500 --age-max 1800  -f ses-3 \
 ```
-for each timepoint, the _sub-BaBa21_ subject is excluded
 
 ## STEP3: Pre-processing anatomical volumes (T1w, T2w)
 
@@ -153,20 +152,9 @@ python preprocessing/denoise_anat.py \
 ## re-orient (T1w, T2w) on Haiko89 T1w template
 
 ### Steps for Downloading and Organizing the Haiko89 Dataset
-These steps rely on an external MRI template for in vivo baboon brain normalization and processing: the **Haiko89** template collection.
-**Source:**
-
-- Haiko89: MRI in vivo Baboon Brain Templates Collection (Papio anubis)
+These steps rely on an external MRI template for in vivo baboon brain (the **Haiko89** template collection) in the BaBa21 bids dataset.
 - Available at: [https://www.nitrc.org/projects/haiko89/](https://www.nitrc.org/projects/haiko89/)
-
-**Usage note:**
-When using these images in your processing pipeline or publications, please ensure you cite the original reference:
 > Love, S.A., Marie, D., Roth, M., Lacoste, R., Nazarian, B., Bertello, A., Coulon, O., Anton, J.-L., Meguerditchian, A., 2016. The average baboon brain: MRI templates and tissue probability maps from 89 individuals. NeuroImage. doi:10.1016/j.neuroimage.2016.03.018
-
-1. Register on [NITRC](https://www.nitrc.org/) if needed.
-2. Download the Haiko89 template package.
-3. Unpack it to a known location accessible to your pipeline.
-4. When running the pipeline, specify the path to the template directory if required.
 
 **Folder structure requirement**  
 All files from the Haiko89 package must be kept together in a single directory. For example:
@@ -187,6 +175,13 @@ Haiko89
 
 This Python script converts the original Haiko89 template files into a BIDS-compliant derivatives structure for a synthetic subject sub-Haiko and session ses-Adult.
 The script update the participants.tsv at the BIDS root.
+
+```
+| Option               | Description                                               |
+| -------------------- | --------------------------------------------------------- |
+| `-i`, `--input`      | Path to the original Haiko89 folder (required)            |
+| `-o`, `--output`     | Path to the derivatives/atlas folder (inside derivatives) |
+```
 
 ```bash
 python preprocessing/convert_haiko_to_bids_derivative.py -i Haiko89 -o BaBa21_openneuro/derivatives/atlas
