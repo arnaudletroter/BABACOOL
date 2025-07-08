@@ -86,15 +86,16 @@ ses-0	    35\
 ses-1	    274\
 ses-2	    764
 
-### parse_dataset.py description
+### _parse_dataset.py_ description
 ```
-Argument	Description
--i, --input	(required) Path to the BIDS root directory.
--o, --output	Output CSV filename (default: subjects_sessions.csv).
--f, --filter-session	Include only sessions whose names contain this substring.
---age-min	Minimum age filter (in day).
---age-max	Maximum age filter (in day).
---exclude-subjects	List of subject IDs to exclude (e.g., sub-01 sub-02).
+| Option                   | Description                                              |
+| ------------------------ | -------------------------------------------------------- |
+| `-i`, `--input`          | Path to the BIDS root directory (required)               |
+| `-o`, `--output`         | Output CSV filename (default: subjects_sessions.csv)     |
+| `-f`, `--filter-session` | Include only sessions whose names contain this substring |
+| `--age-min`              | Minimum age filter (in day)                              |
+| `--age-max`              | Maximum age filter (in day)                              |
+| --exclude-subjects`      | List of subject IDs to exclude (e.g., sub-01 sub-02)     |
 ```
 ### BaBA21 Usage
 
@@ -102,32 +103,30 @@ _for timepoint 0_ (N=17 subjects)
 ```bash
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-0.csv \
 --age-min 0 --age-max 100  -f ses-0 \
---exclude-subjects sub-BaBa21 sub-Noe sub-Oz sub-Ozy
+--exclude-subjects sub-Oz 
 ```
 _for timepoint 1_ (N=18 subjects)
 ```bash
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-1.csv \
 --age-min 200 --age-max 400  -f ses-1 \
---exclude-subjects sub-BaBa21 sub-Ozy
+--exclude-subjects sub-Ozy
 ```
 _for timepoint 2_ (N=21 subjects)
 ```bash
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-2.csv \
 --age-min 600 --age-max 900  -f ses-2 \
---exclude-subjects sub-BaBa21
 ```
 _for timepoint 3_ (N=21 subjects)
 ```bash
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-3.csv \
 --age-min 1500 --age-max 1800  -f ses-3 \
---exclude-subjects sub-BaBa21
 ```
 for each timepoint, the _sub-BaBa21_ subject is excluded
 
 ## STEP3: Pre-processing anatomical volumes (T1w, T2w)
 
 ### Denoise (T1w, T2w) 
-### preproc_denoise_anat.py description
+### _denoise_anat.py_ description
 This Python script reads a CSV file listing subject/session pairs, navigates a BIDS dataset structure, and runs ANTs DenoiseImage on T1w and T2w images.
 This script writes the denoised images into a derivatives folder within the BIDS dataset, following the BIDS standard for derivatives data.
 For each input image found in the original dataset under:
@@ -151,7 +150,7 @@ python preprocessing/denoise_anat.py \
   --threads 8 \
   -o log/denoise_files_ses-3.txt
 ```
-## re-orient (T1w, T2w) on external T1w template
+## re-orient (T1w, T2w) on Haiko89 T1w template
 
 ### Steps for Downloading and Organizing the Haiko89 Dataset
 These steps rely on an external MRI template for in vivo baboon brain normalization and processing: the **Haiko89** template collection.
@@ -184,6 +183,7 @@ Haiko89
 ```
 
 ### Convert Haiko89 Folder to a BIDS Subject
+### _convert_haiko_to_bids_derivative.py_ description
 
 This Python script converts the original Haiko89 template files into a BIDS-compliant derivatives structure for a synthetic subject sub-Haiko and session ses-Adult.
 The script update the participants.tsv at the BIDS root.
