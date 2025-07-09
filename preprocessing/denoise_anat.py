@@ -5,6 +5,7 @@ import argparse
 import pandas as pd
 import subprocess
 import sys
+import csv
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -19,8 +20,8 @@ def parse_args():
         help="Path to BIDS dataset root"
     )
     parser.add_argument(
-        "-o", "--output-log", default=None,
-        help="Optional path to write a log of all denoised files"
+        "-o", "--output-csv", required=True,
+        help="Path to CSV file listing output T1w and T2w denoised images"
     )
     parser.add_argument(
         "--threads", type=int, default=12,
@@ -39,7 +40,7 @@ def main():
     bids_root = args.bids_root
     threads = args.threads
     dry_run = args.dry_run
-    log_path = args.output_log
+    output_csv_path = args.output_csv
 
     # Check input files/folders
     if not os.path.isfile(csv_path):
@@ -62,20 +63,14 @@ def main():
         print(f"Error: CSV must contain columns: {required_cols}")
         sys.exit(1)
 
-    # Prepare log file if requested
-    if log_path:
-        os.makedirs(os.path.dirname(log_path), exist_ok=True)
-        log_file = open(log_path, "w")
-    else:
-        log_file = None
-
     print(f"Found {len(df)} subject-session rows in {csv_path}")
     print(f"Using {threads} threads for ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS")
 
-    processed_files = []
-
     # Base output derivatives folder
     derivatives_base = os.path.join(bids_root, "derivatives", "denoised")
+
+    # Collect lines for CSV output
+    csv_lines = []
 
     for idx, row in df.iterrows():
         subj = row["subject"]
@@ -92,18 +87,17 @@ def main():
         print(f"Processing: {anat_input_dir}")
         print(f"Output folder: {anat_output_dir}")
 
+        denoised_T1w = ""
+        denoised_T2w = ""
+
         for fname in sorted(os.listdir(anat_input_dir)):
             if fname.endswith("_T1w.nii.gz") or fname.endswith("_T2w.nii.gz"):
                 in_path = os.path.join(anat_input_dir, fname)
 
                 # Build output filename with suffix '_desc-denoised' before modality and extension
-                # Example: sub-01_ses-0_T1w.nii.gz -> sub-01_ses-0_desc-denoised_T1w.nii.gz
                 parts = fname.split("_")
-                # Identify modality (last part before .nii.gz, e.g. T1w.nii.gz)
                 modality_part = parts[-1]  # e.g. T1w.nii.gz
-                # Remove extension for manipulation
                 modality = modality_part.replace(".nii.gz", "")
-                # Rebuild filename inserting desc-denoised before modality
                 out_fname = "_".join(parts[:-1] + [f"desc-denoised_{modality}.nii.gz"])
 
                 out_path = os.path.join(anat_output_dir, out_fname)
@@ -128,19 +122,29 @@ def main():
                     try:
                         subprocess.run(cmd, check=True, env=env)
                         print(f"Denoised saved: {out_path}")
-                        processed_files.append(out_path)
-                        if log_file:
-                            log_file.write(out_path + "\n")
+
+                        if "_T1w" in fname:
+                            denoised_T1w = out_path
+                        elif "_T2w" in fname:
+                            denoised_T2w = out_path
+
                     except subprocess.CalledProcessError as e:
                         print(f"Error running DenoiseImage on {in_path}: {e}")
 
-    if log_file:
-        log_file.close()
+        # Add a line even if one of the two is missing
+        csv_lines.append([denoised_T1w, denoised_T2w])
+
+    # Write the CSV output
+    print(f"\nWriting CSV log to {output_csv_path}")
+    with open(output_csv_path, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["T1w_denoised", "T2w_denoised"])
+        for line in csv_lines:
+            writer.writerow(line)
 
     print("\nProcessing complete.")
-    print(f"Total processed images: {len(processed_files)}")
-    if log_path:
-        print(f"Log written to: {log_path}")
+    print(f"Total processed subject-session pairs: {len(csv_lines)}")
+    print(f"CSV log written to: {output_csv_path}")
 
 if __name__ == "__main__":
     main()

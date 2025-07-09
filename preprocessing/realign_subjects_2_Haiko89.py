@@ -99,14 +99,8 @@ def main():
             continue
 
         # SUBJECT BRAINMASK (must exist)
-        subject_brainmask = os.path.join(
-            bids_root,
-            "derivatives",
-            "segmentation",
-            sub,
-            ses,
-            "anat",
-            f"{sub}_{ses}_space-orig_label-BM.nii.gz"
+        subject_brainmask = os.path.join(bids_root, "derivatives", "segmentation",
+            sub, ses, "anat", f"{sub}_{ses}_space-orig_desc-brain_mask.nii.gz"
         )
 
         if not os.path.exists(subject_brainmask):
@@ -124,28 +118,51 @@ def main():
         output_t1w = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_T1w.nii.gz")
         output_t2w = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_T2w.nii.gz")
 
+        t1w_denoised_masked = os.path.join(anat_dir, f"{sub}_{ses}_desc-masked_T1w.nii.gz")
+
+        if args.generate_brainmask:
+            print("Generating Haiko brainmask TPM by combining CSF, GM, WM and thresholding...")
+            run_command([
+                "fslmaths", t1w_denoised,
+                "-mul", subject_brainmask,
+                t1w_denoised_masked
+            ], dry_run)
+
+
         antsreg_cmd = [
             "antsRegistration",
             "--verbose", "1",
             "--dimensionality", "3",
+            "--initial-moving-transform" ,f"[{haiko_template_pad},{t1w_denoised_masked},1]",
             "--float", "0",
             "--collapse-output-transforms", "1",
-            "--output", f"[{transfo_prefix},{output_t1w}]",
+            "--output", f"[{transfo_prefix}]",
             "--interpolation", "Linear",
             "--use-histogram-matching", "0",
             "--winsorize-image-intensities", "[0.005,0.995]",
             "--transform", "Rigid[0.1]",
-            "--metric", f"MI[{haiko_template_pad},{t1w_denoised},1,32,Regular,0.25]",
+            "--metric", f"MI[{haiko_template_pad},{t1w_denoised_masked},1,32,Regular,0.25 ]",
             "--convergence", "[1000x500x250x0,1e-6,10]",
             "--shrink-factors", "8x4x2x1",
-            "--smoothing-sigmas", "3x2x1x0vox",
-            "--masks", f"[{haiko_brainmask},{subject_brainmask}]"
+            "--smoothing-sigmas", "3x2x1x0vox"
         ]
 
         env = os.environ.copy()
         env["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = str(threads)
 
         run_command(antsreg_cmd, dry_run, env)
+
+        antsapply_cmd = [
+            "antsApplyTransforms",
+            "-d", "3",
+            "-i", t1w_denoised,
+            "-r", haiko_template_pad,
+            "-o", output_t1w,
+            "-t", f"{transfo_prefix}0GenericAffine.mat",
+            "--interpolation", "Linear"
+        ]
+
+        run_command(antsapply_cmd, dry_run, env)
 
         antsapply_cmd = [
             "antsApplyTransforms",
@@ -157,6 +174,49 @@ def main():
             "--interpolation", "Linear"
         ]
 
+        run_command(antsapply_cmd, dry_run, env)
+
+        # SUBJECT 3 TISSUES (must exist)
+        subject_wm = os.path.join(bids_root, "derivatives", "segmentation",
+            sub, ses, "anat", f"{sub}_{ses}_space-orig_label-WM_mask.nii.gz"
+        )
+        if not os.path.exists(subject_wm):
+            print(f"Warning: wm mask not found for {sub} {ses}: {subject_wm}. Skipping.")
+            continue
+        subject_gm = os.path.join(bids_root, "derivatives", "segmentation",
+            sub, ses, "anat", f"{sub}_{ses}_space-orig_label-GM_mask.nii.gz"
+        )
+        if not os.path.exists(subject_gm):
+            print(f"Warning: wm mask not found for {sub} {ses}: {subject_gm}. Skipping.")
+            continue
+        subject_csf = os.path.join(bids_root, "derivatives", "segmentation",
+            sub, ses, "anat", f"{sub}_{ses}_space-orig_label-CSF_mask.nii.gz"
+        )
+        if not os.path.exists(subject_csf):
+            print(f"Warning: csf mask not found for {sub} {ses}: {subject_csf}. Skipping.")
+            continue
+
+        output_wm = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_label-WM_mask.nii.gz")
+        output_gm = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_label-GM_mask.nii.gz")
+        output_csf = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_label-CSF_mask.nii.gz")
+
+        antsapply_cmd = [
+            "antsApplyTransforms", "-d", "3",
+            "-i", subject_wm, "-r", haiko_template_pad, "-o", output_wm,
+            "-t", f"{transfo_prefix}0GenericAffine.mat", "--interpolation", "NearestNeighbor"
+        ]
+        run_command(antsapply_cmd, dry_run, env)
+        antsapply_cmd = [
+            "antsApplyTransforms", "-d", "3",
+            "-i", subject_gm, "-r", haiko_template_pad, "-o", output_gm,
+            "-t", f"{transfo_prefix}0GenericAffine.mat", "--interpolation", "NearestNeighbor"
+        ]
+        run_command(antsapply_cmd, dry_run, env)
+        antsapply_cmd = [
+            "antsApplyTransforms", "-d", "3",
+            "-i", subject_csf, "-r", haiko_template_pad, "-o", output_csf,
+            "-t", f"{transfo_prefix}0GenericAffine.mat", "--interpolation", "NearestNeighbor"
+        ]
         run_command(antsapply_cmd, dry_run, env)
 
         # -----------------------------
@@ -194,7 +254,20 @@ def main():
                 "1"
             ], dry_run)
 
-            print(f"Flipped images saved: {flipped_t1w}, {flipped_t2w}")
+            flipped_WM = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-flipped_label-WM_mask.nii.gz")
+            run_command([
+                "fslswapdim", output_wm, "-x", "y", "z", flipped_WM
+            ], dry_run)
+
+            run_command([
+                "CopyImageHeaderInformation",
+                output_wm,
+                flipped_WM,
+                flipped_WM,
+                "1", "1", "1"
+            ], dry_run)
+
+            print(f"Flipped images saved: {flipped_t1w}, {flipped_t2w} {flipped_WM}")
 
 if __name__ == "__main__":
     main()
