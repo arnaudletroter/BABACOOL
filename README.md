@@ -87,7 +87,7 @@ ses-1	    274\
 ses-2	    764
 
 ### _parse_dataset.py_ description
-```
+
 | Option                   | Description                                              |
 | ------------------------ | -------------------------------------------------------- |
 | `-i`, `--input`          | Path to the BIDS root directory (required)               |
@@ -96,14 +96,14 @@ ses-2	    764
 | `--age-min`              | Minimum age filter (in day)                              |
 | `--age-max`              | Maximum age filter (in day)                              |
 | --exclude-subjects`      | List of subject IDs to exclude (e.g., sub-01 sub-02)     |
-```
+
 ### BaBA21 Usage
 
 _for timepoint 0_ (N=17 subjects)
 ```bash
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-0.csv \
 --age-min 0 --age-max 100  -f ses-0 \
---exclude-subjects sub-Oz 
+--exclude-subjects sub-Oz sub-Omelette 
 ```
 _for timepoint 1_ (N=18 subjects)
 ```bash
@@ -132,22 +132,21 @@ For each input image found in the original dataset under:
 ```<dataset_root>/sub-XX/ses-YY/anat/```
 the script saves the denoised image in:
 ```<dataset_root>/derivatives/denoised/sub-XX/ses-YY/anat/```
-```
+
 | Option               | Description                                        |
-| -------------------- | -------------------------------------------------- |
+|----------------------|----------------------------------------------------|
 | `-i`, `--input-csv`  | CSV file with `subject,session` columns (required) |
 | `-b`, `--bids-root`  | Path to the BIDS dataset root (required)           |
-| `-o`, `--output-log` | Optional file to save paths of denoised outputs    |
+| `-o`, `--output-csv` | CSV file to save paths of denoised outputs         |
 | `--threads`          | Number of ITK/ANTs threads (default: 12)           |
 | `--dry-run`          | Print commands without executing them              |
-```
 
 ```bash
 python preprocessing/denoise_anat.py \
-  -i list_of_subjects/subjects_ses-3.csv \
+  -i list_of_subjects/subjects_ses-0.csv \
   -b BaBa21_openneuro \
   --threads 8 \
-  -o log/denoise_files_ses-3.txt
+  -o list_of_subjects/subjects_ses-0_den.csv
 ```
 ## re-orient (T1w, T2w) on Haiko89 T1w template
 
@@ -176,17 +175,15 @@ Haiko89
 This Python script converts the original Haiko89 template files into a BIDS-compliant derivatives structure for a synthetic subject sub-Haiko and session ses-Adult.
 The script update the participants.tsv at the BIDS root.
 
-```
 | Option               | Description                                               |
 | -------------------- | --------------------------------------------------------- |
 | `-i`, `--input`      | Path to the original Haiko89 folder (required)            |
 | `-o`, `--output`     | Path to the derivatives/atlas folder (inside derivatives) |
-```
 
 ```bash
 python preprocessing/convert_haiko_to_bids_derivative.py -i Haiko89 -o BaBa21_openneuro/derivatives/atlas
 ```
-```
+
 | Original File                               | BIDS-Compliant Filename                                      |
 | --------------------------------------------|------------------------------------------------------------- |
 | Haiko89_Asymmetric.Template_n89.nii.gz      | sub-Haiko_ses-Adult_desc-asymmetric_T1w.nii.gz               |
@@ -197,7 +194,7 @@ python preprocessing/convert_haiko_to_bids_derivative.py -i Haiko89 -o BaBa21_op
 | TPM_Symmetric.CSF_Haiko89sym.nii.gz         | sub-Haiko_ses-Adult_desc-symmetric_label-CSF_probseg.nii.gz  |
 | TPM_Symmetric.GreyMatter_Haiko89sym.nii.gz  | sub-Haiko_ses-Adult_desc-symmetric_label-GM_probseg.nii.gz   |
 | TPM_Symmetric.WhiteMatter_Haiko89sym.nii.gz | sub-Haiko_ses-Adult_desc-symmetric_label-WM_probseg.nii.gz   |
-```
+
 ### Re-align anatomical volumes (T1w, T2w) on Haiko89
 
 This Python script integrates the Haiko89 baboon brain MRI template into a BIDS dataset. It supports:
@@ -213,7 +210,6 @@ Rigid registration of subject T1w/T2w images to the Haiko89 space
 
 This script performs rigid registration of individual BIDS dataset subjects’ denoised T1w and T2w anatomical images to the Haiko89 brain template converted to BIDS format.
 
-```
 | Option                | Description                                                                                     |
 | --------------------  | ----------------------------------------------------------------------------------------------- |
 | `--bids_root`         | Path to the root of the BIDS dataset (required).                                                |
@@ -227,7 +223,7 @@ This script performs rigid registration of individual BIDS dataset subjects’ d
 | `--session_filter`    | Optional list of sessions (e.g. `ses-1 ses-2`) to limit processing to these sessions only.      |
 | `--dry-run`           | Print commands without executing them.                                                          |
 | `--threads`           | Number of threads for ITK/ANTs (default: 12)                                                    |
-```
+
 _for timepoint 3_ (Generate a Haiko89 brainmask and padded template only once)
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
@@ -267,6 +263,101 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --threads 8 \
   --flipping_LR
 ```
+
+### prepare_MM_subjects_list.py.py description
+
+This script generates an input CSV file compatible for `antsMultivariateTemplateConstruction2.sh` from a BIDS dataset.
+It extracts paths to warped T1w, T2w volumes (and optionally others modalities) for each subject and session
+
+The output CSV is headerless and formatted to be used directly with antsMultivariateTemplateConstruction2.sh.
+
+| Option                | Description                                                                              |
+|-----------------------|------------------------------------------------------------------------------------------|
+| `-i`, `--input-csv`   | Input CSV with 'subject' and 'session' columns (required).                               |
+| `--deriv-subdir`      | Subdirectory under derivatives to look for files (default: segmentation)                 |
+| `--modalities`        | List of modalities to look for (e.g., T1w T2w label-WM_mask)                             |
+| `-b`, `--bids-root`   | Path to the root of the BIDS dataset (required for mask search).                         |
+| `-o`, `--output-csv`  | Output CSV file (no header - compatible for `antsMultivariateTemplateConstruction2.sh` ) |
+
+
+```bash
+python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-0.csv \
+ --modalities T1w T2w label-WM_mask  -b BaBa21_openneuro/ \
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-0_warp_for_MM_template.csv
+```
+
+```bash
+python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-1.csv \
+ --modalities T1w T2w -b BaBa21_openneuro/ \
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-1_warp_for_MM_template.csv
+```
+
+```bash
+python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-2.csv \
+ --modalities T1w T2w -b BaBa21_openneuro/ \
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-2_warp_for_MM_template.csv
+```
+
+```bash
+python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-3.csv \
+ --modalities T1w T2w -b BaBa21_openneuro/ \
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-3_warp_for_MM_template.csv
+```
+
+### _MM_template_construction.py_ description
+This python wrapper runs a 2-stage multivariate template construction pipeline calling _antsMultivariateTemplateConstruction2.sh_, while enforcing as output a BIDS-compatible derivatives structure.
+
+```bash
+python postprocessing/MM_template_construction.py \
+--subject BaBa21 \
+--session ses-0 \
+--input-list list_of_subjects/subjects_ses-0_warp_for_MM_template.csv \
+-b BaBa21_openneuro -j 12
+```
+
+```bash
+python postprocessing/MM_template_construction.py \
+--subject BaBa21 \
+--session ses-1 \
+--input-list list_of_subjects/subjects_ses-1_warp_for_MM_template.csv \
+-b BaBa21_openneuro -j 12
+```
+
+```bash
+python postprocessing/MM_template_construction.py \
+--subject BaBa21 \
+--session ses-2 \
+--input-list list_of_subjects/subjects_ses-2_warp_for_MM_template.csv \
+-b BaBa21_openneuro -j 12
+```
+
+```bash
+python postprocessing/MM_template_construction.py \
+--subject BaBa21 \
+--session ses-3 \
+--input-list list_of_subjects/subjects_ses-3_warp_for_MM_template.csv \
+-b BaBa21_openneuro -j 12
+```
+
+Example output structure
+```bash
+derivatives/
+└── template/
+    └── sub-BaBa21/
+        └── ses-0/
+            ├── tmp_LR/
+            ├── tmp_HR/
+            ├── final/
+            ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_T1w.nii.gz
+            ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_T2w.nii.gz
+            └── sub-BaBa21_ses-0_desc-symmetric-sharpen_label-WM_probseg.nii.gz
+```
+
+
 
 # PART2: The pipeline steps for **(4D+t)** longitudinal BaBa21 template interpolation
 
