@@ -2,9 +2,9 @@
 
 sub=(sub-Noe sub-Olivier sub-Ota1 sub-Palme sub-Pesto sub-Prune sub-Oasis sub-Omelette sub-Oz sub-Papou sub-Phyllis sub-Puma sub-Odin sub-Omer sub-Pau sub-Picsou sub-Odor sub-Omerta sub-Ozy sub-Pepita sub-Prouesse)
 
-ses=(ses-0)
+#ses=(ses-0)
 
-#ses=(ses-0 ses-1 ses-2 ses-3)
+ses=(ses-1 ses-2 ses-3)
 
 mkdir snap snap/ses-0 snap/ses-1 snap/ses-2 snap/ses-3 
 
