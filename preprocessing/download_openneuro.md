@@ -12,4 +12,4 @@ $ git clone https://openneuro.org/git/3/ds005424
 ```bash
 $ datalad install https://openneuro.org/git/3/ds005424
 ```
-[<-- return menu](pipeline3D.md) [--> next STEP](preprocessing/bids_exporter.md)
+[<-- return menu](../pipeline3D.md) [--> next STEP](bids_exporter.md)
