@@ -1,4 +1,4 @@
-# PART1: pipeline processing steps for **3D** BaBa21 template construction
+# PART1: pipeline processing steps for **3D** template construction
 
 This pipeline, written mainly in bash and python, uses [Ants](#2)  and [FSL](#2)  to generate a 3D anatomical template from any BIDS-formatted dataset. 
 The [BaBa21](#3) dataset is used here as an example, but the pipeline can be applied to other BIDS datasets as well.
