@@ -39,3 +39,6 @@ python postprocessing/generate_TPM.py \
   --mask_subfolder warped \
   --modalities label-WM_mask label-GM_mask label-CSF_mask brain_mask
 ```
+
+[<-- return menu](pipeline3D.md)
+[<-- previous STEP](preprocessing/template_construction.md) [--> next STEP](pipeline4D.md)

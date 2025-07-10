@@ -139,3 +139,6 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --threads 8 \
   --flipping_LR
 ```
+
+[<-- return menu](pipeline3D.md)
+[<-- previous STEP](preprocessing/bids_exporter.md) [--> next STEP](preprocessing/template_construction.md)
