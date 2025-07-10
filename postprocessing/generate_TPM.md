@@ -40,5 +40,4 @@ python postprocessing/generate_TPM.py \
   --modalities label-WM_mask label-GM_mask label-CSF_mask brain_mask
 ```
 
-[<-- return menu](pipeline3D.md)
-[<-- previous STEP](preprocessing/template_construction.md) [--> next STEP](pipeline4D.md)
+[<-- previous STEP](template_construction.md) [return menu](../pipeline3D.md) [--> next STEP](../pipeline4D.md)

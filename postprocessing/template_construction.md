@@ -93,5 +93,4 @@ derivatives/
             └── sub-BaBa21_ses-0_desc-symmetric-sharpen_label-WM_probseg.nii.gz
 ```
 
-[<-- return menu](pipeline3D.md)
-[<-- previous STEP](preprocessing/denoise_realign.md) [--> next STEP](preprocessing/generate_TPM.md)
+[<-- previous STEP](../preprocessing/denoise_realign.md) [return menu](../pipeline3D.md) [--> next STEP](generate_TPM.md)

@@ -24,6 +24,6 @@ Generate population-based issue probability maps (e.g., gray matter, white matte
 ## References
 <a id="1">[ANTS]</a> https://github.com/ANTsX/ANTs \
 <a id="2">[FSL]</a> https://fsl.fmrib.ox.ac.uk/fsl/docs/#/ \
-<a id="3">[BaBa21_2025]</a>
+<a id="3">[BaBa21]</a>
 Arnaud Le Troter, David Meunier, Katherine Bryant, Julien Sein, Siham Bouziane, Adrien Meguerditchian,
 BaBa21. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds005424.v1.0.0
