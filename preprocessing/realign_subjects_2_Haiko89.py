@@ -150,7 +150,7 @@ def main():
         env = os.environ.copy()
         env["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = str(threads)
 
-        run_command(antsreg_cmd, dry_run, env)
+        #run_command(antsreg_cmd, dry_run, env)
 
         antsapply_cmd = [
             "antsApplyTransforms",
@@ -195,10 +195,20 @@ def main():
         if not os.path.exists(subject_csf):
             print(f"Warning: csf mask not found for {sub} {ses}: {subject_csf}. Skipping.")
             continue
+        subject_bm = os.path.join(bids_root, "derivatives", "segmentation",
+                                   sub, ses, "anat", f"{sub}_{ses}_space-orig_desc-brain_mask.nii.gz"
+                                   )
+        if not os.path.exists(subject_bm):
+            print(f"Warning: csf mask not found for {sub} {ses}: {subject_bm}. Skipping.")
+            continue
 
         output_wm = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_label-WM_mask.nii.gz")
         output_gm = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_label-GM_mask.nii.gz")
         output_csf = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_label-CSF_mask.nii.gz")
+        output_bm = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_brain_mask.nii.gz")
+
+        ##"NearestNeighbor" or  "Linear" ?
+        ##"label-CSF_mask" or  "CSF_probseg" ?
 
         antsapply_cmd = [
             "antsApplyTransforms", "-d", "3",
@@ -219,6 +229,13 @@ def main():
         ]
         run_command(antsapply_cmd, dry_run, env)
 
+        antsapply_cmd = [
+            "antsApplyTransforms", "-d", "3",
+            "-i", subject_bm, "-r", haiko_template_pad, "-o", output_bm,
+            "-t", f"{transfo_prefix}0GenericAffine.mat", "--interpolation", "NearestNeighbor"
+        ]
+        run_command(antsapply_cmd, dry_run, env)
+
         # -----------------------------
         # Optionally flip Left/Right
         # -----------------------------
@@ -229,45 +246,32 @@ def main():
             flipped_t2w = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-flipped_T2w.nii.gz")
 
             # T1w flip
-            run_command([
-                "fslswapdim", output_t1w, "-x", "y", "z", flipped_t1w
-            ], dry_run)
-
-            run_command([
-                "CopyImageHeaderInformation",
-                output_t1w,
-                flipped_t1w,
-                flipped_t1w,
-                "1","1","1"
-            ], dry_run)
-
+            run_command([ "fslswapdim", output_t1w, "-x", "y", "z", flipped_t1w ], dry_run)
+            run_command(["CopyImageHeaderInformation",output_t1w, flipped_t1w, flipped_t1w,"1","1","1"], dry_run)
             # T2w flip
-            run_command([
-                "fslswapdim", output_t2w, "-x", "y", "z", flipped_t2w
-            ], dry_run)
+            run_command([ "fslswapdim", output_t2w, "-x", "y", "z", flipped_t2w], dry_run)
+            run_command(["CopyImageHeaderInformation",output_t2w, flipped_t2w, flipped_t2w,"1","1","1"], dry_run)
 
-            run_command([
-                "CopyImageHeaderInformation",
-                output_t2w,
-                flipped_t2w,
-                flipped_t2w,
-                "1"
-            ], dry_run)
+            flipped_t1w = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-flipped_T1w.nii.gz")
+            flipped_t2w = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-flipped_T2w.nii.gz")
 
-            flipped_WM = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-flipped_label-WM_mask.nii.gz")
-            run_command([
-                "fslswapdim", output_wm, "-x", "y", "z", flipped_WM
-            ], dry_run)
+            # tissues
+            flipped_wm = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-flipped_label-WM_mask.nii.gz")
+            flipped_gm = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-flipped_label-GM_mask.nii.gz")
+            flipped_csf = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-flipped_label-CSF_mask.nii.gz")
+            flipped_bm = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-flipped_brain_mask.nii.gz")
 
-            run_command([
-                "CopyImageHeaderInformation",
-                output_wm,
-                flipped_WM,
-                flipped_WM,
-                "1", "1", "1"
-            ], dry_run)
+            # Tissues flip
+            run_command(["fslswapdim", output_wm, "-x", "y", "z", flipped_wm], dry_run)
+            run_command(["CopyImageHeaderInformation", output_wm, flipped_wm, flipped_wm, "1", "1", "1"], dry_run)
+            run_command(["fslswapdim", output_gm, "-x", "y", "z", flipped_gm], dry_run)
+            run_command(["CopyImageHeaderInformation", output_gm, flipped_gm, flipped_gm, "1", "1", "1"], dry_run)
+            run_command(["fslswapdim", output_csf, "-x", "y", "z", flipped_csf], dry_run)
+            run_command(["CopyImageHeaderInformation", output_csf, flipped_csf, flipped_csf, "1", "1", "1"], dry_run)
+            run_command(["fslswapdim", output_bm, "-x", "y", "z", flipped_bm], dry_run)
+            run_command(["CopyImageHeaderInformation", output_bm, flipped_bm, flipped_bm, "1", "1", "1"], dry_run)
 
-            print(f"Flipped images saved: {flipped_t1w}, {flipped_t2w} {flipped_WM}")
+            print(f"Flipped images saved")
 
 if __name__ == "__main__":
     main()

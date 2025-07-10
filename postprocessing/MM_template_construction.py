@@ -59,39 +59,49 @@ def main():
     ants_script_path = os.path.join("postprocessing", "antsMultivariateTemplateConstruction2.sh")
     print(ants_script_path)
 
+    ite=1
     stage1_cmd = (
         f"{ants_script_path} "
-        f"-d 3 -i 5 -k 3 -c 2 -j {args.jobs} "
-        f"-f 4x2x1 -s 2x1x0vox -q 30x20x10 "
+        f"-d 3 -i {ite} -k 3 -c 2 -j {args.jobs} "
+        f"-f 4x2x1 -s 2x1x0vox -q 10x0x0 "
         f"-w 0.5x0.5x1 -t SyN -A 1 -n 0 -m CC "
         f"-o {tmp_LR}/MY {args.input_list}"
     )
-    run_command(stage1_cmd, workdir='./')
+    #run_command(stage1_cmd, workdir='./')
 
     # Resampling Stage 1 templates to 0.4mm isotropic
     print("[INFO] Resampling Stage 1 outputs to higher resolution")
     for i in range(3):
-        in_file = os.path.join(tmp_LR, "intermediateTemplates", f"SyN_iteration4_MYtemplate{i}.nii.gz")
-        out_file = os.path.join(tmp_HR, f"{args.subject}_{args.session}_SyN_iteration4_MYtemplate{i}.nii.gz")
+        in_file = os.path.join(tmp_LR, "intermediateTemplates", f"SyN_iteration{ite-1}_MYtemplate{i}.nii.gz")
+        out_file = os.path.join(tmp_HR, f"{args.subject}_{args.session}_SyN_iteration{ite-1}_MYtemplate{i}.nii.gz")
         convert_cmd = (
             f"mri_convert -i {in_file} -o {out_file} -vs 0.4 0.4 0.4"
         )
-        run_command(convert_cmd)
+        #run_command(convert_cmd)
 
     # Stage 2: high-resolution template building using resampled priors
     print("[INFO] Starting Stage 2: High-resolution template construction")
-    z_opts = " ".join([
-        f"-z {args.subject}_{args.session}_SyN_iteration4_MYtemplate{i}.nii.gz" for i in range(3)
-    ])
+    paths = [
+        os.path.join(
+            tmp_HR,
+            f"{args.subject}_{args.session}_SyN_iteration{ite - 1}_MYtemplate{i}.nii.gz"
+        )
+        for i in range(3)
+    ]
+
+    z_opts = " ".join([f"-z {p}" for p in paths])
+
     stage2_input_glob = args.input_list
 
     ants_script_path = os.path.join("postprocessing", "antsMultivariateTemplateConstruction2.sh")
     print(ants_script_path)
 
+    ite2=1
     stage2_cmd = (
         f"{ants_script_path} "
-        f"-d 3 -i 2 -k 3 -c 2 -j {args.jobs} "
-        f"-f 4x2x1 -s 2x1x0vox -q 50x30x15 "
+        f"-d 3 -i {ite2} -k 3 -c 2 -j {args.jobs} "
+        #f"-f 4x2x1 -s 2x1x0vox -q 50x30x15 "
+        f"-f 4x2x1 -s 2x1x0vox -q 4x0x0 "
         f"-t SyN -w 1x1x1 {z_opts} -A 1 -n 0 -m CC "
         f"-o {tmp_HR}/MY {stage2_input_glob}"
     )
@@ -106,7 +116,7 @@ def main():
     }
 
     for i in range(3):
-        src = os.path.join(tmp_HR, "intermediateTemplates", f"SyN_iteration1_MYtemplate{i}.nii.gz")
+        src = os.path.join(tmp_HR, "intermediateTemplates", f"SyN_iteration{ite2-1}_MYtemplate{i}.nii.gz")
         dst = os.path.join(final_dir, mapping[i])
         run_command(f"cp -f {src} {dst}")
 
