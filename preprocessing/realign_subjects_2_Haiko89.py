@@ -150,7 +150,7 @@ def main():
         env = os.environ.copy()
         env["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = str(threads)
 
-        #run_command(antsreg_cmd, dry_run, env)
+        run_command(antsreg_cmd, dry_run, env)
 
         antsapply_cmd = [
             "antsApplyTransforms",
