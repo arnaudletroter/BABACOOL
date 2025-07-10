@@ -31,21 +31,17 @@ This resource is made available to provide a normalization target for baboon dat
   
 </table>
 
-[# PART1: pipeline processing steps for **3D** BaBa21 template construction](pipeline3D.md)
+## HOW TO USE
+[# PART1: pipeline processing steps for **3D** BaBa21 template construction](pipeline3D.md) 
 
-[# PART2: pipeline processing steps **(4D+t)** longitudinal BaBa21 template interpolation](pipeline 4D.md)
-
+[# PART2: pipeline processing steps **(4D+t)** longitudinal BaBa21 template interpolation](pipeline4D.md)
 
 ## if you use it, please cite the paper:
-
-## References
-<a id="1">[1]</a>
 Katherine L. Bryant, Arnaud Le Troter, David Meunier, Yannick Becker, Scott A. Love, Siham Bouziane, Kep Kee Loh1, Julien Sein, Luc Renaud, Olivier Coulon, Adrien Meguerditchian, 
 under revision in Imaging Neuroscience. Longitudinal MRI template of the baboon brain from birth to adolescence
-<a id="1">[2]</a>
+
 Arnaud Le Troter, David Meunier, Katherine Bryant, Julien Sein, Siham Bouziane, Adrien Meguerditchian,
 BaBa21. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds005424.v1.0.0
 
 ## Acknowledgements
-
 We are very grateful to the Station de Primatologie CNRS, particularly animal care staff, vets and technicians as well as administrative staff of the ILCB, the CRPN and the LPC: Nadia Melili, Nadera Bureau, Frederic Lombardo and Colette Pourpe respectively.
