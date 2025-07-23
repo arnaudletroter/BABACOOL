@@ -37,7 +37,10 @@ def main():
         "-j", "--jobs", type=int, default=12,
         help="Number of CPU cores to use (default: 12)"
     )
-    # NEW ARGS for stages
+    parser.add_argument(
+        "--modalities", nargs="+", required=True,
+        help="List of modalities to look for (e.g., T1w T2w label-WM_mask)"
+    )
     parser.add_argument(
         "--ite1", type=int, default=1,
         help="Number of iterations for Stage 1 (default: 1)"
@@ -133,18 +136,17 @@ def main():
 
     # Copy final outputs with BIDS-style names
     print("[INFO] Copying final templates to BIDS-style outputs")
-    for i in range(modalities_count):
-        modality_name = modalities[i]
-        desc = modality_name
-        if "label" in modality_name.lower() or "probseg" in modality_name.lower():
-            desc = f"desc-symmetric-sharpen_label-{modality_name}_probseg"
-        else:
-            desc = f"desc-symmetric-sharpen_{modality_name}"
+
+    for modality in args.modalities:
+        
+        print(f"[INFO] modality {modality}")
+        desc = f"desc-symmetric-sharpen_{modality}"
 
         dst_name = f"sub-{args.subject}_{args.session}_{desc}.nii.gz"
         src = os.path.join(tmp_HR, "intermediateTemplates", f"SyN_iteration{args.ite2 - 1}_MYtemplate{i}.nii.gz")
         dst = os.path.join(final_dir, dst_name)
         run_command(f"cp -f {src} {dst}")
+        print(f"{dst}")
 
     print(f"[INFO] Template construction complete! Results in {final_dir}")
 
