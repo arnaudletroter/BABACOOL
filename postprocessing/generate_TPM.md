@@ -32,9 +32,31 @@ python postprocessing/generate_TPM.py \
 ```bash
 python postprocessing/generate_TPM.py \
   --bids_root BaBa21_openneuro  \
-  --subjects_csv list_of_subjects/subjects_ses-0.csv \
+  --subjects_csv list_of_subjects/subjects_ses-1.csv \
   --template_name BaBa21 \
-  --template_session ses-0 \
+  --template_session ses-1 \
+  --patterns warped flipped \
+  --mask_subfolder warped \
+  --modalities label-WM_mask label-GM_mask label-CSF_mask brain_mask
+```
+
+```bash
+python postprocessing/generate_TPM.py \
+  --bids_root BaBa21_openneuro  \
+  --subjects_csv list_of_subjects/subjects_ses-2.csv \
+  --template_name BaBa21 \
+  --template_session ses-2 \
+  --patterns warped flipped \
+  --mask_subfolder warped \
+  --modalities label-WM_mask label-GM_mask label-CSF_mask brain_mask
+```
+
+```bash
+python postprocessing/generate_TPM.py \
+  --bids_root BaBa21_openneuro  \
+  --subjects_csv list_of_subjects/subjects_ses-3.csv \
+  --template_name BaBa21 \
+  --template_session ses-3 \
   --patterns warped flipped \
   --mask_subfolder warped \
   --modalities label-WM_mask label-GM_mask label-CSF_mask brain_mask

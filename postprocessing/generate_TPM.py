@@ -68,30 +68,6 @@ def main():
     for sub, ses in subjects:
         print(f"\n=== Processing {sub} {ses} ===")
 
-        # Find the warp/affine transforms matching any of the patterns
-        warp_transform = None
-        affine_transform = None
-
-        for pattern in args.patterns:
-
-            warp_candidates = glob.glob(
-                os.path.join(transform_dir, f"*{sub}_{ses}_space-*_desc-{pattern}_T1w-1Warp.nii.gz")
-            )
-            affine_candidates = glob.glob(
-                os.path.join(transform_dir, f"*{sub}_{ses}_space-*_desc-{pattern}_T1w-0GenericAffine.mat")
-            )
-            if warp_candidates and affine_candidates:
-                warp_transform = warp_candidates[0]
-                affine_transform = affine_candidates[0]
-                print(f"Found transform for pattern '{pattern}':")
-                print(f"  Warp: {warp_transform}")
-                print(f"  Affine: {affine_transform}")
-                break
-
-        if warp_transform is None or affine_transform is None:
-            print(f"ERROR: No transform found for {sub} {ses} with any of the patterns {args.patterns} in {transform_dir}")
-            continue
-
         # Input masks to warp
         mask_input_dir = os.path.join(derivatives_dir, args.mask_subfolder, sub, ses)
         if not os.path.exists(mask_input_dir):
@@ -104,6 +80,30 @@ def main():
 
         for modality in args.modalities:
             for pattern in args.patterns:
+
+                print(f"----{pattern}-----")
+                warp_transform = None
+                affine_transform = None
+
+                warp_candidates = glob.glob(
+                    os.path.join(transform_dir, f"*{sub}_{ses}_space-*_desc-{pattern}_T1w-1Warp.nii.gz")
+                )
+                affine_candidates = glob.glob(
+                    os.path.join(transform_dir, f"*{sub}_{ses}_space-*_desc-{pattern}_T1w-0GenericAffine.mat")
+                )
+
+                if warp_candidates and affine_candidates:
+                    warp_transform = warp_candidates[0]
+                    affine_transform = affine_candidates[0]
+                    print(f"Found transform for pattern '{pattern}':")
+                    print(f"  Warp: {warp_transform}")
+                    print(f"  Affine: {affine_transform}")
+
+                if warp_transform is None or affine_transform is None:
+                    print(
+                        f"ERROR: No transform found for {sub} {ses} with any of the patterns {args.patterns} in {transform_dir}")
+                    continue
+
                 input_mask = os.path.join(mask_input_dir, f"{sub}_{ses}_space-Haiko89_desc-{pattern}_{modality}.nii.gz")
                 if not os.path.exists(input_mask):
                     print(f"  WARNING: Input mask not found for modality '{modality}': {input_mask}. Skipping.")
@@ -124,7 +124,7 @@ def main():
                     "--interpolation", "Linear",
                     "--verbose", "1"
                 ]
-                #run_command(cmd, dry_run)
+                run_command(cmd, dry_run)
 
     print("\n=== Averaging images across subjects ===")
     for modality in args.modalities:
