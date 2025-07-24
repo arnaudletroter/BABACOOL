@@ -18,6 +18,7 @@ this script generates Tissue probability maps to template space
 | `--dry-run`                 | Print commands without executing them                                                     |
 | `--threads`                 | Number of threads for ITK/ANTs (default: 12)                                              |
 
+_for timepoint 0_
 ```bash
 python postprocessing/generate_TPM.py \
   --bids_root BaBa21_openneuro  \
@@ -25,10 +26,11 @@ python postprocessing/generate_TPM.py \
   --template_name BaBa21 \
   --template_session ses-0 \
   --patterns warped flipped \
-  --mask_subfolder warped \
-  --modalities label-WM_mask label-GM_mask label-CSF_mask brain_mask
+  --mask_subfolder segmentation \
+  --modalities label-WM_mask label-GM_mask label-CSF_mask desc-brain_mask
 ```
 
+_for timepoint 1_
 ```bash
 python postprocessing/generate_TPM.py \
   --bids_root BaBa21_openneuro  \
@@ -36,10 +38,11 @@ python postprocessing/generate_TPM.py \
   --template_name BaBa21 \
   --template_session ses-1 \
   --patterns warped flipped \
-  --mask_subfolder warped \
-  --modalities label-WM_mask label-GM_mask label-CSF_mask brain_mask
+  --mask_subfolder segmentation \
+  --modalities label-WM_mask label-GM_mask label-CSF_mask desc-brain_mask
 ```
 
+_for timepoint 2_
 ```bash
 python postprocessing/generate_TPM.py \
   --bids_root BaBa21_openneuro  \
@@ -47,10 +50,11 @@ python postprocessing/generate_TPM.py \
   --template_name BaBa21 \
   --template_session ses-2 \
   --patterns warped flipped \
-  --mask_subfolder warped \
-  --modalities label-WM_mask label-GM_mask label-CSF_mask brain_mask
+  --mask_subfolder segmentation \
+  --modalities label-WM_mask label-GM_mask label-CSF_mask desc-brain_mask
 ```
 
+_for timepoint 3_
 ```bash
 python postprocessing/generate_TPM.py \
   --bids_root BaBa21_openneuro  \
@@ -58,8 +62,8 @@ python postprocessing/generate_TPM.py \
   --template_name BaBa21 \
   --template_session ses-3 \
   --patterns warped flipped \
-  --mask_subfolder warped \
-  --modalities label-WM_mask label-GM_mask label-CSF_mask brain_mask
+  --mask_subfolder segmentation \
+  --modalities label-WM_mask label-GM_mask label-CSF_mask desc-brain_mask
 ```
 
 [<-- previous STEP](template_construction.md) [return menu](../pipeline3D.md) [--> next STEP](../pipeline4D.md)

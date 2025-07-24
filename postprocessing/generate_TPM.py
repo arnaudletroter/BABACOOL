@@ -21,9 +21,9 @@ def main():
     parser.add_argument('--template_session', required=True, help="Template session (e.g. ses-0)")
     parser.add_argument('--patterns', required=True, nargs='+', help="List of patterns to try for transform filenames (e.g. warped flipped)")
     parser.add_argument('--output_derivatives', default=None, help="Output derivatives directory, default: bids_root/derivatives")
-    parser.add_argument('--mask_subfolder', default="warped", help="Subfolder under derivatives where masks are stored (default: warped)")
+    parser.add_argument('--mask_subfolder', default="warped", help="Subfolder under derivatives where masks are saved (default: warped)")
     parser.add_argument('--modalities', nargs='+', required=True,
-                        help="List of modalities/masks to warp (e.g. label-WM_mask label-GM_mask brain_mask)")
+                        help="List of modalities/masks to warp (e.g. label-WM_mask label-GM_mask label-CSF_mask desc-brain_mask)")
     parser.add_argument('--dry-run', action="store_true", help="Print commands without executing them")
 
     args = parser.parse_args()
@@ -69,7 +69,7 @@ def main():
         print(f"\n=== Processing {sub} {ses} ===")
 
         # Input masks to warp
-        mask_input_dir = os.path.join(derivatives_dir, args.mask_subfolder, sub, ses)
+        mask_input_dir = os.path.join(derivatives_dir, "segmentation", sub, ses, "anat")
         if not os.path.exists(mask_input_dir):
             print(f"WARNING: Mask folder does not exist: {mask_input_dir}")
             continue
@@ -104,27 +104,48 @@ def main():
                         f"ERROR: No transform found for {sub} {ses} with any of the patterns {args.patterns} in {transform_dir}")
                     continue
 
-                input_mask = os.path.join(mask_input_dir, f"{sub}_{ses}_space-Haiko89_desc-{pattern}_{modality}.nii.gz")
+                input_mask = os.path.join(mask_input_dir, f"{sub}_{ses}_space-orig_{modality}.nii.gz")
+
                 if not os.path.exists(input_mask):
                     print(f"  WARNING: Input mask not found for modality '{modality}': {input_mask}. Skipping.")
                     continue
 
                 output_mask = os.path.join(
                     output_dir,
-                    f"{sub}_{ses}_space-{args.template_name}_desc-{pattern}_{modality}_probseg.nii.gz"
+                    f"{sub}_{ses}_space-{args.template_name}_desc-HR-{pattern}_{modality}_probseg.nii.gz"
                 )
 
-                cmd = [
-                    "antsApplyTransforms", "-d", "3",
-                    "-i", input_mask,
-                    "-r", template_image,
-                    "-o", output_mask,
-                    "-t", warp_transform,
-                    "-t", affine_transform,
-                    "--interpolation", "Linear",
-                    "--verbose", "1"
-                ]
-                run_command(cmd, dry_run)
+                transforms_dir = os.path.join(derivatives_dir, "transforms", f"{sub}", f"{ses}")
+                transfo_prefix = os.path.join(transforms_dir, f"{sub}_{ses}")
+
+                if (pattern=="warped"):
+                    cmd = [
+                        "antsApplyTransforms", "-d", "3",
+                        "-i", input_mask,
+                        "-r", template_image,
+                        "-o", output_mask,
+                        "-t", warp_transform,
+                        "-t", affine_transform,
+                        "-t", f"{transfo_prefix}_from-native_to-Haiko89_rigid0GenericAffine.mat",
+                        "--interpolation", "Linear",
+                        "--verbose", "1"
+                    ]
+                    run_command(cmd, dry_run)
+
+                if (pattern=="flipped"):
+                    cmd = [
+                        "antsApplyTransforms", "-d", "3",
+                        "-i", input_mask,
+                        "-r", template_image,
+                        "-o", output_mask,
+                        "-t", warp_transform,
+                        "-t", affine_transform,
+                        "-t", f"{transfo_prefix}_from-Haiko89_flip-x_ants.mat",
+                        "-t", f"{transfo_prefix}_from-native_to-Haiko89_rigid0GenericAffine.mat",
+                        "--interpolation", "Linear",
+                        "--verbose", "1"
+                    ]
+                    run_command(cmd, dry_run)
 
     print("\n=== Averaging images across subjects ===")
     for modality in args.modalities:
@@ -138,7 +159,7 @@ def main():
                 ses
             )
             for pattern in args.patterns:
-                pattern_glob = f"{sub}_{ses}_space-{args.template_name}_desc-{pattern}_{modality}_probseg.nii.gz"
+                pattern_glob = f"{sub}_{ses}_space-{args.template_name}_desc-HR-{pattern}_{modality}_probseg.nii.gz"
                 found = glob.glob(os.path.join(output_dir, pattern_glob))
                 all_warped_images.extend(found)
 
@@ -153,7 +174,7 @@ def main():
             f"sub-{args.template_name}",
             f"{args.template_session}",
             "final",
-            f"sub-{args.template_name}_{args.template_session}_desc-symmetric_{modality}_probseg.nii.gz"
+            f"sub-{args.template_name}_{args.template_session}_desc-HR-symmetric_{modality}_probseg.nii.gz"
         )
 
         cmd = ["AverageImages", "3", average_output, "0"] + all_warped_images

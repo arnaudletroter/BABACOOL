@@ -2,6 +2,7 @@ import os
 import argparse
 import subprocess
 import pandas as pd
+import nibabel as nib
 
 def run_command(cmd, dry_run=False, env=None):
     print("Running:", " ".join(map(str, cmd)))
@@ -149,7 +150,6 @@ def main():
 
         env = os.environ.copy()
         env["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = str(threads)
-
         run_command(antsreg_cmd, dry_run, env)
 
         antsapply_cmd = [
@@ -175,6 +175,41 @@ def main():
         ]
 
         run_command(antsapply_cmd, dry_run, env)
+
+        if args.padding:
+            print("Generating flipped x matrix from padded Haiko template...")
+            img = nib.load(haiko_template_pad)
+            header = img.header
+            res_x = header.get_zooms()[0]
+            width = img.shape[0]
+            translation_x = (width * res_x) - res_x
+            matrix = [
+                [-1.0, 0.0, 0.0, translation_x],
+                [0.0, 1.0, 0.0, 0.0],
+                [0.0, 0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0]
+            ]
+            for row in matrix:
+                print(" ".join(f"{value: .10f}" for value in row))
+
+            transfo_output_mat = os.path.join(transforms_dir, f"{sub}_{ses}_from-Haiko89_flip-x_fsl.mat")
+            with open(transfo_output_mat, "w") as f:
+                for row in matrix:
+                    f.write(" ".join(f"{val:.10f}" for val in row) + "\n")
+
+            print(f"Matrix FSL saved : {transfo_output_mat}")
+
+            transfo_output_ants_mat = os.path.join(transforms_dir, f"{sub}_{ses}_from-Haiko89_flip-x_ants.mat")
+
+            convert_transfo_cmd = [
+                "c3d_affine_tool",
+                "-ref", f"{haiko_template_pad}",
+                "-src", f"{haiko_template_pad}",
+                f"{transfo_output_mat}",
+                "-fsl2ras", "-oitk", f"{transfo_output_ants_mat}"
+            ]
+
+            run_command(convert_transfo_cmd, dry_run, env)
 
         # SUBJECT 3 TISSUES (must exist)
         subject_wm = os.path.join(bids_root, "derivatives", "segmentation",
