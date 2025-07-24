@@ -112,7 +112,7 @@ def main():
 
                 output_mask = os.path.join(
                     output_dir,
-                    f"{sub}_{ses}_space-{args.template_name}_desc-HR-{pattern}_{modality}_probseg.nii.gz"
+                    f"{sub}_{ses}_space-{args.template_name}_desc-{pattern}_{modality}_probseg.nii.gz"
                 )
 
                 transforms_dir = os.path.join(derivatives_dir, "transforms", f"{sub}", f"{ses}")
@@ -159,7 +159,7 @@ def main():
                 ses
             )
             for pattern in args.patterns:
-                pattern_glob = f"{sub}_{ses}_space-{args.template_name}_desc-HR-{pattern}_{modality}_probseg.nii.gz"
+                pattern_glob = f"{sub}_{ses}_space-{args.template_name}_desc-{pattern}_{modality}_probseg.nii.gz"
                 found = glob.glob(os.path.join(output_dir, pattern_glob))
                 all_warped_images.extend(found)
 
@@ -174,7 +174,7 @@ def main():
             f"sub-{args.template_name}",
             f"{args.template_session}",
             "final",
-            f"sub-{args.template_name}_{args.template_session}_desc-HR-symmetric_{modality}_probseg.nii.gz"
+            f"sub-{args.template_name}_{args.template_session}_desc-symmetric_{modality}_probseg.nii.gz"
         )
 
         cmd = ["AverageImages", "3", average_output, "0"] + all_warped_images
