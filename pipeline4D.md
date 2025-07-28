@@ -27,5 +27,5 @@ T1w and T2w maps were normalized using multiclass histogram-based approach (Sun 
 Use preprocessed images to build a 3D group-average anatomical template, per age
 
 ## References
-<a id="1">[Glasser, et al. , The minimal preprocessing pipelines for the Human Connectome Project,
-NeuroImage 2013]</a> https://doi.org/10.1016/j.neuroimage.2013.04.127 \
+<a id="1">[Glasser, et al.] The minimal preprocessing pipelines for the Human Connectome Project,
+NeuroImage 2013 </a> https://doi.org/10.1016/j.neuroimage.2013.04.127 \
