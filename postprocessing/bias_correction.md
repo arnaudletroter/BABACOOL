@@ -24,7 +24,7 @@ this script generates a bias field corrected template
 
 ### bias_correction.py description
 
-This script performs bias filed correction on multiple sessions
+This script performs bias field correction on multiple sessions
 
 | Option                | Description                                                                                    |
 | --------------------- |------------------------------------------------------------------------------------------------|
@@ -40,7 +40,7 @@ This script performs bias filed correction on multiple sessions
 python postprocessing/bias_correction.py  --bids_root BaBa21_openneuro --sessions ses-0 ses-3
 ```
 Example output structure
-```bash
+<div style="background-color:#f0f0f0; padding:10px;">
 └── sub-BaBa21
     ├── ses-0
     │   └── final
@@ -56,7 +56,7 @@ Example output structure
             ├── **sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz**
             ├── sub-BaBa21_ses-3_desc-symmetric-sharpen_T1w.nii.gz
             └── sub-BaBa21_ses-3_desc-symmetric-sharpen_T2w.nii.gz
-```
+</div>
 
 _for all timepoints_
 ```bash
