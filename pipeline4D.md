@@ -13,7 +13,7 @@ The bias field is estimated from the square root of the product of the T1w and T
 This method works because the opposing contrasts in gray and white matter cancel each other out, leaving only the bias field. 
 This approach was described by [Glasser](#1) in the context of myelin mapping."_
 
-**We would like to thank Régis Trapeau for suggesting the use of this method in the context of non-human primate data and for providing the  [script](../postprocessing/T1xT2BiasFieldCorrection.sh) used to implement it.**
+**We would like to thank Régis Trapeau for suggesting the use of this method in the context of non-human primate data and for providing the  [script](postprocessing/T1xT2BiasFieldCorrection.sh) used to implement it.**
 
 2. [## STEP2 (Optional): Template Symmetrization](preprocessing/template_sym.md)
 Symmetrize all volumes by L/R flipping and rigid registration step.

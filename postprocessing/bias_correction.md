@@ -58,7 +58,7 @@ Example output structure
             └── sub-BaBa21_ses-3_desc-symmetric-sharpen_T2w.nii.gz
 ```
 
-_for all timepoints _
+_for all timepoints_
 ```bash
 #!/bin/bash
 sessions=("ses-0" "ses-1" "ses-2" "ses-3")
