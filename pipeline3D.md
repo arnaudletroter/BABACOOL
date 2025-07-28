@@ -6,19 +6,19 @@ The template can be generated across multiple ages (sessions) and in a multi-mod
 
 Processing steps:
 
-1. [## STEP1: Prepare dataset](preprocessing/download_openneuro.md) \
+1. [STEP1: Prepare dataset](preprocessing/download_openneuro.md) \
 Download a BIDS-formatted dataset from OpenNeuro (example here: BaBa21, Dataset ID: ds005424).
 
-2. [## STEP2: BIDS Session-Age CSV Exporter](preprocessing/bids_exporter.md) \
+2. [STEP2: BIDS Session-Age CSV Exporter](preprocessing/bids_exporter.md) \
 Generate a CSV file containing session and participant age metadata for the next steps 
 
-3. [## STEP3: Pre-processing stages](preprocessing/denoise_realign.md)
+3. [STEP3: Pre-processing stages](preprocessing/denoise_realign.md)
 Denoise and rigidly align T1-weighted and T2-weighted volumes to a standard orientation.
 
-4. [## STEP4: Post-processing template construction](postprocessing/template_construction.md)
+4. [STEP4: Post-processing template construction](postprocessing/template_construction.md)
 Use preprocessed images to build a 3D group-average anatomical template, per age
 
-5. [## STEP5: Post-processing TPM generation](postprocessing/generate_TPM.md)
+5. [STEP5: Post-processing TPM generation](postprocessing/generate_TPM.md)
 Generate population-based issue probability maps (e.g., gray matter, white matter, CSF) by averaging individual segmentations.
 
 ## References

@@ -6,25 +6,24 @@ The template can be generated across multiple ages (sessions) and in a multi-mod
 
 Processing steps:
 
-1. [## STEP1: B1 Bias correction](postprocessing/bias_correction.md) \
-Apply T1xT2BiasFieldCorrection.sh (using FSL):
-_"Once the T1w and T2w images are aligned in the same space, they are corrected for B1− and some B1+ bias. 
+1. [STEP1: B1 Bias correction](postprocessing/bias_correction.md) \
+_"T1w and T2w images co-registered in the same space are corrected for B1− and some B1+ bias. 
 The bias field is estimated from the square root of the product of the T1w and T2w images, after excluding non-brain tissues. 
 This method works because the opposing contrasts in gray and white matter cancel each other out, leaving only the bias field. 
 This approach was described by [Glasser](#1) in the context of myelin mapping."_
 
 **We would like to thank Régis Trapeau for suggesting the use of this method in the context of non-human primate data and for providing the  [script](postprocessing/T1xT2BiasFieldCorrection.sh) used to implement it.**
 
-2. [## STEP2 (Optional): Template Symmetrization](preprocessing/template_sym.md)
+2. [STEP2 (Optional): Template Symmetrization](preprocessing/template_sym.md)
 Symmetrize all volumes by L/R flipping and rigid registration step.
 The multi-modal templates were left/right flipped and averaged to generate a temporary symmetrical template, which was used as the final target for a last rigid registration step. 
 This step produced an exact symmetrical template by averaging both the co-registered template and its flipped version.
 
-3. [## STEP3: Histogram-Based Normalization ](postprocessing/hist_normalization.md) \
+3. [STEP3: Histogram-Based Normalization ](postprocessing/hist_normalization.md) \
 T1w and T2w maps were normalized using multiclass histogram-based approach (Sun et al., 2015), using the following equation:
 
 
-4. [## STEP4: Longitudinal registration](postprocessing/template_construction.md)
+4. [STEP4: Longitudinal registration](postprocessing/template_construction.md)
 Use preprocessed images to build a 3D group-average anatomical template, per age
 
 ## References
