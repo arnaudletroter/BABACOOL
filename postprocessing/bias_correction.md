@@ -40,23 +40,23 @@ This script performs bias field correction on multiple sessions
 python postprocessing/bias_correction.py  --bids_root BaBa21_openneuro --sessions ses-0 ses-3
 ```
 Example output structure
-<div style="background-color:#f0f0f0; padding:10px;">
+```
 └── sub-BaBa21
     ├── ses-0
     │   └── final
     │       ├── sub-BaBa21_ses-0_desc-symmetric_desc-brain_mask_probseg.nii.gz
-    │       ├── **sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz**
-    │       ├── **sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz**
+    │       ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
     │       ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_T1w.nii.gz
     │       └── sub-BaBa21_ses-0_desc-symmetric-sharpen_T2w.nii.gz
     └── ses-3
         └── final
             ├── sub-BaBa21_ses-3_desc-symmetric_desc-brain_mask_probseg.nii.gz
-            ├── **sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz**
-            ├── **sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz**
+            ├── sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
+            ├── sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
             ├── sub-BaBa21_ses-3_desc-symmetric-sharpen_T1w.nii.gz
             └── sub-BaBa21_ses-3_desc-symmetric-sharpen_T2w.nii.gz
-</div>
+```
 
 _for all timepoints_
 ```bash
