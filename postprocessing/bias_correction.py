@@ -27,7 +27,6 @@ def main():
         t1 = f"{path_template}/sub-{args.template_name}_{ses}_{args.template_type}_T1w.nii.gz"
         t2 = f"{path_template}/sub-{args.template_name}_{ses}_{args.template_type}_T2w.nii.gz"
 
-        # Vérification existence T1 et T2, sinon on skip la session
         if not os.path.exists(t1):
             print(f"Error: T1w file not found for session {ses}: {t1}")
             print(f"Skipping session {ses}.")

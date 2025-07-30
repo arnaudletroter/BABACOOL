@@ -10,7 +10,7 @@ this script generates a bias field corrected template
     </td>
 </tr>
 <tr> 
-    <td align="center">Before Correction</td> 
+    <td align="center">T1w efore Correction</td> 
 </tr>
 <tr>
     <td align="center">
@@ -18,7 +18,7 @@ this script generates a bias field corrected template
     </td>
 </tr>
 <tr> 
-    <td align="center">After Correction</td> 
+    <td align="center">T1w After Correction</td> 
 </tr>
 </table>
 
@@ -78,3 +78,5 @@ or run
 ```bash
 postprocessing/bias_correction_all_sessions.sh BaBa21_openneuro
 ```
+
+[return menu](../pipeline4D.md) [--> next STEP](../postprocessing/hist_normalization.md)

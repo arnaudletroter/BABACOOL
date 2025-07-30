@@ -14,17 +14,15 @@ This approach was described by [Glasser](#1) in the context of myelin mapping."_
 
 **We would like to thank Régis Trapeau for suggesting the use of this method in the context of non-human primate data and for providing the  [script](postprocessing/T1xT2BiasFieldCorrection.sh) used to implement it.**
 
-2. [STEP2 (Optional): Template Symmetrization](preprocessing/template_sym.md)
-Symmetrize all volumes by L/R flipping and rigid registration step.
-The multi-modal templates were left/right flipped and averaged to generate a temporary symmetrical template, which was used as the final target for a last rigid registration step. 
-This step produced an exact symmetrical template by averaging both the co-registered template and its flipped version.
+2. [STEP2: Histogram-Based Normalization ](postprocessing/hist_normalization.md) \
+T1w and T2w maps were normalized using multiclass histogram-based approach
 
-3. [STEP3: Histogram-Based Normalization ](postprocessing/hist_normalization.md) \
-T1w and T2w maps were normalized using multiclass histogram-based approach (Sun et al., 2015), using the following equation:
+3. [STEP3: Longitudinal registration](postprocessing/postprocessing/longitudinal_registration.md)
+- CA-CP Alignment Across Timepoints (OPTIONAL)
+- multi-modal registration based on T1w and T2w contrasts (TPM OPTIONAL), with three stages (rigid, affine, SyN)
+- Symmetrize all volumes by L/R flipping and rigid registration step (OPTIONAL)
 
-
-4. [STEP4: Longitudinal registration](postprocessing/template_construction.md)
-Use preprocessed images to build a 3D group-average anatomical template, per age
+4. [STEP4: Generation of Intermediate Timepoint Templates](postprocessing/longitudinal_interpolation.md) 
 
 ## References
 <a id="1">[Glasser, et al.] The minimal preprocessing pipelines for the Human Connectome Project,

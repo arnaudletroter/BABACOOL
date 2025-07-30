@@ -33,7 +33,7 @@ _for timepoint 3_
   --patterns warped flipped\
   --input_folder derivatives/segmentation \
   --output_folder warped \
-  --modalities label-WM_mask label-GM_mask label-CSF_mask desc-brain_mask
+  --modalities label-WM_mask label-GM_mask label-CSF_mask desc-brain_mask \
   --map_type probseg
 ```
 
