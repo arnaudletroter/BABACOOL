@@ -10,7 +10,7 @@ this script generates a bias field corrected template
     </td>
 </tr>
 <tr> 
-    <td align="center">T1w efore Correction</td> 
+    <td align="center">T1w before Correction</td> 
 </tr>
 <tr>
     <td align="center">
@@ -18,7 +18,7 @@ this script generates a bias field corrected template
     </td>
 </tr>
 <tr> 
-    <td align="center">T1w After Correction</td> 
+    <td align="center">T1w after Correction</td> 
 </tr>
 </table>
 
