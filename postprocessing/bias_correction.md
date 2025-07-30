@@ -1,27 +1,5 @@
 ## STEP1: B1 Bias correction
 
-### T1xT2BiasFieldCorrection.sh (using FSL) description
-this script generates a bias field corrected template
-
-<table>
-<tr>
-    <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_beforeBiasCorrection.png" width="400" height="150" />
-    </td>
-</tr>
-<tr> 
-    <td align="center">T1w before Correction</td> 
-</tr>
-<tr>
-    <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_afterBiasCorrection.png" width="400" height="150" />
-    </td>
-</tr>
-<tr> 
-    <td align="center">T1w after Correction</td> 
-</tr>
-</table>
-
 ### bias_correction.py description
 
 This script performs bias field correction on multiple sessions
@@ -78,5 +56,24 @@ or run
 ```bash
 postprocessing/bias_correction_all_sessions.sh BaBa21_openneuro
 ```
+
+<table>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_beforeBiasCorrection.png" width="400" height="150" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">T1w before Correction</td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_afterBiasCorrection.png" width="400" height="150" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">T1w after Correction</td> 
+</tr>
+</table>
 
 [return menu](../pipeline4D.md) [--> next STEP](../postprocessing/hist_normalization.md)
