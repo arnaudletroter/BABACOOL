@@ -19,8 +19,8 @@ T1w and T2w maps were normalized using multiclass histogram-based approach
 
 3. [STEP3: Longitudinal registration](postprocessing/postprocessing/longitudinal_registration.md)
 - CA-CP Alignment Across Timepoints (OPTIONAL)
-- multi-modal registration based on T1w and T2w contrasts (TPM OPTIONAL), with three stages (rigid, affine, SyN)
 - Symmetrize all volumes by L/R flipping and rigid registration step (OPTIONAL)
+- multi-modal registration based on T1w and T2w contrasts (TPM OPTIONAL), with three stages (rigid, affine, SyN)
 
 4. [STEP4: Generation of Intermediate Timepoint Templates](postprocessing/longitudinal_interpolation.md) 
 
