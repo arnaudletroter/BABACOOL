@@ -17,7 +17,7 @@ This approach was described by [Glasser](#1) in the context of myelin mapping."_
 2. [STEP2: Histogram-Based Normalization ](postprocessing/hist_normalization.md) \
 T1w and T2w maps were normalized using multiclass histogram-based approach
 
-3. [STEP3: Longitudinal registration](postprocessing/postprocessing/longitudinal_registration.md)
+3. [STEP3: Longitudinal registration](postprocessing/longitudinal_registration.md)
 - CA-CP Alignment Across Timepoints (OPTIONAL)
 - Symmetrize all volumes by L/R flipping and rigid registration step (OPTIONAL)
 - multi-modal registration based on T1w and T2w contrasts (TPM OPTIONAL), with three stages (rigid, affine, SyN)
