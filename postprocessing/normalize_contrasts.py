@@ -75,7 +75,7 @@ def main():
         mask_files = {
             "WM": os.path.join(input_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_label-WM_mask_probseg.nii.gz"),
             "GM": os.path.join(input_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_label-GM_mask_probseg.nii.gz"),
-            "BM": os.path.join(input_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_desc-brain_mask_probseg.nii.gz")
+            "BM": os.path.join(input_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_brain_mask_probseg.nii.gz")
         }
 
         for key, mask_path in mask_files.items():

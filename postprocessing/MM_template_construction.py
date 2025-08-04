@@ -137,6 +137,7 @@ def main():
     # Copy final outputs with BIDS-style names
     print("[INFO] Copying final templates to BIDS-style outputs")
 
+    i=0
     for modality in args.modalities:
         
         print(f"[INFO] modality {modality}")
@@ -147,6 +148,7 @@ def main():
         dst = os.path.join(final_dir, dst_name)
         run_command(f"cp -f {src} {dst}")
         print(f"{dst}")
+        i += 1
 
     print(f"[INFO] Template construction complete! Results in {final_dir}")
 

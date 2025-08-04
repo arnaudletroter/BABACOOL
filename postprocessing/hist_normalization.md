@@ -25,7 +25,7 @@ It uses tissue probability masks (WM, GM, CSF) and percentile-based scaling to n
 Normalize T1w for all sessions
 ```bash
 python postprocessing/normalize_contrasts.py \
-  --bids_root ../BaBa21_openneuro \
+  --bids_root BaBa21_openneuro \
   --sessions ses-0 ses-1 ses-2 ses-3 \
   --modality T1w \
   --wm-norm 70 \
@@ -44,7 +44,7 @@ python postprocessing/normalize_contrasts.py \
 Normalize T2w for all sessions
 ```bash
 python postprocessing/normalize_contrasts.py \
-  --bids_root ../BaBa21_openneuro \
+  --bids_root BaBa21_openneuro \
   --sessions ses-0 ses-1 ses-2 ses-3 \
   --modality T2w \
   --wm-norm 30 \
@@ -68,13 +68,6 @@ BaBa21_openneuro/
     └── template/
         └── sub-BaBa21/
             └── ses-0/
-                ├── final/
-                │   ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
-                │   ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
-                │   ├── sub-BaBa21_ses-0_desc-symmetric_label-WM_mask_probseg.nii.gz
-                │   ├── sub-BaBa21_ses-0_desc-symmetric_label-GM_mask_probseg.nii.gz
-                │   ├── sub-BaBa21_ses-0_desc-symmetric_label-CSF_mask_probseg.nii.gz
-                │   └── sub-BaBa21_ses-0_desc-symmetric_label-brain_mask.nii.gz
                 └── norm/
                     ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_desc-norm_T1w.nii.gz
                     ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
