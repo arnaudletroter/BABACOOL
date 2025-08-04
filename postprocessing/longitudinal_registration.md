@@ -32,4 +32,5 @@ python postprocessing/register_long_templates.py  \
   --TPM_modalities desc-symmetric_label-WM_mask_probseg desc-symmetric_label-GM_mask_probseg --TPM_path final \
   --segmentation_mask_suffix desc-symmetric_label-3axis_mask
 
+
 [<-- previous STEP](hist_normalization.md) [return menu](../pipeline4D.md) [--> next STEP](longitudinal_interpolation.md)
