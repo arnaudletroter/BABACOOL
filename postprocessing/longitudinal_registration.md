@@ -8,7 +8,7 @@ stage1: Semi-automatic CA-CP Alignment Across Timepoints (OPTIONAL) with two sta
 <table>
 <tr>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-3_CACP_3axis.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-3_CACP_3axis.png" width="600" />
     </td>
 </tr>
 <tr> 
@@ -31,10 +31,5 @@ python postprocessing/register_long_templates.py  \
   --brain_mask_suffix desc-symmetric_brain_mask_probseg --brainmask_path final \
   --TPM_modalities desc-symmetric_label-WM_mask_probseg desc-symmetric_label-GM_mask_probseg --TPM_path final \
   --segmentation_mask_suffix desc-symmetric_label-3axis_mask
-
-template_type = 
-desc-symmetric-sharpen
-desc-symmetric-sharpen_desc-debiased
-desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped
 
 [<-- previous STEP](hist_normalization.md) [return menu](../pipeline4D.md) [--> next STEP](longitudinal_interpolation.md)
