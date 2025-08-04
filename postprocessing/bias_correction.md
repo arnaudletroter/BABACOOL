@@ -7,7 +7,7 @@ This script performs bias field correction on multiple sessions
 | Option                | Description                                                                                    |
 | --------------------- |------------------------------------------------------------------------------------------------|
 | `--bids_root`         | Path to the root of the BIDS dataset (required).                                               |
-| `--sessions`          | List of session identifiers to process (e.g., `ses-0`, `ses-3`).                               |
+| `--sessions`          | List of session identifiers to process (e.g., `ses-0`, `ses-1`, `ses-2`, `ses-3`).             |
 | `--template_name`     | Template name used in filenames (default: `BaBa21`).                                           |
 | `--template_type`     | Template type used in filenames (default: `desc-symmetric-sharpen`).                           |
 | `--brain_mask_suffix` | Suffix for the brain mask filename (e.g., `desc-symmetric_desc-brain_mask_probseg`). Optional. |
@@ -15,7 +15,7 @@ This script performs bias field correction on multiple sessions
 | `--s_value`           | size of gauss kernel in mm when performing mean filtering (default is 2)                       |
 
 ```bash
-python postprocessing/bias_correction.py  --bids_root BaBa21_openneuro --sessions ses-0 ses-3
+python postprocessing/bias_correction.py  --bids_root BaBa21_openneuro --sessions ses-0 ses-1 ses-2 ses-3
 ```
 Example output structure
 ```
@@ -25,15 +25,21 @@ Example output structure
     │       ├── sub-BaBa21_ses-0_desc-symmetric_desc-brain_mask_probseg.nii.gz
     │       ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
     │       ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
-    │       ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_T1w.nii.gz
-    │       └── sub-BaBa21_ses-0_desc-symmetric-sharpen_T2w.nii.gz
+    ├── ses-1
+    │   └── final
+    │       ├── sub-BaBa21_ses-1_desc-symmetric_desc-brain_mask_probseg.nii.gz
+    │       ├── sub-BaBa21_ses-1_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-1_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
+    ├── ses-2
+    │   └── final
+    │       ├── sub-BaBa21_ses-2_desc-symmetric_desc-brain_mask_probseg.nii.gz
+    │       ├── sub-BaBa21_ses-2_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-2_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
     └── ses-3
         └── final
             ├── sub-BaBa21_ses-3_desc-symmetric_desc-brain_mask_probseg.nii.gz
             ├── sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
             ├── sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
-            ├── sub-BaBa21_ses-3_desc-symmetric-sharpen_T1w.nii.gz
-            └── sub-BaBa21_ses-3_desc-symmetric-sharpen_T2w.nii.gz
 ```
 
 _for all timepoints_

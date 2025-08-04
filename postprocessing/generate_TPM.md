@@ -37,6 +37,45 @@ _for timepoint 3_
   --map_type probseg
 ```
 
+Example output structure
+```
+BaBa21_openneuro/
+└── derivatives/
+    └── template/
+        └── sub-BaBa21/
+            └── ses-3/
+                ├── final/
+                │   ├── sub-BaBa21_ses-3_desc-symmetric_label-WM_mask_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-3_desc-symmetric_label-GM_mask_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-3_desc-symmetric_label-CSF_mask_probseg.nii.gz
+                │   └── sub-BaBa21_ses-3_desc-symmetric_brain_mask_probseg.nii.gz
+```
+# regenerate symmetric T1w T2w templates (without sharpen)
+```bash
+python postprocessing/generate_TPM.py \
+  --bids_root BaBa21_openneuro  \
+  --subjects_csv list_of_subjects/subjects_ses-3.csv \
+  --template_name BaBa21 \
+  --template_session ses-3 \
+  --patterns warped flipped \
+  --output_folder warped \
+  --modalities T1w T2w  \
+  --map_type mean
+ ```
+
+Example output structure
+```
+BaBa21_openneuro/
+└── derivatives/
+    └── template/
+        └── sub-BaBa21/
+            └── ses-3/
+                ├── final/
+                │   ├── sub-BaBa21_ses-3_desc-symmetric_T1w_mean.nii.gz
+                │   └── sub-BaBa21_ses-3_desc-symmetric_T2w_mean.nii.gz
+```
+
+
 # generate asymmetric T2w template (without sharpen)
 ```bash
 python postprocessing/generate_TPM.py \
@@ -50,17 +89,8 @@ python postprocessing/generate_TPM.py \
   --map_type mean
 ```
 
-# regenerate symmetric T1w template (without sharpen)
-```bash
-python postprocessing/generate_TPM.py \
-  --bids_root BaBa21_openneuro  \
-  --subjects_csv list_of_subjects/subjects_ses-3.csv \
-  --template_name BaBa21 \
-  --template_session ses-3 \
-  --patterns warped flipped \
-  --output_folder warped \
-  --modalities T1w \
-  --map_type mean
- ```
+
+
+
 
 [<-- previous STEP](template_construction.md) [return menu](../pipeline3D.md) [--> next STEP](../pipeline4D.md)

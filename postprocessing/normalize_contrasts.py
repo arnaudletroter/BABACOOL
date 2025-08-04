@@ -24,7 +24,7 @@ def main():
     parser.add_argument("--bids_root", required=True,
                         help="Path to the root of the BIDS dataset.")
     parser.add_argument("--sessions", nargs="+", required=True,
-                        help="List of session identifiers (e.g., ses-0 ses-3).")
+                        help="List of session identifiers (e.g., ses-0 ses-1 ses-2 ses-3).")
     parser.add_argument("--modality", choices=["T1w", "T2w"], required=True,
                         help="Contrast modality to normalize.")
     parser.add_argument("--wm-norm", type=float, required=True,

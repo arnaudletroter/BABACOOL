@@ -7,7 +7,7 @@ It uses tissue probability masks (WM, GM, CSF) and percentile-based scaling to n
 | Option                        | Description                                                                        |
 |-------------------------------|------------------------------------------------------------------------------------|
 | `--bids_root`                 | Path to the root of the BIDS dataset (required).                                   |
-| `--sessions`                  | List of session identifiers (e.g., `ses-0`, `ses-3`).                              |
+| `--sessions`                  | List of session identifiers (e.g., `ses-0`, `ses-1`, `ses-2`, `ses-3`).            |
 | `--modality`                  | Image modality to normalize: `T1w` or `T2w`.                                       |
 | `--wm-norm`                   | Target intensity value for white matter after normalization (e.g., 70).            |
 | `--gm-norm`                   | Target intensity value for gray matter after normalization (e.g., 30).             |
