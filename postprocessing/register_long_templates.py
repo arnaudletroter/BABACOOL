@@ -109,8 +109,8 @@ def main():
             "--transform", "Rigid[0.1]",
             "--metric",
             f"MI[{relpath_from_cwd(fixed_brainmask)},{relpath_from_cwd(moving_brainmask)},1,32,Regular,0.25]",
-            #f"MI[{relpath_from_cwd(fixed_T1w)},{relpath_from_cwd(moving_T1w)},1,32,Regular,0.25]",
             f"MI[{relpath_from_cwd(fixed_T2w)},{relpath_from_cwd(moving_T2w)},1,32,Regular,0.25]",
+            # f"MI[{relpath_from_cwd(fixed_T1w)},{relpath_from_cwd(moving_T1w)},1,32,Regular,0.25]",
             "--convergence", "[1000x500x250x100,1e-6,10]",
             "--shrink-factors", "12x8x4x2",
             "--smoothing-sigmas", "4x3x2x1vox"
@@ -286,8 +286,9 @@ def main():
             run_command(cmd, dry_run=args.dry_run)
 
         for modality in args.TPM_modalities:
-            src_img = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / src_ses / args.template_path / f"sub-{args.template_name}_{src_ses}_{modality}.nii.gz"
-            out_img = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / src_ses / args.template_path / f"sub-{args.template_name}_{src_ses}_space-CACP_{modality}.nii.gz"
+
+            src_img = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / src_ses / args.TPM_path / f"sub-{args.template_name}_{src_ses}_{modality}.nii.gz"
+            out_img = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / src_ses / args.TPM_path / f"sub-{args.template_name}_{src_ses}_space-CACP_{modality}.nii.gz"
 
             print(f"\nPropagating modality '{modality}' from {src_ses} to {reference_ses}")
             print(f"  ➤ Source image : {relpath_from_cwd(src_img)}")

@@ -125,7 +125,7 @@ def main():
             img = nib.load(norm_img_path)
             data = img.get_fdata()
 
-            masked_data = data[bm_data > 0]
+            masked_data = data[bm_data > args.brainmask_threshold]
             min_val = masked_data.min()
             max_val = masked_data.max()
 
