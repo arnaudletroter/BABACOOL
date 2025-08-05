@@ -57,4 +57,32 @@ python postprocessing/register_long_templates.py  \
   --segmentation_mask_suffix desc-symmetric_label-3axis_mask
 ```
 
+Example output structure
+```
+BaBa21_openneuro/
+└── derivatives/
+    └── template/
+        └── sub-BaBa21/
+            └── ses-0/
+                └── final/
+                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric_brain_mask_probseg.nii.gz
+                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric_label-CSF_mask_probseg.nii.gz
+                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric_label-GM_mask_probseg.nii.gz
+                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric_label-WM_mask_probseg.nii.gz
+                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
+                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w.nii.gz
+                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
+                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
+            └── ses-1/
+                └── final/
+                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric_brain_mask_probseg.nii.gz
+                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric_label-CSF_mask_probseg.nii.gz
+                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric_label-GM_mask_probseg.nii.gz
+                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric_label-WM_mask_probseg.nii.gz
+                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
+                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w.nii.gz
+                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
+                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
+```                
+                
 [<-- previous STEP](hist_normalization.md) [return menu](../pipeline4D.md) [--> next STEP](longitudinal_interpolation.md)
