@@ -35,10 +35,9 @@ python postprocessing/normalize_contrasts.py \
   --template_name BaBa21 \
   --template_prefix desc-symmetric-sharpen_desc-debiased \
   --TPM_prefix desc-symmetric \
-  --input_template_path final \
-  --output_template_path norm \
+  --template_path final \
   --generate_cropped_template \
-  --brainmask_threshold 0.1 \
+  --brainmask_threshold 0.5 \
   --QC 
 ```
 Normalize T2w for all sessions
@@ -54,10 +53,9 @@ python postprocessing/normalize_contrasts.py \
   --template_name BaBa21 \
   --template_prefix desc-symmetric-sharpen_desc-debiased \
   --TPM_prefix desc-symmetric \
-  --input_template_path final \
-  --output_template_path norm \
+  --template_path final \
   --generate_cropped_template \
-  --brainmask_threshold 0.1 \
+  --brainmask_threshold 0.5 \
   --QC 
 ```
 
@@ -68,7 +66,7 @@ BaBa21_openneuro/
     └── template/
         └── sub-BaBa21/
             └── ses-0/
-                └── norm/
+                └── final/
                     ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_desc-norm_T1w.nii.gz
                     ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
                     ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_desc-norm_T2w.nii.gz

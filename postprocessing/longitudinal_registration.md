@@ -22,15 +22,39 @@ stage3: Symmetrize all volumes by L/R flipping and rigid registration step (OPTI
 
 ### register_long_templates.py description
 
+### Command-Line Arguments
+
+| Argument                    | Type      | Required | Default                           | Description                                                  |
+|----------------------------|-----------|--------|-----------------------------------|--------------------------------------------------------------|
+| `--bids_root`              | `str`     | ✅      | —                                 | Root BIDS directory                                          |
+| `--template_name`          | `str`     | ✅      | —                                 | Template subject name                                        |
+| `--sessions`               | `list`    | ✅      | —                                 | List of sessions (ordered)                                  |
+| `--template_type`          | `str`     | ✅      | `desc-symmetric-sharpen`          | Template type                                                |
+| `--template_modalities`    | `list`    | ✅      | —                                 | Modalities to use for registration                          |
+| `--template_path`          | `str`     | ❌      | `final`                           | Subfolder for template                                      |
+| `--brain_mask_suffix`      | `str`     | ❌      | —                                 | Brain mask suffix                                           |
+| `--segmentation_mask_suffix` | `str`   | ❌      | —                                 | Segmentation mask suffix                                    |
+| `--contrasts_to_warp`      | `list`    | ❌      | `None`                            | Contrasts to warp in CA-CP space                            |
+| `--dry-run`                | `flag`    | ❌      | `False` (set to `True` if passed) | Don't actually run commands (simulate only)                 |
+
+```bash
 python postprocessing/register_long_templates.py  \
   --bids_root BaBa21_openneuro \
   --template_name BaBa21 \
-  --sessions ses-3 ses-2 ses-1 ses-0 \
-  --template_modalities T1w T2w \
-  --template_type desc-symmetric-sharpen_desc-debiased --template_path final \
-  --brain_mask_suffix desc-symmetric_brain_mask_probseg --brainmask_path final \
-  --TPM_modalities desc-symmetric_label-WM_mask_probseg desc-symmetric_label-GM_mask_probseg --TPM_path final \
+  --sessions ses-3 ses-2 ses-1 ses-0\
+  --template_modalities T1w \
+  --template_type desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped --template_path final \
+  --brain_mask_suffix desc-symmetric_brain_mask_probseg \
+  --contrasts_to_warp \
+      desc-symmetric_label-WM_mask_probseg \
+      desc-symmetric_label-GM_mask_probseg \
+      desc-symmetric_label-CSF_mask_probseg \
+      desc-symmetric_brain_mask_probseg \
+      desc-symmetric-sharpen_T1w \
+      desc-symmetric-sharpen_T2w \
+      desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w \
+      desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w \
   --segmentation_mask_suffix desc-symmetric_label-3axis_mask
-
+```
 
 [<-- previous STEP](hist_normalization.md) [return menu](../pipeline4D.md) [--> next STEP](longitudinal_interpolation.md)

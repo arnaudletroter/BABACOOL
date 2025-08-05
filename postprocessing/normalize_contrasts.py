@@ -41,10 +41,8 @@ def main():
                         help="Template prefix for input images (e.g., desc-symmetric-sharpen_desc-debiased).")
     parser.add_argument("--TPM_prefix",
                         help="Prefix for TPM mask files (if not set, equals template_prefix).")
-    parser.add_argument("--input_template_path", default="final",
-                        help="Folder under template where input images are found (default: final).")
-    parser.add_argument("--output_template_path", default="norm",
-                        help="Folder under template where outputs will be saved (default: norm).")
+    parser.add_argument("--template_path", default="final",
+                        help="Folder under template where input images are found and outputs will be saved (default: final).")
     parser.add_argument("--generate_cropped_template", action="store_true",
                         help="If set, generate cropped (masked) version of the normalized image.")
     parser.add_argument("--brainmask_threshold", type=float, default=0.5,
@@ -59,13 +57,10 @@ def main():
         TPM_prefix = args.TPM_prefix
 
     for ses in args.sessions:
-        input_path = os.path.join(args.bids_root, "derivatives", "template",
-                                  f"sub-{args.template_name}", ses, args.input_template_path)
-        output_path = os.path.join(args.bids_root, "derivatives", "template",
-                                   f"sub-{args.template_name}", ses, args.output_template_path)
-        os.makedirs(output_path, exist_ok=True)
+        template_path = os.path.join(args.bids_root, "derivatives", "template",
+                                  f"sub-{args.template_name}", ses, args.template_path)
 
-        img_in = os.path.join(input_path,
+        img_in = os.path.join(template_path,
                               f"sub-{args.template_name}_{ses}_{args.template_prefix}_{args.modality}.nii.gz")
 
         if not os.path.exists(img_in):
@@ -73,9 +68,9 @@ def main():
             continue
 
         mask_files = {
-            "WM": os.path.join(input_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_label-WM_mask_probseg.nii.gz"),
-            "GM": os.path.join(input_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_label-GM_mask_probseg.nii.gz"),
-            "BM": os.path.join(input_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_brain_mask_probseg.nii.gz")
+            "WM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_label-WM_mask_probseg.nii.gz"),
+            "GM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_label-GM_mask_probseg.nii.gz"),
+            "BM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_brain_mask_probseg.nii.gz")
         }
 
         for key, mask_path in mask_files.items():
@@ -95,14 +90,14 @@ def main():
         print(f"Normalization linear transform: a = {a:.4f}, b = {b:.4f}")
         print(f"Equation: normalized_value = a * original_value + b")
 
-        img_out = os.path.join(output_path,
+        img_out = os.path.join(template_path,
                                f"sub-{args.template_name}_{ses}_{args.template_prefix}_desc-norm_{args.modality}.nii.gz")
         os.system(f"fslmaths {img_in} -mul {a} -add {b} {img_out}")
 
         if args.generate_cropped_template:
-            bm_bin = os.path.join(output_path, "tmp_brainmask_bin.nii.gz")
+            bm_bin = os.path.join(template_path, "tmp_brainmask_bin.nii.gz")
             os.system(f"fslmaths {mask_files['BM']} -thr {args.brainmask_threshold} -bin {bm_bin}")
-            img_out_cropped = os.path.join(output_path,
+            img_out_cropped = os.path.join(template_path,
                                            f"sub-{args.template_name}_{ses}_{args.template_prefix}_desc-norm_desc-cropped_{args.modality}.nii.gz")
             os.system(f"fslmaths {img_out} -mul {bm_bin} {img_out_cropped}")
             os.remove(bm_bin)
@@ -119,7 +114,7 @@ def main():
             wm_data = nib.load(mask_files['WM']).get_fdata()
             bm_data = nib.load(mask_files['BM']).get_fdata()
 
-            save_histogram(data, gm_data, wm_data, bm_data, args.modality, ses, output_path, "after_cor",-10, 110, 120)
+            save_histogram(data, gm_data, wm_data, bm_data, args.modality, ses, template_path, "after_cor",-10, 110, 120)
 
             norm_img_path = img_in
             img = nib.load(norm_img_path)
@@ -131,7 +126,7 @@ def main():
 
             print(f"Masked image values: min = {min_val:.4f}, max = {max_val:.4f}")
 
-            save_histogram(data, gm_data, wm_data, bm_data, args.modality, ses, output_path, "before_cor",min_val,max_val, 100)
+            save_histogram(data, gm_data, wm_data, bm_data, args.modality, ses, template_path, "before_cor",min_val,max_val, 100)
 
         print(f"done")
 
