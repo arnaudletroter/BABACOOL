@@ -1,6 +1,6 @@
 ## STEP3: Longitudinal registration (3 stages)
 
-stage1: Semi-automatic CA-CP Alignment Across Timepoints (OPTIONAL) with two stages 
+stage1: Semi-automatic AC-PC Alignment Across Timepoints (OPTIONAL) with two stages 
   - manual segmentation of 3-axis binary mask in ses-3 space (called **sub-BaBa21_ses-3_desc-symmetric_label-3axis_mask.nii.gz** )
   - first stage: rigid + affine registration (ants) and descending 3-axis mask propagation ses-3 -> ses-2 -> ses-1 -> ses-0
   - second stage: rigid only registration (flirt) and ascending propagation ses-0 -> ses-1 -> ses-2 -> ses-3
@@ -23,19 +23,19 @@ stage3: Symmetrize all volumes by L/R flipping and rigid registration step (OPTI
 ### register_long_templates.py description
 
 ### Command-Line Arguments
+| Option                          | Description                                                                             |
+|---------------------------------|-----------------------------------------------------------------------------------------|
+| `--bids_root`                   | Root BIDS directory (required).                                                         |
+| `--template_name`              | Template subject name (required).                                                       |
+| `--sessions`                   | List of sessions (ordered) (required). Example: `ses-3 ses-2`.                          |
+| `--template_type`              | Template type. Default: `desc-symmetric-sharpen`. (required)                            |
+| `--template_modalities`        | Modalities to use for registration (required). Example: `T1w T2w`.                      |
+| `--template_path`              | Subfolder for template. Default: `final`.                                               |
+| `--brain_mask_suffix`          | Brain mask suffix.                                                                      |
+| `--segmentation_mask_suffix`   | Segmentation mask suffix for automatic propagation                                      |
+| `--contrasts_to_warp`          | Contrasts to warp in CA-CP space. Optional list. Example: `T1w T2w`.                    |
+| `--dry-run`                    | Don't actually run commands; perform a dry run. Use this flag to simulate the workflow. |
 
-| Argument                    | Type      | Required | Default                           | Description                                                  |
-|----------------------------|-----------|--------|-----------------------------------|--------------------------------------------------------------|
-| `--bids_root`              | `str`     | ✅      | —                                 | Root BIDS directory                                          |
-| `--template_name`          | `str`     | ✅      | —                                 | Template subject name                                        |
-| `--sessions`               | `list`    | ✅      | —                                 | List of sessions (ordered)                                  |
-| `--template_type`          | `str`     | ✅      | `desc-symmetric-sharpen`          | Template type                                                |
-| `--template_modalities`    | `list`    | ✅      | —                                 | Modalities to use for registration                          |
-| `--template_path`          | `str`     | ❌      | `final`                           | Subfolder for template                                      |
-| `--brain_mask_suffix`      | `str`     | ❌      | —                                 | Brain mask suffix                                           |
-| `--segmentation_mask_suffix` | `str`   | ❌      | —                                 | Segmentation mask suffix                                    |
-| `--contrasts_to_warp`      | `list`    | ❌      | `None`                            | Contrasts to warp in CA-CP space                            |
-| `--dry-run`                | `flag`    | ❌      | `False` (set to `True` if passed) | Don't actually run commands (simulate only)                 |
 
 ```bash
 python postprocessing/register_long_templates.py  \
