@@ -52,30 +52,6 @@ python postprocessing/register_long_templates.py  \
       desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w \
   --segmentation_mask_suffix desc-symmetric_label-3axis_mask
 ```
-
-
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_brain_mask_probseg.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_label-3axis_mask.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_label-AC-CP_mask.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_label-CA_mask.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_label-CP_mask.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_label-CSF_mask_probseg.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_label-GM_mask_probseg.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_label-IS_mask.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_label-LR_mask.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_label-WM_mask_probseg.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_T1w_mean.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric_T2w_mean.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_desc-norm_T1w.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_desc-norm_T2w.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric-sharpen_T1w.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-symmetric-sharpen_T2w.nii.gz
-../BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_space-CACP_desc-3axis-mask.nii.gz
-
 Contrast warped structure
 ```
 BaBa21_openneuro/
