@@ -10,7 +10,7 @@ This script performs bias field correction on multiple sessions
 | `--sessions`          | List of session identifiers to process (e.g., `ses-0`, `ses-1`, `ses-2`, `ses-3`).             |
 | `--template_name`     | Template name used in filenames (default: `BaBa21`).                                           |
 | `--template_type`     | Template type used in filenames (default: `desc-symmetric-sharpen`).                           |
-| `--brain_mask_suffix` | Suffix for the brain mask filename (e.g., `desc-symmetric_desc-brain_mask_probseg`). Optional. |
+| `--brain_mask_suffix` | Suffix for the brain mask filename (e.g., `desc-symmetric_brain_mask_probseg`). Optional. |
 | `--k`                 | Flag to keep temporary files (adds the `-k` option to the processing command).                 |
 | `--s_value`           | size of gauss kernel in mm when performing mean filtering (default is 2)                       |
 
@@ -22,22 +22,22 @@ Example output structure
 └── sub-BaBa21
     ├── ses-0
     │   └── final
-    │       ├── sub-BaBa21_ses-0_desc-symmetric_desc-brain_mask_probseg.nii.gz
+    │       ├── sub-BaBa21_ses-0_desc-symmetric_brain_mask_probseg.nii.gz
     │       ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
     │       ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
     ├── ses-1
     │   └── final
-    │       ├── sub-BaBa21_ses-1_desc-symmetric_desc-brain_mask_probseg.nii.gz
+    │       ├── sub-BaBa21_ses-1_desc-symmetric_brain_mask_probseg.nii.gz
     │       ├── sub-BaBa21_ses-1_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
     │       ├── sub-BaBa21_ses-1_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
     ├── ses-2
     │   └── final
-    │       ├── sub-BaBa21_ses-2_desc-symmetric_desc-brain_mask_probseg.nii.gz
+    │       ├── sub-BaBa21_ses-2_desc-symmetric_brain_mask_probseg.nii.gz
     │       ├── sub-BaBa21_ses-2_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
     │       ├── sub-BaBa21_ses-2_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
     └── ses-3
         └── final
-            ├── sub-BaBa21_ses-3_desc-symmetric_desc-brain_mask_probseg.nii.gz
+            ├── sub-BaBa21_ses-3_desc-symmetric_brain_mask_probseg.nii.gz
             ├── sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T1w.nii.gz
             ├── sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_T2w.nii.gz
 ```
@@ -51,7 +51,7 @@ for ses in "${sessions[@]}"; do
     postprocessing/T1xT2BiasFieldCorrection.sh \
         -t1 ${path_template}/sub-BaBa21_${ses}_desc-symmetric-sharpen_T1w.nii.gz \
         -t2 ${path_template}/sub-BaBa21_${ses}_desc-symmetric-sharpen_T2w.nii.gz \
-        -b ${path_template}/sub-BaBa21_${ses}_desc-symmetric_desc-brain_mask_probseg.nii.gz \
+        -b ${path_template}/sub-BaBa21_${ses}_desc-symmetric_brain_mask_probseg.nii.gz \
         -k -s 2 \
         -os "_desc-debiased"
 done

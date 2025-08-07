@@ -13,7 +13,7 @@ def main():
     parser.add_argument("--template_type", default="desc-symmetric-sharpen",
                         help="Template type (e.g., desc-symmetric-sharpen).")
     parser.add_argument("--brain_mask_suffix",
-                        help="Suffix for the brain mask filename (e.g., `desc-symmetric_desc-brain_mask_probseg`). Optional.")
+                        help="Suffix for the brain mask filename (e.g., `desc-symmetric_brain_mask_probseg`). Optional.")
     parser.add_argument("--k", action="store_true",
                         help="Will keep temporary files (adds the -k flag).")
     parser.add_argument("--s_value", type=int, default=2,
