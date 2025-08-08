@@ -74,7 +74,6 @@ def propagate_symmetrization(template_name, ses_current, template_path, contrast
     for modality in contrasts:
         print(f"\nPropagating modality '{modality}' for session {ses_current}")
 
-        # Chemins
         base_dir = bids_root / "derivatives" / "template" / f"sub-{template_name}" / ses_current / template_path
         src_img = base_dir / f"sub-{template_name}_{ses_current}_{modality}.nii.gz"
 
