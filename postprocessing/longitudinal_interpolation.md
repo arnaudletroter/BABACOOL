@@ -24,6 +24,7 @@ python postprocessing/interpolate_long_template.py  \
 --registration_modalities T2w T1w \
 --registration_metrics CC CC \
 --compute-reg \
+--reg_long_type desc-MM \
 --suffix_modalities \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
@@ -36,6 +37,7 @@ python postprocessing/interpolate_long_template.py  \
 --sessions ses-1 ses-0 \
 --registration_modalities T2w T1w label-WM_mask_probseg \
 --compute-reg \
+--reg_long_type desc-MM \
 --registration_metrics MI MI CC[1,4] \
 --suffix_modalities \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
@@ -50,16 +52,16 @@ python postprocessing/interpolate_long_template.py  \
 --sessions ses-3 ses-2 ses-1 ses-0\
 --registration_modalities T2w T1w label-WM_mask_probseg \
 --registration_metrics CC CC \
+--reg_long_type desc-MM \
 --suffix_modalities \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
 --template_path final \ 
 --output_path inter \
 --contrasts_to_interpolate \
-  space-CACP_desc-symmetric_label-WM_mask_probseg \
-  space-CACP_desc-symmetric_label-GM_mask_probseg \
-  space-CACP_desc-symmetric_label-CSF_mask_probseg
+  desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w \
+  desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w 
 ```
---dry-run (in option)
+
 
 [<-- previous STEP](longitudinal_registration.md) [return menu](../pipeline4D.md)

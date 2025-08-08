@@ -59,59 +59,51 @@ def parse_metrics_arg(modalities, metrics):
 
     return metrics_dict
 
-def interpolate_contrast(template_name, ses_from, ses_to, template_path, output_path, contrasts, bids_root, args, keep_tmp=False):
+def interpolate_contrast(template_name, ses_from, ses_to, fixed, moving, template_path, output_path, contrasts, bids_root, args, keep_tmp=False):
 
-    out_prefix = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long" / f"{ses_from}_to_{ses_to}_so_"
+    out_prefix = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}"
 
-    #transfo_prefix = out_prefix / f"{ses_current}_flirt"
+    out_path = out_prefix / output_path
+    out_path.mkdir(parents=True, exist_ok=True)
+
+    warp_prefix = out_prefix / "long" / f"{ses_from}_to_{ses_to}_{args.reg_long_type}_0Warp.nii.gz"
+    invwarp_prefix = out_prefix / "long" / f"{ses_from}_to_{ses_to}_{args.reg_long_type}_0InverseWarp.nii.gz"
 
     for modality in contrasts:
         print(f"\nPropagating modality '{modality}' from session {ses_from} to {ses_to}")
 
-        # # Chemins
-        # base_dir = bids_root / "derivatives" / "template" / f"sub-{template_name}" / ses_current / template_path
-        # src_img = base_dir / f"sub-{template_name}_{ses_current}_{modality}.nii.gz"
-        #
-        # flipped_img = base_dir / f"sub-{template_name}_{ses_current}_desc-flipped_space-CACP_{modality}.nii.gz"
-        # warped_img = base_dir / f"sub-{template_name}_{ses_current}_desc-warped_space-CACP_{modality}.nii.gz"
-        # warped_flipped_img = base_dir / f"sub-{template_name}_{ses_current}_desc-flipped-warped_space-CACP_{modality}.nii.gz"
-        # sym_avg_img = base_dir / f"sub-{template_name}_{ses_current}_desc-sym_{modality}.nii.gz"
-        #
-        # # 1. Flip image
-        # run_command(["fslswapdim", str(src_img), "-x", "y", "z", str(flipped_img)], dry_run=args.dry_run)
-        # run_command(["CopyImageHeaderInformation", str(src_img), str(flipped_img), str(flipped_img), "1", "1", "1"], dry_run=args.dry_run)
-        #
-        # # 2. Apply transforms
-        # run_command([
-        #     "flirt", "-in", str(src_img), "-ref", str(src_img),
-        #     "-applyxfm", "-init", anat2sym_mat, "-out", str(warped_img)
-        # ], dry_run=args.dry_run)
-        #
-        # run_command([
-        #     "flirt", "-in", str(flipped_img), "-ref", str(src_img),
-        #     "-applyxfm", "-init", flip2sym_mat, "-out", str(warped_flipped_img)
-        # ], dry_run=args.dry_run)
-        #
-        # # 3. Average
-        # run_command([
-        #     "fslmaths", str(warped_img), "-add", str(warped_flipped_img), "-div", "2", str(sym_avg_img)
-        # ], dry_run=args.dry_run)
-        #
-        # print(f"  ➤ Source      : {relpath_from_cwd(src_img)}")
-        # print(f"  ➤ Flipped     : {relpath_from_cwd(flipped_img)}")
-        # print(f"  ➤ Warped      : {relpath_from_cwd(warped_img)}")
-        # print(f"  ➤ Warped flip : {relpath_from_cwd(warped_flipped_img)}")
-        # print(f"  ➤ Output sym  : {relpath_from_cwd(sym_avg_img)}")
-        #
-        # # 4. Clean up temporary files
-        # if not keep_tmp and not args.dry_run:
-        #     for tmp_file in [flipped_img, warped_img, warped_flipped_img]:
-        #         try:
-        #             tmp_file.unlink()
-        #             print(f"  ➤ Removed temporary file: {relpath_from_cwd(tmp_file)}")
-        #         except FileNotFoundError:
-        #             pass
-        #
+        ses_dir = bids_root / "derivatives" / "template" / f"sub-{args.template_name}"
+
+        contrast_from = ses_dir / f"{ses_from}" / args.template_path / f"sub-{args.template_name}_{ses_from}_{modality}.nii.gz"
+        contrast_to = ses_dir / f"{ses_to}" / args.template_path / f"sub-{args.template_name}_{ses_to}_{modality}.nii.gz"
+
+        warped = out_path / f"{ses_from}_to_{ses_to}_{args.reg_long_type}_{modality}.nii.gz"
+        inverse_warped = out_path / f"{ses_to}_to_{ses_from}_{args.reg_long_type}_{modality}.nii.gz"
+
+        cmd = [
+             "antsApplyTransforms", "-d", "3",
+             "-i", relpath_from_cwd(contrast_from),
+             "-r", relpath_from_cwd(fixed),
+             "-o", relpath_from_cwd(warped),
+             "-t", relpath_from_cwd(warp_prefix),
+             "--interpolation", "Linear",
+             "--verbose", "1"
+         ]
+
+        run_command(cmd, dry_run=args.dry_run)
+
+        cmd = [
+             "antsApplyTransforms", "-d", "3",
+             "-i", relpath_from_cwd(contrast_to),
+             "-r", relpath_from_cwd(moving),
+             "-o", relpath_from_cwd(inverse_warped),
+             "-t", relpath_from_cwd(invwarp_prefix),
+             "--interpolation", "Linear",
+             "--verbose", "1"
+         ]
+
+        run_command(cmd, dry_run=args.dry_run)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Register templates across sessions using SyN only deformations")
@@ -125,6 +117,7 @@ def main():
     parser.add_argument("--registration_metrics", nargs='+', required=True,
                         help="Metrics corresponding to registration_modalities, e.g. MI CC or MI[1,32] CC[1,4]")
     parser.add_argument("--template_path", default="final", help="Subfolder for template")
+    parser.add_argument("--reg_long_type", default="CACP_MM", help="name of registration type")
     parser.add_argument("--output_path", default="intermediate", help="Subfolder for template")
     parser.add_argument("--compute-reg", action="store_true",default=False, help="compute registration")
     parser.add_argument("--contrasts_to_interpolate", nargs='*', help="Contrasts to interpolate across timepoints")
@@ -174,8 +167,7 @@ def main():
         ses_to = args.sessions[i + 1]
 
         print(f"Registering {ses_from} → {ses_to}")
-        out_prefix = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long" / f"{ses_from}_to_{ses_to}_so_"
-        warped_prefix = f"{out_prefix}" + "desc-warped.nii.gz"
+        out_prefix = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long" / f"{ses_from}_to_{ses_to}_{args.reg_long_type}_so_"
         out_prefix.parent.mkdir(parents=True, exist_ok=True)
 
         fixed_images = {}
@@ -200,7 +192,7 @@ def main():
         cmd = [
             "antsRegistration", "--verbose", "1", "--dimensionality", "3", "--float", "0",
             "--collapse-output-transforms", "1",
-            "--output", f"[{relpath_from_cwd(out_prefix)},{relpath_from_cwd(warped_prefix)}]",
+            "--output", f"{relpath_from_cwd(out_prefix)}",
             "--interpolation", "Linear", "--use-histogram-matching", "0",
             "--winsorize-image-intensities", "[0.005,0.995]",
         ]
@@ -226,11 +218,12 @@ def main():
         else:
             print("\n=== skip registration ===")
 
-        print("\n=== Propagate symmetrization on other contrasts ===")
+        print("\n=== interpolate other contrasts ===")
         if args.contrasts_to_interpolate:
             interpolate_contrast(
                 args.template_name,
                 ses_from,ses_to,
+                fixed,moving,
                 args.template_path,
                 args.output_path,
                 args.contrasts_to_interpolate,
