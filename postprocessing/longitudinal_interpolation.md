@@ -27,10 +27,7 @@ python postprocessing/interpolate_long_template.py  \
 --suffix_modalities \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
---template_path final \ 
---output_path inter \
---contrasts_to_interpolate \
-space-CACP_desc-symmetric_label-WM_mask_probseg
+--template_path final
 --dry-run
 ```
 ```bash
@@ -44,10 +41,7 @@ python postprocessing/interpolate_long_template.py  \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
     desc-sym_space-CACP_desc-symmetric  \
---template_path final \ 
---output_path inter \
---contrasts_to_interpolate \
-space-CACP_desc-symmetric_label-WM_mask_probseg 
+--template_path final 
 ```
 
 ```bash
