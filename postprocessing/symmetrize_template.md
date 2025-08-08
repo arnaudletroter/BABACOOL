@@ -20,7 +20,7 @@
 # Symmetrize template using rigid registration ( --compute-reg )
 
 ```bash
-python postprocessing/sym_template.py --bids_root ../BaBa21_openneuro  --template_name BaBa21 \
+python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_name BaBa21 \
   --sessions ses-3 ses-2 ses-1 ses-0 \
   --template_modality T1w \
   --template_type space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped --template_path final \
@@ -30,7 +30,7 @@ python postprocessing/sym_template.py --bids_root ../BaBa21_openneuro  --templat
 # Just apply the previous transformation to other contrasts
 
 ```bash
-python postprocessing/sym_template.py --bids_root ../BaBa21_openneuro  --template_name BaBa21 \
+python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_name BaBa21 \
   --sessions ses-3 ses-2 ses-1 ses-0 \
   --template_modality T1w \
   --template_type space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped --template_path final \

@@ -20,6 +20,7 @@ def main():
     parser.add_argument('--subjects_csv', required=True, help="CSV file with columns 'subject' and 'session'")
     parser.add_argument('--output_derivatives', default=None, help="Output derivatives directory, default: bids_root/derivatives")
     parser.add_argument('--padding', action='store_true', help="Generate padded Haiko template with ImageMath ANTS")
+    parser.add_argument('--resolution', type=float, default=0.6, help="pixel resolution in mm (default: 0.6)")
     parser.add_argument('--pad_size', type=int, default=50, help="Padding size in pixels (default: 50)")
     parser.add_argument('--generate_brainmask', action='store_true', help="Generate brainmask TPM from Haiko TPMs")
     parser.add_argument('--flipping_LR', action='store_true', default=False, help="Flip warped T1w/T2w images Left-Right (default: False)")
@@ -32,6 +33,7 @@ def main():
     threads = args.threads
     bids_root = args.bids_root
     pad_size = args.pad_size
+    resolution = args.resolution
 
     derivatives_dir = args.output_derivatives or os.path.join(bids_root, "derivatives")
     haiko_sub_dir = os.path.join(derivatives_dir, "atlas", "sub-Haiko89", "ses-Adult", "anat")
@@ -68,6 +70,16 @@ def main():
     else:
         if not os.path.exists(haiko_template_pad):
             raise FileNotFoundError(f"Padded template not found: {haiko_template_pad}. Use --padding to create it.")
+
+    if args.resolution:
+        print(f"Resampling padded Haiko template to {resolution}mm iso resolution...")
+        run_command([
+            "mri_convert", "-i",
+            haiko_template_pad,
+            "-o",
+            haiko_template_pad,
+            "-vs", str(resolution), str(resolution), str(resolution)
+        ], dry_run)
 
     if args.generate_brainmask:
         print("Generating Haiko brainmask TPM by combining CSF, GM, WM and thresholding...")

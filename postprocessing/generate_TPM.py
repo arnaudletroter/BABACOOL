@@ -23,7 +23,7 @@ def main():
     parser.add_argument('--output_derivatives', default=None, help="Output derivatives directory, default: bids_root/derivatives")
     parser.add_argument('--input_folder', default="", help="folder where input are founded (default: bids_root)")
     parser.add_argument('--output_folder', default="warped", help="folder under derivatives where masks are saved (default: warped)")
-    parser.add_argument('--modalities', nargs='+', required=True,help="List of modalities/masks to warp (e.g. label-WM_mask label-GM_mask label-CSF_mask desc-brain_mask)")
+    parser.add_argument('--modalities', nargs='+', required=True,help="List of modalities/masks to warp (e.g. label-WM_mask label-GM_mask label-CSF_mask brain_mask)")
     parser.add_argument('--map_type', required=True, help="type of map, bids compatible (e.g. probseg for TPM or mean for contrasts)")
     parser.add_argument('--dry-run', action="store_true", help="Print commands without executing them")
 
