@@ -40,26 +40,26 @@ python postprocessing/interpolate_long_template.py  \
 --reg_long_type desc-MM \
 --registration_metrics MI MI CC[1,4] \
 --suffix_modalities \
-    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
-    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
-    desc-sym_space-CACP_desc-symmetric  \
+ space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
+ space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
+ desc-sym_space-CACP_desc-symmetric  \
 --template_path final 
 ```
 
 ```bash
 python postprocessing/interpolate_long_template.py  \
 --bids_root BaBa21_openneuro   --template_name BaBa21 \
---sessions ses-3 ses-2 ses-1 ses-0\
+--sessions ses-3 ses-2 ses-1 ses-0 \
 --registration_modalities T1w \
 --registration_metrics CC \
 --reg_long_type desc-MM \
 --suffix_modalities \
-    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
---template_path final \ 
+ space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
+--template_path final \
 --contrasts_to_interpolate \
-  desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w \
-  desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w \
-  desc-sym_space-CACP_desc-symmetric_label-WM_mask_probseg
+ desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w \
+ desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w \
+ desc-sym_space-CACP_desc-symmetric_label-WM_mask_probseg
 ```
 
 
