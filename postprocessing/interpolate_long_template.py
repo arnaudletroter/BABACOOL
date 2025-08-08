@@ -66,8 +66,8 @@ def interpolate_contrast(template_name, ses_from, ses_to, fixed, moving, templat
     out_path = out_prefix / output_path
     out_path.mkdir(parents=True, exist_ok=True)
 
-    warp_prefix = out_prefix / "long" / f"{ses_from}_to_{ses_to}_{args.reg_long_type}_0Warp.nii.gz"
-    invwarp_prefix = out_prefix / "long" / f"{ses_from}_to_{ses_to}_{args.reg_long_type}_0InverseWarp.nii.gz"
+    warp_prefix = out_prefix / "long" / f"{ses_from}_to_{ses_to}_{args.reg_long_type}_so_0Warp.nii.gz"
+    invwarp_prefix = out_prefix / "long" / f"{ses_from}_to_{ses_to}_{args.reg_long_type}_so_0InverseWarp.nii.gz"
 
     for modality in contrasts:
         print(f"\nPropagating modality '{modality}' from session {ses_from} to {ses_to}")
