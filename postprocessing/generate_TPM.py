@@ -19,6 +19,7 @@ def main():
     parser.add_argument('--subjects_csv', required=True, help="CSV file with columns 'subject' and 'session'")
     parser.add_argument('--template_name', required=True, help="Template name (e.g. BaBa21)")
     parser.add_argument('--template_session', required=True, help="Template session (e.g. ses-0)")
+    parser.add_argument("--reference_suffix", default="desc-symmetric-sharpen_T1w",required=True, help="reference suffix volume For warping input images")
     parser.add_argument('--patterns', required=True, nargs='+', help="List of patterns to try for transform filenames (e.g. warped flipped)")
     parser.add_argument('--output_derivatives', default=None, help="Output derivatives directory, default: bids_root/derivatives")
     parser.add_argument('--input_folder', default="", help="folder where input are founded (default: bids_root)")
@@ -51,7 +52,7 @@ def main():
         f"sub-{args.template_name}",
         f"{args.template_session}",
         "final",
-        f"sub-{args.template_name}_{args.template_session}_desc-symmetric-sharpen_T1w.nii.gz"
+        f"sub-{args.template_name}_{args.template_session}_{args.reference_suffix}.nii.gz"
     )
     if not os.path.exists(template_image):
         print(f"ERROR: Template image not found: {template_image}")
