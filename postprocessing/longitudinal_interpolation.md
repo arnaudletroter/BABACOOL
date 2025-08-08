@@ -28,7 +28,7 @@ python postprocessing/interpolate_long_template.py  \
 --suffix_modalities \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
---template_path final
+--template_path final \
 --dry-run
 ```
 ```bash
@@ -50,17 +50,15 @@ python postprocessing/interpolate_long_template.py  \
 python postprocessing/interpolate_long_template.py  \
 --bids_root BaBa21_openneuro   --template_name BaBa21 \
 --sessions ses-3 ses-2 ses-1 ses-0\
---registration_modalities T2w T1w label-WM_mask_probseg \
---registration_metrics CC CC \
+--registration_modalities T1w \
 --reg_long_type desc-MM \
 --suffix_modalities \
     space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
-    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
 --template_path final \ 
---output_path inter \
 --contrasts_to_interpolate \
   desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w \
-  desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w 
+  desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w \
+  desc-sym_space-CACP_desc-symmetric_label-WM_mask_probseg
 ```
 
 
