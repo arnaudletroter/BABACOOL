@@ -13,12 +13,19 @@ def update_subjects_list(csv_path):
     df = pd.read_csv(csv_path)
     return list(df[['subject', 'session']].itertuples(index=False, name=None))
 
+def build_desc_str(descriptions):
+    if descriptions:
+        return "_".join(descriptions)
+    return None
+
 def main():
     parser = argparse.ArgumentParser(description="Register BIDS subjects T1w/T2w to Haiko89 template using ANTs")
     parser.add_argument('--bids_root', required=True, help="Root directory of BIDS dataset")
     parser.add_argument('--sym', action='store_true', help='Use symmetric Haiko89 template (default: asymmetric)')
     parser.add_argument('--subjects_csv', required=True, help="CSV file with columns 'subject' and 'session'")
-    parser.add_argument('--output_derivatives', default=None, help="Output derivatives directory, default: bids_root/derivatives")
+    parser.add_argument('--input_folder', default="",help="Folder where input images are located (default: bids_root)")
+    parser.add_argument('--output_derivatives', default="warped", help="Output derivatives directory, default: bids_root/derivatives/warped")
+    parser.add_argument('--bids_description', nargs='+', help="Optional list of BIDS descriptions to include for reading input filenames (e.g. denoised)")
     parser.add_argument('--padding', action='store_true', help="Generate padded Haiko template with ImageMath ANTS")
     parser.add_argument('--resolution', type=float, default=0.6, help="pixel resolution in mm (default: 0.6)")
     parser.add_argument('--pad_size', type=int, default=50, help="Padding size in pixels (default: 50)")
@@ -34,9 +41,12 @@ def main():
     bids_root = args.bids_root
     pad_size = args.pad_size
     resolution = args.resolution
+    desc_str = build_desc_str(args.bids_description)
 
-    derivatives_dir = args.output_derivatives or os.path.join(bids_root, "derivatives")
+    derivatives_dir =  os.path.join(bids_root, "derivatives")
     haiko_sub_dir = os.path.join(derivatives_dir, "atlas", "sub-Haiko89", "ses-Adult", "anat")
+
+    input_dir = os.path.join(bids_root, args.input_folder)
 
     if args.sym:
         prefix = "sub-Haiko89_ses-Adult_desc-symmetric"
@@ -103,16 +113,20 @@ def main():
     for sub, ses in subjects:
         print(f"Processing {sub} {ses}")
 
-        anat_dir = os.path.join(derivatives_dir, "denoised", f"{sub}", f"{ses}", "anat")
-        t1w_denoised = os.path.join(anat_dir, f"{sub}_{ses}_desc-denoised_T1w.nii.gz")
-        t2w_denoised = os.path.join(anat_dir, f"{sub}_{ses}_desc-denoised_T2w.nii.gz")
+        #input_dir
 
-        if not os.path.exists(t1w_denoised) or not os.path.exists(t2w_denoised):
+        anat_dir = os.path.join(input_dir, f"{sub}", f"{ses}", "anat")
+        suffix = f"_desc-{desc_str}" if desc_str else ""
+
+        t1w_in = os.path.join(anat_dir, f"{sub}_{ses}{suffix}_T1w.nii.gz")
+        t2w_in = os.path.join(anat_dir, f"{sub}_{ses}{suffix}_T2w.nii.gz")
+
+        if not os.path.exists(t1w_in) or not os.path.exists(t2w_in):
             print(f"Warning: Missing denoised T1w or T2w for {sub} {ses}, skipping.")
             continue
 
         # SUBJECT BRAINMASK (must exist)
-        subject_brainmask = os.path.join(bids_root, "derivatives", "segmentation",
+        subject_brainmask = os.path.join(derivatives_dir, "segmentation",
             sub, ses, "anat", f"{sub}_{ses}_space-orig_desc-brain_mask.nii.gz"
         )
 
@@ -123,7 +137,8 @@ def main():
         transforms_dir = os.path.join(derivatives_dir, "transforms", f"{sub}", f"{ses}")
         os.makedirs(transforms_dir, exist_ok=True)
 
-        output_dir = os.path.join(derivatives_dir, "warped", f"{sub}", f"{ses}")
+        output_dir = os.path.join(derivatives_dir, args.output_derivatives, f"{sub}", f"{ses}")
+        #output_dir = os.path.join(derivatives_dir, "warped", f"{sub}", f"{ses}")
         os.makedirs(output_dir, exist_ok=True)
 
         transfo_prefix = os.path.join(transforms_dir, f"{sub}_{ses}_from-native_to-Haiko89_rigid")
@@ -131,14 +146,14 @@ def main():
         output_t1w = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_T1w.nii.gz")
         output_t2w = os.path.join(output_dir, f"{sub}_{ses}_space-Haiko89_desc-warped_T2w.nii.gz")
 
-        t1w_denoised_masked = os.path.join(anat_dir, f"{sub}_{ses}_desc-masked_T1w.nii.gz")
+        t1w_in_masked = os.path.join(anat_dir, f"{sub}_{ses}_desc-masked_T1w.nii.gz")
 
         if args.generate_brainmask:
             print("Generating Haiko brainmask TPM by combining CSF, GM, WM and thresholding...")
             run_command([
-                "fslmaths", t1w_denoised,
+                "fslmaths", t1w_in,
                 "-mul", subject_brainmask,
-                t1w_denoised_masked
+                t1w_in_masked
             ], dry_run)
 
 
@@ -146,7 +161,7 @@ def main():
             "antsRegistration",
             "--verbose", "1",
             "--dimensionality", "3",
-            "--initial-moving-transform" ,f"[{haiko_template_pad},{t1w_denoised_masked},1]",
+            "--initial-moving-transform" ,f"[{haiko_template_pad},{t1w_in_masked},1]",
             "--float", "0",
             "--collapse-output-transforms", "1",
             "--output", f"[{transfo_prefix}]",
@@ -154,7 +169,7 @@ def main():
             "--use-histogram-matching", "0",
             "--winsorize-image-intensities", "[0.005,0.995]",
             "--transform", "Rigid[0.1]",
-            "--metric", f"MI[{haiko_template_pad},{t1w_denoised_masked},1,32,Regular,0.25 ]",
+            "--metric", f"MI[{haiko_template_pad},{t1w_in_masked},1,32,Regular,0.25 ]",
             "--convergence", "[1000x500x250x0,1e-6,10]",
             "--shrink-factors", "8x4x2x1",
             "--smoothing-sigmas", "3x2x1x0vox"
@@ -167,7 +182,7 @@ def main():
         antsapply_cmd = [
             "antsApplyTransforms",
             "-d", "3",
-            "-i", t1w_denoised,
+            "-i", t1w_in,
             "-r", haiko_template_pad,
             "-o", output_t1w,
             "-t", f"{transfo_prefix}0GenericAffine.mat",
@@ -179,7 +194,7 @@ def main():
         antsapply_cmd = [
             "antsApplyTransforms",
             "-d", "3",
-            "-i", t2w_denoised,
+            "-i", t2w_in,
             "-r", haiko_template_pad,
             "-o", output_t2w,
             "-t", f"{transfo_prefix}0GenericAffine.mat",

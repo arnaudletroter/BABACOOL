@@ -138,7 +138,7 @@ def main():
     print(f"\nWriting CSV log to {output_csv_path}")
     with open(output_csv_path, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["T1w_denoised", "T2w_denoised"])
+        writer.writerow(["t1w_in", "t2w_in"])
         for line in csv_lines:
             writer.writerow(line)
 

@@ -86,22 +86,24 @@ Rigid registration of subject T1w/T2w images to the Haiko89 space
 
 This script performs rigid registration of individual BIDS dataset subjects’ denoised T1w and T2w anatomical images to the Haiko89 brain template converted to BIDS format.
 
-| Option                | Description                                                                                      |
-| --------------------  |--------------------------------------------------------------------------------------------------|
-| `--bids_root`         | Path to the root of the BIDS dataset (required).                                                 |
-| `--subjects_csv`      | CSV file containing columns `sub` and `ses` listing subjects and sessions to process (required). |
-| `--output_derivatives`| Optional path to derivatives directory. Defaults to `{bids_root}/derivatives`.                   |
-| `--sym`               | Use symmetric Haiko89 template (default: asymmetric)`.                                           |
-| `--padding`           | Flag to generate a padded version of the Haiko89 template image                                  |
-| `--resolution`        | pixel resolution in mm (default: 0.6)                                                            |
-| `--pad_size`          | Padding size in pixel (default: 50)                                                              |
-| `--generate_brainmask`| Flag to generate a brainmask TPM by thresholding the sum of CSF, GM, and WM tissue maps.         |
-| `--flipping_LR`       | Flip warped T1w/T2w images Left-Right (default: False)                                           |
-| `--session_filter`    | Optional list of sessions (e.g. `ses-1 ses-2`) to limit processing to these sessions only.       |
-| `--dry-run`           | Print commands without executing them.                                                           |
-| `--threads`           | Number of threads for ITK/ANTs (default: 12)                                                     |
+| Option                 | Description                                                                                       |
+|------------------------|---------------------------------------------------------------------------------------------------|
+| `--bids_root`          | Path to the root of the BIDS dataset (required).                                                  |
+| `--subjects_csv`       | CSV file containing columns `sub` and `ses` listing subjects and sessions to process (required).  |
+| `--input_folder`       | Optional Folder where input images are located (default: bids_root)"                              |
+| `--output_derivatives` | Optional path to derivatives output directory. default: warped for bids_root/derivatives/warped"  |
+| `--bids_description`   | Optional list of BIDS descriptions to include for reading input filenames (e.g. denoised)         |
+| `--sym`                | Use symmetric Haiko89 template (default: asymmetric)`.                                            |
+| `--padding`            | Flag to generate a padded version of the Haiko89 template image                                   |
+| `--resolution`         | pixel resolution in mm (default: 0.6)                                                             |
+| `--pad_size`           | Padding size in pixel (default: 50)                                                               |
+| `--generate_brainmask` | Flag to generate a brainmask TPM by thresholding the sum of CSF, GM, and WM tissue maps.          |
+| `--flipping_LR`        | Flip warped T1w/T2w images Left-Right (default: False)                                            |
+| `--session_filter`     | Optional list of sessions (e.g. `ses-1 ses-2`) to limit processing to these sessions only.        |
+| `--dry-run`            | Print commands without executing them.                                                            |
+| `--threads`            | Number of threads for ITK/ANTs (default: 12)                                                      |
 
-_for timepoint 3_ (Generate a Haiko89 brainmask and padded template only once)
+_for timepoint 3_ (Generate a Haiko89 brainmask and target padded template only once and register subjects @0.6mm iso from input_folder to output_derivatives folder)
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
   --subjects_csv list_of_subjects/subjects_ses-3.csv \
@@ -109,10 +111,30 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --sym \
   --threads 8 \
   --padding \
-  --pad_size 5 \
+  --pad_size 15 \
   --generate_brainmask \
-  --flipping_LR
+  --flipping_LR \
+  --input_folder derivatives/denoised \
+  --bids_description denoised \
+  --output_derivatives warped_den
 ```
+
+_for timepoint 3_ (register subjects @0.4mm iso from input_folder bids_root/sub/ses/anat to output_derivatives folder)
+```bash
+python preprocessing/realign_subjects_2_Haiko89.py \
+  --subjects_csv list_of_subjects/subjects_ses-3.csv \
+  --bids_root BaBa21_openneuro \
+  --sym \
+  --threads 8 \
+  --padding \
+  --pad_size 15 \
+  --generate_brainmask \
+  --flipping_LR \
+  --resolution 0.4 \
+  --output_derivatives warped_HR
+```
+
+
 _for timepoint 2_
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
