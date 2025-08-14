@@ -68,7 +68,7 @@ This python wrapper runs a 2-stage multivariate template construction pipeline c
 | `--q2`              | Steps for Stage 2 `-q` option (default: 50x30x15)             |
 | `--w2`              | Weights for Stage 2 modalities (default: 1x1x1)               |
 
-
+_for timepoint 0_
 ```bash
 python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
@@ -78,6 +78,7 @@ python postprocessing/MM_template_construction.py \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 0.5x0.5x1 --ite2 4 --q2 50x30x15 --w2 1x1x1
 ```
 
+_for timepoint 1_
 ```bash
 python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
@@ -87,6 +88,7 @@ python postprocessing/MM_template_construction.py \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
 ```
 
+_for timepoint 2_
 ```bash
 python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
@@ -96,6 +98,7 @@ python postprocessing/MM_template_construction.py \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
 ```
 
+_for timepoint 3_
 ```bash
 python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
@@ -105,7 +108,7 @@ python postprocessing/MM_template_construction.py \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
 ```
 
-Example output structure
+Example output structure for two successive timepoints
 ```bash
 derivatives/
 └── template/
@@ -113,10 +116,16 @@ derivatives/
         └── ses-0/
             ├── tmp_LR/
             ├── tmp_HR/
-            ├── final/
-            ├── sub-BaBa21_ses-0_desc-sharpen_T1w.nii.gz
-            ├── sub-BaBa21_ses-0_desc-sharpen_T2w.nii.gz
-            └── sub-BaBa21_ses-0_desc-sharpen_label-WM_probseg.nii.gz
+            └── final/
+                ├── sub-BaBa21_ses-0_desc-sharpen_T1w.nii.gz
+                ├── sub-BaBa21_ses-0_desc-sharpen_T2w.nii.gz
+                └── sub-BaBa21_ses-0_desc-sharpen_label-WM_probseg.nii.gz
+        └── ses-1/
+            ├── tmp_LR/
+            ├── tmp_HR/
+            └── final/
+                ├── sub-BaBa21_ses-1_desc-sharpen_T1w.nii.gz
+                └── sub-BaBa21_ses-1_desc-sharpen_T2w.nii.gz
 ```
 
 [<-- previous STEP](../preprocessing/denoise_realign.md) [return menu](../pipeline3D.md) [--> next STEP](generate_TPM.md)
