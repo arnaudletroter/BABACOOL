@@ -36,7 +36,7 @@ This resource is made available to provide a normalization target for baboon dat
 </table>
 
 ## If you use it, please cite the paper:
-Katherine L. Bryant, Arnaud Le Troter, David Meunier, Yannick Becker, Scott A. Love, Siham Bouziane, Kep Kee Loh1, Julien Sein, Luc Renaud, Olivier Coulon, Adrien Meguerditchian, 
+Katherine L. Bryant, Arnaud Le Troter, David Meunier, Yannick Becker, Scott A. Love, Siham Bouziane, Kep Kee Loh, Julien Sein, Luc Renaud, Olivier Coulon, Adrien Meguerditchian, 
 under revision in Imaging Neuroscience. Longitudinal MRI template of the baboon brain from birth to adolescence
 
 Arnaud Le Troter, David Meunier, Katherine Bryant, Julien Sein, Siham Bouziane, Adrien Meguerditchian,

@@ -1,9 +1,9 @@
-## STEP3: Longitudinal registration (2 stages)
+## STEP3: Longitudinal registration (3 stages)
 
-**stage1: Semi-automatic AC-PC Alignment Across Timepoints (OPTIONAL)** 
-  - manual segmentation of 3-axis binary mask in ses-3 space (called **sub-BaBa21_ses-3_desc-symmetric_label-3axis_mask.nii.gz** )
-  - first step: rigid + affine registration (ants) and descending 3-axis mask propagation ses-3 -> ses-2 -> ses-1 -> ses-0
-  - second step: rigid only registration (flirt) and ascending propagation ses-0 -> ses-1 -> ses-2 -> ses-3
+**Semi-automatic AC-PC Alignment Across Timepoints (OPTIONAL)** 
+  - stage 1: manual segmentation of 3-axis binary mask in ses-3 space (called **sub-BaBa21_ses-3_desc-symmetric_label-3axis_mask.nii.gz** )
+  - stage 2: rigid + affine registration (ants) and descending 3-axis mask propagation ses-3 -> ses-2 -> ses-1 -> ses-0
+  - stage 3: rigid only registration (flirt) and ascending propagation ses-0 -> ses-1 -> ses-2 -> ses-3
 
 <table>
 <tr>
@@ -19,19 +19,21 @@
 ### register_long_templates.py description
 
 ### Command-Line Arguments
-| Option                         | Description                                                                             |
-|--------------------------------|-----------------------------------------------------------------------------------------|
-| `--bids_root`                  | Root BIDS directory (required).                                                         |
-| `--template_name`              | Template subject name (required).                                                       |
-| `--sessions`                   | List of sessions (ordered) (required). Example: `ses-3 ses-2`.                          |
-| `--template_type`              | Template type. Default: `desc-symmetric-sharpen`. (required)                            |
-| `--template_modalities`        | Modalities to use for registration (required). Example: `T1w T2w`.                      |
-| `--template_path`              | Subfolder for template. Default: `final`.                                               |
-| `--brain_mask_suffix`          | Brain mask suffix.                                                                      |
-| `--segmentation_mask_suffix`   | Segmentation mask suffix for automatic propagation                                      |
-| `--contrasts_to_warp`          | Contrasts to warp in CA-CP space. Optional list. Example: `T1w T2w`.                    |
-| `--dry-run`                    | Don't actually run commands; perform a dry run. Use this flag to simulate the workflow. |
+| Option                        | Description                                                                             |
+|-------------------------------|-----------------------------------------------------------------------------------------|
+| `--bids_root`                 | Root BIDS directory (required).                                                         |
+| `--template_name`             | Template subject name (required).                                                       |
+| `--sessions`                  | List of sessions (ordered) (required). Example: `ses-3 ses-2`.                          |
+| `--template_type`             | Template type. Default: `desc-symmetric-sharpen`. (required)                            |
+| `--template_modalities`       | Modalities to use for registration (required). Example: `T1w T2w`.                      |
+| `--template_path`             | Subfolder for template. Default: `final`.                                               |
+| `--brain_mask_suffix`         | Brain mask suffix.                                                                      |
+| `--segmentation_mask_suffix`  | Segmentation mask suffix for automatic propagation                                      |
+| `--compute-reg`               | Flag to actually compute registration (if not set, registration commands are skipped).  |
+| `--contrasts_to_warp`         | Contrasts to warp in CA-CP space. Optional list. Example: `T1w T2w`.                    |
+| `--dry-run`                   | Don't actually run commands; perform a dry run. Use this flag to simulate the workflow. |
 
+AC-PC Alignment Across Timepoints template using 3 stages registration ( --compute-reg )
 
 ```bash
 python postprocessing/register_long_templates.py  \
@@ -41,6 +43,7 @@ python postprocessing/register_long_templates.py  \
   --template_modalities T1w \
   --template_type desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped --template_path final \
   --brain_mask_suffix desc-symmetric_brain_mask_probseg \
+  --compute-reg \
   --contrasts_to_warp \
       desc-symmetric_label-WM_mask_probseg \
       desc-symmetric_label-GM_mask_probseg \
@@ -108,9 +111,21 @@ longitudinal transformations structure
     └── ses-3_to_ses-2_flirt.mat
 ```
 
-**stage2: Multi-modal SyN only registration based on T1w and T2w contrasts (add TPM in option)**
+Just apply the previous transformation to other contrasts (here average T1w T2w padded), skip registration step
 
-TO-DO
+```bash
+python postprocessing/register_long_templates.py  \
+  --bids_root BaBa21_openneuro \
+  --template_name BaBa21 \
+  --sessions ses-3 ses-2\
+  --template_modalities T1w \
+  --template_type desc-symmetric-sharpen_desc-padded --template_path final \
+  --brain_mask_suffix desc-symmetric_brain_mask_probseg \
+  --contrasts_to_warp \
+      desc-symmetric_T1w_desc-padded_mean \
+      desc-symmetric_T2w_desc-padded_mean
+```
+
 
 
 [<-- previous STEP](hist_normalization.md) [return menu](../pipeline4D.md) [--> next STEP](symmetrize_template.md)

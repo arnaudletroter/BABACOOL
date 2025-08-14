@@ -62,5 +62,21 @@ python postprocessing/interpolate_long_template.py  \
  desc-sym_space-CACP_desc-symmetric_label-WM_mask_probseg
 ```
 
+```bash
+python postprocessing/interpolate_long_template.py  \
+--bids_root BaBa21_openneuro   --template_name BaBa21 \
+--sessions ses-3 ses-2 \
+--registration_modalities T2w T1w \
+--registration_metrics CC CC \
+--compute-reg \
+--reg_long_type desc-MM-padded \
+--suffix_modalities \
+    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
+    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
+--template_path final \
+--dry-run
+```
+
+
 
 [<-- previous STEP](longitudinal_registration.md) [return menu](../pipeline4D.md)

@@ -141,7 +141,7 @@ def main():
     for modality in args.modalities:
         
         print(f"[INFO] modality {modality}")
-        desc = f"desc-symmetric-sharpen_{modality}"
+        desc = f"desc-sharpen_{modality}"
 
         dst_name = f"sub-{args.subject}_{args.session}_{desc}.nii.gz"
         src = os.path.join(tmp_HR, "intermediateTemplates", f"SyN_iteration{args.ite2 - 1}_MYtemplate{i}.nii.gz")

@@ -3,6 +3,18 @@ import argparse
 import subprocess
 from pathlib import Path
 
+#sub- → ses- → task- → acq- → ce- → dir- → run- → mod- → echo- → flip- → inv- → mt- → part- → rec- → space- → split- → desc- → suffix (T1w).
+#sub-BaBa21_ses-3_desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
+# --> sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen-debiased-norm-cropped_T1w.nii.gz
+
+#sub-<label>_ses-<label>_task-<label>_acq-<label>_ce-<label>_dir-<label>_run-<index>_mod-<label>_echo-<index>_flip-<index>_inv-<index>_mt-<label>_part-<label>_rec-<label>_space-<label>_split-<index>_label-<label>_desc-<label>_<suffix>.nii.gz
+#sub-BaBa21_ses-3_space-CACP_desc-symmetric_label-WM_mask_probseg.nii.gz
+# --> sub-BaBa21_ses-3_space-CACP_label-WM_desc-symmetric_mask_probseg.nii.gz
+
+#sub-BaBa21_ses-3_desc-symmetric_T2w_desc-padded_mean.nii.gz
+# -> sub-BaBa21_ses-3_desc-symmetric-padded_T2w_mean.nii.gz
+
+
 def relpath_from_cwd(filepath):
     filepath_abs = os.path.abspath(filepath)
     cwd_abs = os.path.abspath(os.getcwd())
@@ -33,6 +45,7 @@ def main():
     parser.add_argument("--template_path", default="final", help="Subfolder for template")
     parser.add_argument("--brain_mask_suffix", help="Brain mask suffix")
     parser.add_argument("--segmentation_mask_suffix", help="Segmentation mask suffix")
+    parser.add_argument("--compute-reg", action="store_true", default=False, help="compute registration")
     parser.add_argument("--contrasts_to_warp", nargs='*', help="Contrasts to warp in CA-CP space (")
     parser.add_argument("--dry-run", action="store_true", help="Don't actually run commands")
 
@@ -75,209 +88,212 @@ def main():
     else:
         print("\nAll required files found!")
 
-    print("\n=== Registering sessions ===")
-    for i in range(len(args.sessions) - 1):
-        ses_from = args.sessions[i]
-        ses_to = args.sessions[i + 1]
+    if args.compute_reg:
+        print("\n=== compute registration ===")
 
-        print(f"Registering {ses_from} → {ses_to}")
-        out_prefix = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long" / f"{ses_from}_to_{ses_to}_"
-        warped_prefix = f"{out_prefix}"+"desc-warped.nii.gz"
-        out_prefix.parent.mkdir(parents=True, exist_ok=True)
+        for i in range(len(args.sessions) - 1):
+            ses_from = args.sessions[i]
+            ses_to = args.sessions[i + 1]
 
-        fixed_brainmask = brainmasks[ses_to]
-        moving_brainmask = brainmasks[ses_from]
+            print(f"Registering {ses_from} → {ses_to}")
+            out_prefix = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long" / f"{ses_from}_to_{ses_to}_"
+            warped_prefix = f"{out_prefix}"+"desc-warped.nii.gz"
+            out_prefix.parent.mkdir(parents=True, exist_ok=True)
 
-        # Retrieve fixed and moving images for each modality
-        fixed_images = {}
-        moving_images = {}
-        missing_modalities = False
+            fixed_brainmask = brainmasks[ses_to]
+            moving_brainmask = brainmasks[ses_from]
 
-        for modality in args.template_modalities:
-            fixed = templates[ses_to].get(modality)
-            moving = templates[ses_from].get(modality)
+            # Retrieve fixed and moving images for each modality
+            fixed_images = {}
+            moving_images = {}
+            missing_modalities = False
 
-            if not fixed or not moving:
-                print(f"Missing modality {modality} for registration {ses_from} → {ses_to}")
-                missing_modalities = True
+            for modality in args.template_modalities:
+                fixed = templates[ses_to].get(modality)
+                moving = templates[ses_from].get(modality)
 
-            fixed_images[modality] = fixed
-            moving_images[modality] = moving
+                if not fixed or not moving:
+                    print(f"Missing modality {modality} for registration {ses_from} → {ses_to}")
+                    missing_modalities = True
 
-        # Also check for brainmasks
-        if not fixed_brainmask or not moving_brainmask or missing_modalities:
-            print(f"Skipping registration {ses_from} → {ses_to} due to missing files")
-            continue
+                fixed_images[modality] = fixed
+                moving_images[modality] = moving
 
-        # Start building the ANTs command
-        cmd = [
-            "antsRegistration", "--verbose", "1", "--dimensionality", "3", "--float", "0",
-            "--collapse-output-transforms", "1",
-            "--output", f"[{relpath_from_cwd(out_prefix)},{relpath_from_cwd(warped_prefix)}]",
-            "--interpolation", "Linear", "--use-histogram-matching", "0",
-            "--winsorize-image-intensities", "[0.005,0.995]",
-        ]
+            # Also check for brainmasks
+            if not fixed_brainmask or not moving_brainmask or missing_modalities:
+                print(f"Skipping registration {ses_from} → {ses_to} due to missing files")
+                continue
 
-        # Use T1w as reference for initial transform if available
-        ref_modality = "T1w" if "T1w" in fixed_images else args.template_modalities[0]
-
-        cmd += [
-            "--initial-moving-transform",
-            f"[{relpath_from_cwd(fixed_images[ref_modality])},{relpath_from_cwd(moving_images[ref_modality])},1]"
-        ]
-
-        # Rigid stage
-        cmd += ["--transform", "Rigid[0.1]"]
-        for modality in args.template_modalities:
-            cmd += [
-                "--metric",
-                f"MI[{relpath_from_cwd(fixed_images[modality])},{relpath_from_cwd(moving_images[modality])},1,32,Regular,0.25]"
+            # Start building the ANTs command
+            cmd = [
+                "antsRegistration", "--verbose", "1", "--dimensionality", "3", "--float", "0",
+                "--collapse-output-transforms", "1",
+                "--output", f"[{relpath_from_cwd(out_prefix)},{relpath_from_cwd(warped_prefix)}]",
+                "--interpolation", "Linear", "--use-histogram-matching", "0",
+                "--winsorize-image-intensities", "[0.005,0.995]",
             ]
-        cmd += [
-            "--convergence", "[1000x500x250x100,1e-6,10]",
-            "--shrink-factors", "12x8x4x2",
-            "--smoothing-sigmas", "4x3x2x1vox",
-        ]
 
-        # Affine stage
-        cmd += ["--transform", "Affine[0.1]"]
-        for modality in args.template_modalities:
+            # Use T1w as reference for initial transform if available
+            ref_modality = "T1w" if "T1w" in fixed_images else args.template_modalities[0]
+
             cmd += [
-                "--metric",
-                f"MI[{relpath_from_cwd(fixed_images[modality])},{relpath_from_cwd(moving_images[modality])},1,32,Regular,0.25]"
+                "--initial-moving-transform",
+                f"[{relpath_from_cwd(fixed_images[ref_modality])},{relpath_from_cwd(moving_images[ref_modality])},1]"
             ]
-        cmd += [
-            "--convergence", "[1000x500x250x100,1e-6,10]",
-            "--shrink-factors", "12x8x4x2",
-            "--smoothing-sigmas", "4x3x2x1vox",
-        ]
 
-        # Run the command
-        run_command(cmd, dry_run=args.dry_run)
-
-    if args.segmentation_mask_suffix:
-        print("\n=== Propagating segmentation mask ===")
-
-        ref_ses = args.sessions[0]
-        seg_fname_ref = f"sub-{args.template_name}_{ref_ses}_{args.segmentation_mask_suffix}.nii.gz"
-        seg_path = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / ref_ses / args.template_path / seg_fname_ref
-
-        if not seg_path.exists():
-            print(f"Segmentation mask not found: {relpath_from_cwd(seg_path)}")
-        else:
-            cumulative_transforms = []
-            current_source = ref_ses
-
-            for ses_to in args.sessions[1:]:
-                # Transform files location (in sub-BaBa21/long/)
-                transform_prefix = (
-                        bids_root
-                        / "derivatives"
-                        / "transforms"
-                        / f"sub-{args.template_name}"
-                        / "long"
-                        / f"{current_source}_to_{ses_to}_"
-                )
-
-                affine = transform_prefix.with_name(transform_prefix.name + "0GenericAffine.mat")
-                warp = transform_prefix.with_name(transform_prefix.name + "1Warp.nii.gz")
-
-                #if not (affine.exists() and warp.exists()):
-                if not (affine.exists()):
-                    print(f"❌ Missing transforms for {current_source} → {ses_to}")
-                    break
-
-                #cumulative_transforms = [relpath_from_cwd(warp), relpath_from_cwd(affine)] + cumulative_transforms
-                cumulative_transforms = [relpath_from_cwd(affine)] + cumulative_transforms
-
-                # Output path → template/sub-XXX/ses-Y/paper/sub-XXX_ses-Y_....nii.gz
-                seg_fname_out = f"sub-{args.template_name}_{ses_to}_{args.segmentation_mask_suffix}.nii.gz"
-                out_seg = (
-                        bids_root
-                        / "derivatives"
-                        / "template"
-                        / f"sub-{args.template_name}"
-                        / ses_to
-                        / args.template_path
-                        / seg_fname_out
-                )
-                ref_T1w = templates[ses_to].get("T1w")
-
-                if not ref_T1w:
-                    print(f"No T2w for session {ses_to}, skipping.")
-                    continue
-
-                out_seg.parent.mkdir(parents=True, exist_ok=True)
-
-                cmd = [
-                    "antsApplyTransforms", "-d", "3",
-                    "-i", relpath_from_cwd(seg_path),
-                    "-r", relpath_from_cwd(ref_T1w),
-                    "-o", relpath_from_cwd(out_seg),
-                    "--interpolation", "NearestNeighbor",
-                    "--verbose", "1"
+            # Rigid stage
+            cmd += ["--transform", "Rigid[0.1]"]
+            for modality in args.template_modalities:
+                cmd += [
+                    "--metric",
+                    f"MI[{relpath_from_cwd(fixed_images[modality])},{relpath_from_cwd(moving_images[modality])},1,32,Regular,0.25]"
                 ]
+            cmd += [
+                "--convergence", "[1000x500x250x100,1e-6,10]",
+                "--shrink-factors", "12x8x4x2",
+                "--smoothing-sigmas", "4x3x2x1vox",
+            ]
 
-                for transform in cumulative_transforms:
-                    cmd += ["-t", transform]
+            # Affine stage
+            cmd += ["--transform", "Affine[0.1]"]
+            for modality in args.template_modalities:
+                cmd += [
+                    "--metric",
+                    f"MI[{relpath_from_cwd(fixed_images[modality])},{relpath_from_cwd(moving_images[modality])},1,32,Regular,0.25]"
+                ]
+            cmd += [
+                "--convergence", "[1000x500x250x100,1e-6,10]",
+                "--shrink-factors", "12x8x4x2",
+                "--smoothing-sigmas", "4x3x2x1vox",
+            ]
 
-                run_command(cmd, dry_run=args.dry_run)
+            # Run the command
+            run_command(cmd, dry_run=args.dry_run)
 
-                # Next step: propagate from this target
-                current_source = ses_to
+        if args.segmentation_mask_suffix:
+            print("\n=== Propagating segmentation mask ===")
 
-    print("\n=== Stage 2: FLIRT rigid registration and ANTs transform ===")
-    for i in range(len(args.sessions) - 1):
-        ses_from = args.sessions[i]
-        ses_to = args.sessions[i + 1]
+            ref_ses = args.sessions[0]
+            seg_fname_ref = f"sub-{args.template_name}_{ref_ses}_{args.segmentation_mask_suffix}.nii.gz"
+            seg_path = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / ref_ses / args.template_path / seg_fname_ref
 
-        print(f"FLIRT registration {ses_from} → {ses_to}")
+            if not seg_path.exists():
+                print(f"Segmentation mask not found: {relpath_from_cwd(seg_path)}")
+            else:
+                cumulative_transforms = []
+                current_source = ref_ses
 
-        from_mask = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / ses_from / args.template_path / f"sub-{args.template_name}_{ses_from}_{args.segmentation_mask_suffix}.nii.gz"
-        to_mask = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / ses_to / args.template_path / f"sub-{args.template_name}_{ses_to}_{args.segmentation_mask_suffix}.nii.gz"
+                for ses_to in args.sessions[1:]:
+                    # Transform files location (in sub-BaBa21/long/)
+                    transform_prefix = (
+                            bids_root
+                            / "derivatives"
+                            / "transforms"
+                            / f"sub-{args.template_name}"
+                            / "long"
+                            / f"{current_source}_to_{ses_to}_"
+                    )
 
-        flirt_mat = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long" / f"{ses_from}_to_{ses_to}_flirt.mat"
-        flirt_mat.parent.mkdir(parents=True, exist_ok=True)
+                    affine = transform_prefix.with_name(transform_prefix.name + "0GenericAffine.mat")
+                    warp = transform_prefix.with_name(transform_prefix.name + "1Warp.nii.gz")
 
-        flirt_out = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long" / f"{ses_from}_to_{ses_to}_flirt_warped.nii.gz"
-        flirt_out.parent.mkdir(parents=True, exist_ok=True)
+                    #if not (affine.exists() and warp.exists()):
+                    if not (affine.exists()):
+                        print(f"❌ Missing transforms for {current_source} → {ses_to}")
+                        break
 
-        # 1. FLIRT
-        cmd_flirt = [
-            "flirt", "-in", relpath_from_cwd(from_mask), "-ref",  relpath_from_cwd(to_mask),
-            "-o", relpath_from_cwd(flirt_out), "-omat", relpath_from_cwd(flirt_mat),
-            "-dof", "6",
-            "-searchrx", "-30", "30",
-            "-searchry", "0", "0",
-            "-searchrz", "0", "0",
-            "-v"
-        ]
-        run_command(cmd_flirt, dry_run=args.dry_run)
+                    #cumulative_transforms = [relpath_from_cwd(warp), relpath_from_cwd(affine)] + cumulative_transforms
+                    cumulative_transforms = [relpath_from_cwd(affine)] + cumulative_transforms
 
-        # 2. Convert FLIRT matrix to ITK format
-        ants_mat = flirt_mat.with_name(flirt_mat.stem.replace(".mat", "") + "_ants_rig.mat")
-        cmd_c3d = [
-            "c3d_affine_tool",
-            "-ref", relpath_from_cwd(to_mask),
-            "-src", relpath_from_cwd(from_mask),
-            relpath_from_cwd(flirt_mat),
-            "-fsl2ras",
-            "-oitk", relpath_from_cwd(ants_mat)
-        ]
-        run_command(cmd_c3d, dry_run=args.dry_run)
+                    # Output path → template/sub-XXX/ses-Y/paper/sub-XXX_ses-Y_....nii.gz
+                    seg_fname_out = f"sub-{args.template_name}_{ses_to}_{args.segmentation_mask_suffix}.nii.gz"
+                    out_seg = (
+                            bids_root
+                            / "derivatives"
+                            / "template"
+                            / f"sub-{args.template_name}"
+                            / ses_to
+                            / args.template_path
+                            / seg_fname_out
+                    )
+                    ref_T1w = templates[ses_to].get("T1w")
 
-        # 3. Apply transform using ANTs
-        ants_out = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / ses_from / args.template_path / f"sub-{args.template_name}_{ses_from}_space-CACP_desc-3axis-mask.nii.gz"
+                    if not ref_T1w:
+                        print(f"No T2w for session {ses_to}, skipping.")
+                        continue
 
-        cmd_apply = [
-            "antsApplyTransforms", "-d", "3",
-            "-i", relpath_from_cwd(from_mask),
-            "-o", relpath_from_cwd(ants_out),
-            "-r", relpath_from_cwd(to_mask),
-            "-t", relpath_from_cwd(ants_mat)
-        ]
-        run_command(cmd_apply, dry_run=args.dry_run)
+                    out_seg.parent.mkdir(parents=True, exist_ok=True)
 
+                    cmd = [
+                        "antsApplyTransforms", "-d", "3",
+                        "-i", relpath_from_cwd(seg_path),
+                        "-r", relpath_from_cwd(ref_T1w),
+                        "-o", relpath_from_cwd(out_seg),
+                        "--interpolation", "NearestNeighbor",
+                        "--verbose", "1"
+                    ]
+
+                    for transform in cumulative_transforms:
+                        cmd += ["-t", transform]
+
+                    run_command(cmd, dry_run=args.dry_run)
+
+                    # Next step: propagate from this target
+                    current_source = ses_to
+
+        print("\n=== Stage 2: FLIRT rigid registration and ANTs transform ===")
+        for i in range(len(args.sessions) - 1):
+            ses_from = args.sessions[i]
+            ses_to = args.sessions[i + 1]
+
+            print(f"FLIRT registration {ses_from} → {ses_to}")
+
+            from_mask = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / ses_from / args.template_path / f"sub-{args.template_name}_{ses_from}_{args.segmentation_mask_suffix}.nii.gz"
+            to_mask = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / ses_to / args.template_path / f"sub-{args.template_name}_{ses_to}_{args.segmentation_mask_suffix}.nii.gz"
+
+            flirt_mat = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long" / f"{ses_from}_to_{ses_to}_flirt.mat"
+            flirt_mat.parent.mkdir(parents=True, exist_ok=True)
+
+            flirt_out = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long" / f"{ses_from}_to_{ses_to}_flirt_warped.nii.gz"
+            flirt_out.parent.mkdir(parents=True, exist_ok=True)
+
+            # 1. FLIRT
+            cmd_flirt = [
+                "flirt", "-in", relpath_from_cwd(from_mask), "-ref",  relpath_from_cwd(to_mask),
+                "-o", relpath_from_cwd(flirt_out), "-omat", relpath_from_cwd(flirt_mat),
+                "-dof", "6",
+                "-searchrx", "-30", "30",
+                "-searchry", "0", "0",
+                "-searchrz", "0", "0",
+                "-v"
+            ]
+            run_command(cmd_flirt, dry_run=args.dry_run)
+
+            # 2. Convert FLIRT matrix to ITK format
+            ants_mat = flirt_mat.with_name(flirt_mat.stem.replace(".mat", "") + "_ants_rig.mat")
+            cmd_c3d = [
+                "c3d_affine_tool",
+                "-ref", relpath_from_cwd(to_mask),
+                "-src", relpath_from_cwd(from_mask),
+                relpath_from_cwd(flirt_mat),
+                "-fsl2ras",
+                "-oitk", relpath_from_cwd(ants_mat)
+            ]
+            run_command(cmd_c3d, dry_run=args.dry_run)
+
+            # 3. Apply transform using ANTs
+            ants_out = bids_root / "derivatives" / "template" / f"sub-{args.template_name}" / ses_from / args.template_path / f"sub-{args.template_name}_{ses_from}_space-CACP_desc-3axis-mask.nii.gz"
+
+            cmd_apply = [
+                "antsApplyTransforms", "-d", "3",
+                "-i", relpath_from_cwd(from_mask),
+                "-o", relpath_from_cwd(ants_out),
+                "-r", relpath_from_cwd(to_mask),
+                "-t", relpath_from_cwd(ants_mat)
+            ]
+            run_command(cmd_apply, dry_run=args.dry_run)
+    else:
+        print("\n=== skip registration ===")
 
     print("\n=== Stage 3: Propagate modalities into reference session using inverse transforms ===")
     reference_ses = args.sessions[0]

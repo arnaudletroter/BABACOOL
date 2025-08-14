@@ -78,7 +78,7 @@ def main():
             haiko_template_pad,
             "-o",
             haiko_template_pad,
-            "-vs", str(resolution), str(resolution), str(resolution)
+            "-vs", f"{resolution}", f"{resolution}",f"{resolution}"
         ], dry_run)
 
     if args.generate_brainmask:

@@ -43,13 +43,13 @@ ses-2	    764
 
 ### BaBA21 Usage
 
-_for timepoint 0_ (N=17 subjects)
+_for timepoint 0_ (N=20 subjects)
 ```bash
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-0.csv \
 --age-min 0 --age-max 100  -f ses-0 \
---exclude-subjects sub-Oz sub-Omelette 
+--exclude-subjects sub-Oz 
 ```
-_for timepoint 1_ (N=18 subjects)
+_for timepoint 1_ (N=20 subjects)
 ```bash
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-1.csv \
 --age-min 200 --age-max 400  -f ses-1 \

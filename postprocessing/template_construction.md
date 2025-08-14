@@ -114,9 +114,9 @@ derivatives/
             ├── tmp_LR/
             ├── tmp_HR/
             ├── final/
-            ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_T1w.nii.gz
-            ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_T2w.nii.gz
-            └── sub-BaBa21_ses-0_desc-symmetric-sharpen_label-WM_probseg.nii.gz
+            ├── sub-BaBa21_ses-0_desc-sharpen_T1w.nii.gz
+            ├── sub-BaBa21_ses-0_desc-sharpen_T2w.nii.gz
+            └── sub-BaBa21_ses-0_desc-sharpen_label-WM_probseg.nii.gz
 ```
 
 [<-- previous STEP](../preprocessing/denoise_realign.md) [return menu](../pipeline3D.md) [--> next STEP](generate_TPM.md)

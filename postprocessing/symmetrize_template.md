@@ -17,7 +17,7 @@
 | `--compute-reg`       | Compute registration and symmetrization steps. Defaults to `False`. |
 | `--dry-run`           | Only print commands without executing them. Useful for testing.     |
 
-# Symmetrize template using rigid registration ( --compute-reg )
+Symmetrize template using rigid registration ( --compute-reg )
 
 ```bash
 python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_name BaBa21 \
@@ -27,7 +27,7 @@ python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_n
   --compute-reg
 ```
 
-# Just apply the previous transformation to other contrasts
+Just apply the previous transformation to other contrasts
 
 ```bash
 python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_name BaBa21 \
