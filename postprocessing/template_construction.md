@@ -16,7 +16,7 @@ The output CSV is headerless and formatted to be used directly with antsMultivar
 | `-b`, `--bids-root`  | Path to the root of the BIDS dataset (required for mask search).                         |
 | `-o`, `--output-csv` | Output CSV file (no header - compatible for `antsMultivariateTemplateConstruction2.sh` ) |
 
-
+_for timepoint 0_
 ```bash
 python preprocessing/prepare_MM_subjects_list.py \
  -i list_of_subjects/subjects_ses-0.csv \
@@ -24,7 +24,7 @@ python preprocessing/prepare_MM_subjects_list.py \
  --pattern warped flipped \
  --deriv-subdir warped -o list_of_subjects/subjects_ses-0_warp_for_MM_template.csv
 ```
-
+_for timepoint 1_
 ```bash
 python preprocessing/prepare_MM_subjects_list.py \
  -i list_of_subjects/subjects_ses-1.csv \
@@ -32,7 +32,7 @@ python preprocessing/prepare_MM_subjects_list.py \
  --pattern warped flipped \
  --deriv-subdir warped -o list_of_subjects/subjects_ses-1_warp_for_MM_template.csv
 ```
-
+_for timepoint 2_
 ```bash
 python preprocessing/prepare_MM_subjects_list.py \
  -i list_of_subjects/subjects_ses-2.csv \
@@ -40,7 +40,7 @@ python preprocessing/prepare_MM_subjects_list.py \
  --pattern warped flipped \
  --deriv-subdir warped -o list_of_subjects/subjects_ses-2_warp_for_MM_template.csv
 ```
-
+_for timepoint 3_
 ```bash
 python preprocessing/prepare_MM_subjects_list.py \
  -i list_of_subjects/subjects_ses-3.csv \
@@ -77,7 +77,6 @@ python postprocessing/MM_template_construction.py \
 --input-list list_of_subjects/subjects_ses-0_warp_for_MM_template.csv \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 0.5x0.5x1 --ite2 4 --q2 50x30x15 --w2 1x1x1
 ```
-
 _for timepoint 1_
 ```bash
 python postprocessing/MM_template_construction.py \
@@ -87,7 +86,6 @@ python postprocessing/MM_template_construction.py \
 --input-list list_of_subjects/subjects_ses-1_warp_for_MM_template.csv \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
 ```
-
 _for timepoint 2_
 ```bash
 python postprocessing/MM_template_construction.py \
@@ -97,7 +95,6 @@ python postprocessing/MM_template_construction.py \
 --input-list list_of_subjects/subjects_ses-2_warp_for_MM_template.csv \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
 ```
-
 _for timepoint 3_
 ```bash
 python postprocessing/MM_template_construction.py \
