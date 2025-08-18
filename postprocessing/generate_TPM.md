@@ -93,14 +93,59 @@ python postprocessing/generate_TPM.py \
   --reference_suffix desc-sharpen_padded_T1w \
   --patterns warped \
   --template_folder final \
-  --output_tmp_folder warped \
+  --output_tmp_folder warped_HR \
   --modalities T2w \
   --map_type contrast \
   --bids_description average asym padded
 ```
-
-
-
+_for timepoint 2_
+```bash
+python postprocessing/generate_TPM.py \
+  --bids_root BaBa21_openneuro \
+  --subjects_csv list_of_subjects/subjects_ses-2.csv \
+  --template_name BaBa21 \
+  --template_session ses-2 \
+  --reference_suffix desc-sharpen_T1w \
+  --patterns warped flipped \
+  --template_folder final \
+  --input_folder derivatives/segmentation \
+  --output_tmp_folder warped_HR \
+  --modalities label-WM label-GM label-CSF  \
+  --map_type mask \
+  --bids_description average probseg
+```
+_for timepoint 1_
+```bash
+python postprocessing/generate_TPM.py \
+  --bids_root BaBa21_openneuro \
+  --subjects_csv list_of_subjects/subjects_ses-1.csv \
+  --template_name BaBa21 \
+  --template_session ses-1 \
+  --reference_suffix desc-sharpen_T1w \
+  --patterns warped flipped \
+  --template_folder final \
+  --input_folder derivatives/segmentation \
+  --output_tmp_folder warped_HR \
+  --modalities label-WM label-GM label-CSF  \
+  --map_type mask \
+  --bids_description average probseg
+```
+_for timepoint 0_
+```bash
+python postprocessing/generate_TPM.py \
+  --bids_root BaBa21_openneuro \
+  --subjects_csv list_of_subjects/subjects_ses-0.csv \
+  --template_name BaBa21 \
+  --template_session ses-0 \
+  --reference_suffix desc-sharpen_T1w \
+  --patterns warped flipped \
+  --template_folder final \
+  --input_folder derivatives/segmentation \
+  --output_tmp_folder warped_HR \
+  --modalities label-WM label-GM label-CSF  \
+  --map_type mask \
+  --bids_description average probseg
+```
 
 
 [<-- previous STEP](template_construction.md) [return menu](../pipeline3D.md) [--> next STEP](../pipeline4D.md)
