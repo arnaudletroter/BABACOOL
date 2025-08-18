@@ -7,14 +7,14 @@ It extracts paths to warped T1w, T2w volumes (and optionally others modalities) 
 
 The output CSV is headerless and formatted to be used directly with antsMultivariateTemplateConstruction2.sh.
 
-| Option               | Description                                                                              |
-|----------------------|------------------------------------------------------------------------------------------|
-| `-i`, `--input-csv`  | Input CSV with 'subject' and 'session' columns (required).                               |
-| `--deriv-subdir`     | Subdirectory under derivatives to look for files (default: segmentation)                 |
-| `--modalities`       | List of modalities to look for (e.g., T1w T2w label-WM_mask)                             |
-| `--pattern`          | List of desc patterns to include (e.g., flipped warped)                            |
-| `-b`, `--bids-root`  | Path to the root of the BIDS dataset (required for mask search).                         |
-| `-o`, `--output-csv` | Output CSV file (no header - compatible for `antsMultivariateTemplateConstruction2.sh` ) |
+| Option               | Description                                                                   |
+|----------------------|-------------------------------------------------------------------------------|
+| `-i`, `--input-csv`  | Input CSV with 'subject' and 'session' columns (required).                    |
+| `--deriv-subdir`     | Subdirectory under derivatives where volumes are browsed (default: warped)    |
+| `--modalities`       | List of modalities to look for (e.g., T1w T2w label-WM_mask)                  |
+| `--pattern`          | List of desc patterns to include (e.g., flipped warped)                       |
+| `-b`, `--bids-root`  | Path to the root of the BIDS dataset (required for mask search).              |
+| `-o`, `--output-csv` | Output CSV file (compatible for `antsMultivariateTemplateConstruction2.sh` )  |
 
 _for timepoint 3_
 ```bash
@@ -24,21 +24,13 @@ python preprocessing/prepare_MM_subjects_list.py \
  --pattern warped flipped \
  --deriv-subdir warped_HR -o list_of_subjects/subjects_ses-3_warp_HR_for_MM_template.csv
 ```
-```bash
-python preprocessing/prepare_MM_subjects_list.py \
- -i list_of_subjects/subjects_ses-3.csv \
- --modalities T1w T2w -b BaBa21_openneuro \
- --pattern warped flipped \
- --deriv-subdir warped_den -o list_of_subjects/subjects_ses-3_warp_den_for_MM_template.csv
-```
-
 _for timepoint 2_
 ```bash
 python preprocessing/prepare_MM_subjects_list.py \
  -i list_of_subjects/subjects_ses-2.csv \
  --modalities T1w T2w -b BaBa21_openneuro \
  --pattern warped flipped \
- --deriv-subdir warped -o list_of_subjects/subjects_ses-2_warp_for_MM_template.csv
+ --deriv-subdir warped_HR -o list_of_subjects/subjects_ses-2_warp_HR_for_MM_template.csv
 ```
 _for timepoint 1_
 ```bash
@@ -46,7 +38,7 @@ python preprocessing/prepare_MM_subjects_list.py \
  -i list_of_subjects/subjects_ses-1.csv \
  --modalities T1w T2w -b BaBa21_openneuro \
  --pattern warped flipped \
- --deriv-subdir warped -o list_of_subjects/subjects_ses-1_warp_for_MM_template.csv
+ --deriv-subdir warped_HR -o list_of_subjects/subjects_ses-1_warp_HR_for_MM_template.csv
 ```
 _for timepoint 0_
 ```bash
@@ -54,7 +46,7 @@ python preprocessing/prepare_MM_subjects_list.py \
  -i list_of_subjects/subjects_ses-0.csv \
  --modalities T1w T2w label-WM_mask  -b BaBa21_openneuro \
  --pattern warped flipped \
- --deriv-subdir warped -o list_of_subjects/subjects_ses-0_warp_for_MM_template.csv
+ --deriv-subdir warped_HR -o list_of_subjects/subjects_ses-0_warp_HR_for_MM_template.csv
 ```
 
 ### _MM_template_construction.py_ description

@@ -159,7 +159,7 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --resolution 0.4 \
   --output_derivatives warped_HR
 ```
-### ALTERNATIVE
+### ALTERNATIVE less time consuming (Low resolution, preferred denoised volume)
 _for timepoint 3_ (Generate a Haiko89 brainmask and target padded template only once and register subjects @0.6mm iso from input_folder to output_derivatives folder)
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \

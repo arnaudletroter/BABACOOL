@@ -52,11 +52,11 @@ def main():
     )
     parser.add_argument(
         "--deriv-subdir", default="warped",
-        help="Subdirectory under derivatives (default: warped)"
+        help="Subdirectory under derivatives where volumes are browsed (default: warped)"
     )
     parser.add_argument(
         "-o", "--output-csv", default="output_list.csv",
-        help="Output CSV file (no header)"
+        help="Output CSV file (compatible for `antsMultivariateTemplateConstruction2.sh` )"
     )
     args = parser.parse_args()
 

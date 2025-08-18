@@ -46,8 +46,8 @@ def main():
         help="Number of iterations for Stage 1 (default: 1)"
     )
     parser.add_argument(
-        "--q1", default="10x0x0",
-        help="Steps for Stage 1 -q option (default: 10x0x0)"
+        "--q1", default="50x30x15",
+        help="Steps for Stage 1 -q option (default: 50x30x15)"
     )
     parser.add_argument(
         "--w1", default="0.5x0.5x1",
@@ -58,8 +58,8 @@ def main():
         help="Number of iterations for Stage 2 (default: 1)"
     )
     parser.add_argument(
-        "--q2", default="50x30x15",
-        help="Steps for Stage 2 -q option (default: 50x30x15)"
+        "--q2", default="70x50x30",
+        help="Steps for Stage 2 -q option (default: 70x50x30)"
     )
     parser.add_argument(
         "--w2", default="1x1x1",
