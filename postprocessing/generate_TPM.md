@@ -22,7 +22,7 @@ this script generates Tissue probability maps to template space
 | `--dry-run`              | Print commands without executing them                                                   |
                                                          |
 
-Generate symmetric TPM WM GM CSF 
+**Generate symmetric TPM WM GM CSF** 
 _for timepoint 3_
 ```bash
 python postprocessing/generate_TPM.py \
@@ -51,7 +51,7 @@ BaBa21_openneuro/
                 │   ├── sub-BaBa21_ses-3_label-GM_desc-average_probseg.nii.gz
                 │   ├── sub-BaBa21_ses-3_label-CSF_desc-average_probseg.nii.gz
 ```
-# regenerate symmetric T1w T2w templates (without sharpen) on a padded template largest (for example add 25 pixels on each border to enlarge FOV)
+**Regenerate symmetric T1w T2w templates (without sharpen) on a padded template largest (for example add 25 pixels on each border to enlarge FOV)**
 ```bash
 
 ImageMath 3 BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-sharpen_padded_T1w.nii.gz \
@@ -65,7 +65,7 @@ python postprocessing/generate_TPM.py \
   --reference_suffix desc-sharpen_padded_T1w \
   --patterns warped flipped \
   --template_folder final \
-  --output_tmp_folder warped \
+  --output_tmp_folder warped_HR \
   --modalities T1w T2w \
   --map_type contrast \
   --bids_description average padded
