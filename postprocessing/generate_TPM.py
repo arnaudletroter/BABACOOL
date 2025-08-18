@@ -111,10 +111,6 @@ def main():
         help="List of patterns selected for merging (e.g. warped flipped) (required)"
     )
     parser.add_argument(
-        '--output_derivatives', default=None,
-        help="Output derivatives directory, default: bids_root/derivatives"
-    )
-    parser.add_argument(
         '--input_folder', default="",
         help="Folder where input images are located (default: bids_root)"
     )
@@ -147,7 +143,7 @@ def main():
 
     dry_run = args.dry_run
     bids_root = args.bids_root
-    derivatives_dir = args.output_derivatives or os.path.join(bids_root, "derivatives")
+    derivatives_dir = os.path.join(bids_root, "derivatives")
     input_dir = os.path.join(bids_root, args.input_folder)
     desc_str = build_desc_str(args.bids_description)
 

@@ -13,7 +13,6 @@ this script generates Tissue probability maps to template space
 | `--template_session`   | Template session (e.g. ses-0) (required)                                                                    |
 | `--reference_suffix`   | Reference suffix volume for warping input images (e.g. desc-sharpen) (required, default: desc-sharpen\_T1w) |
 | `--patterns`           | List of patterns selected for merging (e.g. warped flipped) (required)                                      |
-| `--output_derivatives` | Output derivatives directory, default: bids\_root/derivatives                                               |
 | `--input_folder`       | Folder where input images are located (default: bids\_root)                                                 |
 | `--output_tmp_folder`  | Folder under derivatives where warped volumes are saved (default: warped)                                   |
 | `--template_folder`    | Folder under template where final template images are located (default: final)                              |
@@ -23,7 +22,7 @@ this script generates Tissue probability maps to template space
 | `--dry-run`            | Print commands without executing them                                                                       |
                                                          |
 
-Generate symmetric TPM WM GM CSF BM 
+Generate symmetric TPM WM GM CSF 
 _for timepoint 3_
 ```bash
 python postprocessing/generate_TPM.py \
@@ -35,8 +34,8 @@ python postprocessing/generate_TPM.py \
   --patterns warped flipped \
   --template_folder final \
   --input_folder derivatives/segmentation \
-  --output_tmp_folder warped \
-  --modalities label-WM label-GM label-CSF desc-brain  \
+  --output_tmp_folder warped_HR \
+  --modalities label-WM label-GM label-CSF  \
   --map_type mask \
   --bids_description average probseg
 ```
@@ -51,9 +50,8 @@ BaBa21_openneuro/
                 │   ├── sub-BaBa21_ses-3_label-WM_mask_probseg.nii.gz
                 │   ├── sub-BaBa21_ses-3_label-GM_desc-average_probseg.nii.gz
                 │   ├── sub-BaBa21_ses-3_label-CSF_desc-average_probseg.nii.gz
-                │   └── sub-BaBa21_ses-3_desc-brain_desc-average_probseg.nii.gz
 ```
-# regenerate symmetric T1w T2w templates (without sharpen) on a padded template (for example add 25 pixels on each border to enlarge FOV)
+# regenerate symmetric T1w T2w templates (without sharpen) on a padded template largest (for example add 25 pixels on each border to enlarge FOV)
 ```bash
 
 ImageMath 3 BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final/sub-BaBa21_ses-3_desc-sharpen_padded_T1w.nii.gz \
