@@ -13,7 +13,7 @@ Download a BIDS-formatted dataset from OpenNeuro (example here: BaBa21, Dataset 
 Generate a CSV file containing session and participant age metadata for the next steps 
 
 [STEP3: Pre-processing stages](preprocessing/denoise_realign.md)
-Denoise and rigidly align T1-weighted and T2-weighted volumes to a standard orientation.
+Denoise and rigidly realign T1-weighted and T2-weighted volumes to a standard orientation.
 
 [STEP4: Post-processing template construction](postprocessing/template_construction.md)
 Use preprocessed images to build a 3D group-average anatomical template, per age

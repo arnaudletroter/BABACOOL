@@ -103,22 +103,6 @@ This script performs rigid registration of individual BIDS dataset subjects’ d
 | `--dry-run`            | Print commands without executing them.                                                            |
 | `--threads`            | Number of threads for ITK/ANTs (default: 12)                                                      |
 
-_for timepoint 3_ (Generate a Haiko89 brainmask and target padded template only once and register subjects @0.6mm iso from input_folder to output_derivatives folder)
-```bash
-python preprocessing/realign_subjects_2_Haiko89.py \
-  --subjects_csv list_of_subjects/subjects_ses-3.csv \
-  --bids_root BaBa21_openneuro \
-  --sym \
-  --threads 8 \
-  --padding \
-  --pad_size 15 \
-  --generate_brainmask \
-  --flipping_LR \
-  --input_folder derivatives/denoised \
-  --bids_description denoised \
-  --output_derivatives warped_den
-```
-
 _for timepoint 3_ (register subjects @0.4mm iso from input_folder bids_root/sub/ses/anat to output_derivatives folder)
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
@@ -133,8 +117,6 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --resolution 0.4 \
   --output_derivatives warped_HR
 ```
-
-
 _for timepoint 2_
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
@@ -142,7 +124,12 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --bids_root BaBa21_openneuro \
   --sym \
   --threads 8 \
-  --flipping_LR
+  --padding \
+  --pad_size 15 \
+  --generate_brainmask \
+  --flipping_LR \
+  --resolution 0.4 \
+  --output_derivatives warped_HR
 ```
 _for timepoint 1_
 ```bash
@@ -151,7 +138,12 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --bids_root BaBa21_openneuro \
   --sym \
   --threads 8 \
-  --flipping_LR
+  --padding \
+  --pad_size 15 \
+  --generate_brainmask \
+  --flipping_LR \
+  --resolution 0.4 \
+  --output_derivatives warped_HR
 ```
 _for timepoint 0_
 ```bash
@@ -160,7 +152,27 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --bids_root BaBa21_openneuro \
   --sym \
   --threads 8 \
-  --flipping_LR
+  --padding \
+  --pad_size 15 \
+  --generate_brainmask \
+  --flipping_LR \
+  --resolution 0.4 \
+  --output_derivatives warped_HR
 ```
+### ALTERNATIVE
+_for timepoint 3_ (Generate a Haiko89 brainmask and target padded template only once and register subjects @0.6mm iso from input_folder to output_derivatives folder)
+```bash
+python preprocessing/realign_subjects_2_Haiko89.py \
+  --subjects_csv list_of_subjects/subjects_ses-3.csv \
+  --bids_root BaBa21_openneuro \
+  --sym \
+  --threads 8 \
+  --generate_brainmask \
+  --flipping_LR \
+  --input_folder derivatives/denoised \
+  --bids_description denoised \
+  --output_derivatives warped_den
+```
+
 
 [<-- previous STEP](bids_exporter.md) [return menu](../pipeline3D.md) [--> next STEP](../postprocessing/template_construction.md)

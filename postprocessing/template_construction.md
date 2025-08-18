@@ -16,13 +16,29 @@ The output CSV is headerless and formatted to be used directly with antsMultivar
 | `-b`, `--bids-root`  | Path to the root of the BIDS dataset (required for mask search).                         |
 | `-o`, `--output-csv` | Output CSV file (no header - compatible for `antsMultivariateTemplateConstruction2.sh` ) |
 
-_for timepoint 0_
+_for timepoint 3_
 ```bash
 python preprocessing/prepare_MM_subjects_list.py \
- -i list_of_subjects/subjects_ses-0.csv \
- --modalities T1w T2w label-WM_mask  -b BaBa21_openneuro \
+ -i list_of_subjects/subjects_ses-3.csv \
+ --modalities T1w T2w -b BaBa21_openneuro \
  --pattern warped flipped \
- --deriv-subdir warped -o list_of_subjects/subjects_ses-0_warp_for_MM_template.csv
+ --deriv-subdir warped_HR -o list_of_subjects/subjects_ses-3_warp_HR_for_MM_template.csv
+```
+```bash
+python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-3.csv \
+ --modalities T1w T2w -b BaBa21_openneuro \
+ --pattern warped flipped \
+ --deriv-subdir warped_den -o list_of_subjects/subjects_ses-3_warp_den_for_MM_template.csv
+```
+
+_for timepoint 2_
+```bash
+python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-2.csv \
+ --modalities T1w T2w -b BaBa21_openneuro \
+ --pattern warped flipped \
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-2_warp_for_MM_template.csv
 ```
 _for timepoint 1_
 ```bash
@@ -32,21 +48,13 @@ python preprocessing/prepare_MM_subjects_list.py \
  --pattern warped flipped \
  --deriv-subdir warped -o list_of_subjects/subjects_ses-1_warp_for_MM_template.csv
 ```
-_for timepoint 2_
+_for timepoint 0_
 ```bash
 python preprocessing/prepare_MM_subjects_list.py \
- -i list_of_subjects/subjects_ses-2.csv \
- --modalities T1w T2w -b BaBa21_openneuro \
+ -i list_of_subjects/subjects_ses-0.csv \
+ --modalities T1w T2w label-WM_mask  -b BaBa21_openneuro \
  --pattern warped flipped \
- --deriv-subdir warped -o list_of_subjects/subjects_ses-2_warp_for_MM_template.csv
-```
-_for timepoint 3_
-```bash
-python preprocessing/prepare_MM_subjects_list.py \
- -i list_of_subjects/subjects_ses-3.csv \
- --modalities T1w T2w -b BaBa21_openneuro \
- --pattern warped flipped \
- --deriv-subdir warped -o list_of_subjects/subjects_ses-3_warp_for_MM_template.csv
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-0_warp_for_MM_template.csv
 ```
 
 ### _MM_template_construction.py_ description
@@ -68,24 +76,16 @@ This python wrapper runs a 2-stage multivariate template construction pipeline c
 | `--q2`              | Steps for Stage 2 `-q` option (default: 50x30x15)             |
 | `--w2`              | Weights for Stage 2 modalities (default: 1x1x1)               |
 
-_for timepoint 0_
+_for timepoint 3_
 ```bash
 python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
---session ses-0 \
---modalities T1w T2w label-WM_mask \ 
---input-list list_of_subjects/subjects_ses-0_warp_for_MM_template.csv \
--b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 0.5x0.5x1 --ite2 4 --q2 50x30x15 --w2 1x1x1
-```
-_for timepoint 1_
-```bash
-python postprocessing/MM_template_construction.py \
---subject BaBa21 \
---session ses-1 \
+--session ses-3 \
 --modalities T1w T2w \ 
---input-list list_of_subjects/subjects_ses-1_warp_for_MM_template.csv \
+--input-list list_of_subjects/subjects_ses-3_warp_for_MM_template.csv \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
 ```
+
 _for timepoint 2_
 ```bash
 python postprocessing/MM_template_construction.py \
@@ -95,14 +95,25 @@ python postprocessing/MM_template_construction.py \
 --input-list list_of_subjects/subjects_ses-2_warp_for_MM_template.csv \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
 ```
-_for timepoint 3_
+
+_for timepoint 1_
 ```bash
 python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
---session ses-3 \
+--session ses-1 \
 --modalities T1w T2w \ 
---input-list list_of_subjects/subjects_ses-3_warp_for_MM_template.csv \
+--input-list list_of_subjects/subjects_ses-1_warp_for_MM_template.csv \
 -b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
+```
+
+_for timepoint 0_
+```bash
+python postprocessing/MM_template_construction.py \
+--subject BaBa21 \
+--session ses-0 \
+--modalities T1w T2w label-WM_mask \ 
+--input-list list_of_subjects/subjects_ses-0_warp_for_MM_template.csv \
+-b BaBa21_openneuro -j 12 --ite1 4 --q1 30x20x10 --w1 0.5x0.5x1 --ite2 4 --q2 50x30x15 --w2 1x1x1
 ```
 
 Example output structure for two successive timepoints
