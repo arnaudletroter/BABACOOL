@@ -4,22 +4,22 @@
 
 this script generates Tissue probability maps to template space
 
-| Option                 | Description                                                                                                 |
-| ---------------------- |-------------------------------------------------------------------------------------------------------------|
-| `-h`, `--help`         | Show this help message and exit                                                                             |
-| `--bids_root`          | Root directory of BIDS dataset (required)                                                                   |
-| `--subjects_csv`       | CSV file with columns 'subject' and 'session' (required)                                                    |
-| `--template_name`      | Template name (e.g. BaBa21) (required)                                                                      |
-| `--template_session`   | Template session (e.g. ses-0) (required)                                                                    |
-| `--reference_suffix`   | Reference suffix volume for warping input images (e.g. desc-sharpen) (required, default: desc-sharpen\_T1w) |
-| `--patterns`           | List of patterns selected for merging (e.g. warped flipped) (required)                                      |
-| `--input_folder`       | Folder where input images are located (default: bids\_root)                                                 |
-| `--output_tmp_folder`  | Folder under derivatives where warped volumes are saved (default: warped)                                   |
-| `--template_folder`    | Folder under template where final template images are located (default: final)                              |
-| `--modalities`         | List of modalities/masks to warp (e.g. label-WM label-GM desc-brain if mask or T1w if contrast) (required)  |
-| `--map_type`           | Type of map, BIDS-compatible (e.g. mask for TPM or contrast for other maps like T1w)                        |
-| `--bids_description`   | Optional list of BIDS descriptions to include in output filenames (e.g. average padded)                     |
-| `--dry-run`            | Print commands without executing them                                                                       |
+| Option                   | Description                                                                             |
+|--------------------------|-----------------------------------------------------------------------------------------|
+| `-h`, `--help`           | Show this help message and exit                                                         |
+| `--bids_root`            | Root directory of BIDS dataset (required)                                               |
+| `--subjects_csv`         | CSV file with columns 'subject' and 'session' (required)                                |
+| `--template_name`        | Template name (e.g. BaBa21) (required)                                                  |
+| `--template_session`     | Template session (e.g. ses-0) (required)                                                |
+| `--reference_suffix`     | Reference suffix volume for warping input images (default: desc-sharpen\_T1w)           |
+| `--patterns`             | List of patterns selected for merging (e.g. warped flipped) (required)                  |
+| `--input_folder`         | Folder where input images are located (default: bids\_root)                             |
+| `--output_tmp_folder`    | Folder under derivatives where warped volumes are saved (default: warped)               |
+| `--template_folder`      | Folder under template where final template images are located (default: final)          |
+| `--modalities`           | List of modalities/masks to warp (e.g. label-WM label-GM if mask or T1w if contrast)    |
+| `--map_type`             | Type of map, BIDS-compatible (e.g. mask for TPM or contrast for other maps like T1w)    |
+| `--bids_description`     | Optional list of BIDS descriptions to include in output filenames (e.g. average padded) |
+| `--dry-run`              | Print commands without executing them                                                   |
                                                          |
 
 Generate symmetric TPM WM GM CSF 
