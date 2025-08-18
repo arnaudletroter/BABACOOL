@@ -149,5 +149,32 @@ python postprocessing/generate_TPM.py \
   --bids_description average probseg
 ```
 
+**Generate _for all timepoints_ the corrected TPM where WM=1-(GM+CSF) with GM,CSF>thr and BM=sum(GM,WM,CSF)>thr)**
+```bash
+python postprocessing/correct_TPM.py \
+  --bids_root BaBa21_openneuro \
+  --template_name BaBa21 \
+  --session ses-0 ses-1 ses-2 ses-3\
+  --TPM_suffix desc-average_probseg \
+  --template_folder final \
+  --TPM_threshold 0.2
+```
+Example output structure
+```
+BaBa21_openneuro/
+└── derivatives/
+    └── template/
+        └── sub-BaBa21/
+            └── ses-3/
+                ├── final/
+                │   ├── sub-BaBa21_ses-3_label-BM_desc-thr0p2_mask.nii.gz
+                │   ├── sub-BaBa21_ses-3_label-WM_desc-thr0p2_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-3_label-GM_desc-thr0p2_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-3_label-CSF_desc-thr0p2_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-3_label-WM_desc-thr0p2_probseg.json
+                │   ├── sub-BaBa21_ses-3_label-GM_desc-thr0p2_probseg.json
+                │   └── sub-BaBa21_ses-3_label-CSF_desc-thr0p2_probseg.json
+```
+
 
 [<-- previous STEP](template_construction.md) [return menu](../pipeline3D.md) [--> next STEP](../pipeline4D.md)

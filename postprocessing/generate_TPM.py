@@ -189,8 +189,6 @@ def main():
                 output_mask = os.path.join(output_dir, build_output_filename(sub, ses, args.template_name, pattern, modality, args.map_type, desc_str))
                 transfo_prefix = os.path.join(derivatives_dir, "transforms", sub, ses)
 
-                print("coucou", transfo_prefix)
-
                 apply_transform(pattern, input_mask, template_image, output_mask, warp, affine, transfo_prefix, sub, ses, dry_run)
 
     # --- AVERAGING ---
