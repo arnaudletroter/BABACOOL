@@ -83,7 +83,7 @@ BaBa21_openneuro/
                 │   └── sub-BaBa21_ses-3_desc-average_padded_T2w.nii.gz
 ```
 
-# generate asymmetric average padded T2w template (without sharpen)
+Generate asymmetric average padded T1w/T2w template (without sharpen)
 ```bash
 python postprocessing/generate_TPM.py \
   --bids_root BaBa21_openneuro \
@@ -94,10 +94,11 @@ python postprocessing/generate_TPM.py \
   --patterns warped \
   --template_folder final \
   --output_tmp_folder warped_HR \
-  --modalities T2w \
+  --modalities T1w T2w \
   --map_type contrast \
   --bids_description average asym padded
 ```
+**Generate symmetric TPM WM GM CSF** 
 _for timepoint 2_
 ```bash
 python postprocessing/generate_TPM.py \
