@@ -78,8 +78,20 @@ Example output structure
     </td>
 </tr>
 <tr> 
-    <td align="center">T1w (after correction) </td> 
-    <td align="center">T2w (after correction) </td> 
+    <td align="center">T1w padded (after correction) </td> 
+    <td align="center">T2w padded (after correction) </td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_padded_debiased_T1w.png" width="400" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_padded_debiased_T2w.png" width="400" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">T1w cropped (after correction) </td> 
+    <td align="center">T2w cropped (after correction) </td> 
 </tr>
 <tr>
     <td align="center">
