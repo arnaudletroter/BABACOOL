@@ -57,10 +57,8 @@ def main():
                         help="Threshold used to binarize the TPM before correction (default: 0.2).")
     parser.add_argument("--pad", action="store_true",
                         help="If set, generate TPM padded.")
-    parser.add_argument("--padded_template_prefix", default="desc-average_padded_T1w",
-                        help="padded Template suffix (e.g., desc-average_padded_T1w).")
-
-
+    parser.add_argument("--pad_size", type=int, default=25,
+                        help="padding size (in pixel for each border) (default: 25).")
     parser.add_argument(
         '--dry-run', action="store_true",
         help="Print commands without executing them"
@@ -159,14 +157,13 @@ def main():
         }
 
         if args.pad:
-            padded_template= os.path.join(template_path, f"sub-{args.template_name}_{ses}_{args.padded_template_prefix}.nii.gz")
-            cmd = ["mri_convert", "-i", f"{mask_files_thr['WM']}", "-o", f"{mask_files_pad['WM']}", "-rl" ,f"{padded_template}"]
+            cmd = ["ImageMath", "3", f"{mask_files_pad['WM']}", "PadImage", f"{mask_files_thr['WM']}", f"{args.pad_size}"]
             run_command(cmd, dry_run)
-            cmd = ["mri_convert", "-i", f"{mask_files_thr['GM']}", "-o", f"{mask_files_pad['GM']}", "-rl", f"{padded_template}"]
+            cmd = ["ImageMath", "3", f"{mask_files_pad['GM']}", "PadImage", f"{mask_files_thr['GM']}", f"{args.pad_size}"]
             run_command(cmd, dry_run)
-            cmd = ["mri_convert", "-i", f"{mask_files_thr['CSF']}", "-o", f"{mask_files_pad['CSF']}", "-rl", f"{padded_template}"]
+            cmd = ["ImageMath", "3", f"{mask_files_pad['CSF']}", "PadImage", f"{mask_files_thr['CSF']}",f"{args.pad_size}"]
             run_command(cmd, dry_run)
-            cmd = ["mri_convert", "-i", f"{brainmask_files_filled['BM']}", "-o", f"{brainmask_files_padded['BM']}", "-rl", f"{padded_template}"]
+            cmd = ["ImageMath", "3", f"{brainmask_files_padded['BM']}", "PadImage", f"{brainmask_files_filled['BM']}",f"{args.pad_size}"]
             run_command(cmd, dry_run)
         print(f"done")
 

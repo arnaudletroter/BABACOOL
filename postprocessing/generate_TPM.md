@@ -158,7 +158,8 @@ python postprocessing/correct_TPM.py \
   --TPM_suffix desc-average_probseg \
   --template_folder final \
   --TPM_threshold 0.2 \
-  --pad ##(OPTIONAL)
+  --pad \ ##(OPTIONAL)
+  --pad_size 25 ##(OPTIONAL)
 ```
 Example output structure
 ```
@@ -179,6 +180,7 @@ BaBa21_openneuro/
                 │   ├── sub-BaBa21_ses-2_label-WM_desc-thr0p2_probseg.json
                 │   ├── sub-BaBa21_ses-2_label-GM_desc-thr0p2_probseg.json
                 │   ├── sub-BaBa21_ses-2_label-CSF_desc-thr0p2_probseg.json
+                │   ├── sub-BaBa21_ses-2_label-BM_desc-thr0p2_padded_mask.nii.gz (OPTIONAL)      
                 │   ├── sub-BaBa21_ses-2_label-WM_desc-thr0p2_padded_probseg.nii.gz (OPTIONAL)
                 │   ├── sub-BaBa21_ses-2_label-GM_desc-thr0p2_padded_probseg.nii.gz (OPTIONAL)
                 │   └── sub-BaBa21_ses-2_label-CSF_desc-thr0p2_padded_probseg.nii.gz (OPTIONAL)
