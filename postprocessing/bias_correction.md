@@ -55,22 +55,6 @@ Example output structure
     │       ├── sub-BaBa21_ses-3_desc-sharpen_debiased_T1w.nii.gz
     │       └── sub-BaBa21_ses-3_desc-sharpen_debiased_T2w.nii.gz
 ```
-
-_for all timepoints_
-```bash
-#!/bin/bash
-sessions=("ses-0" "ses-1" "ses-2" "ses-3")
-for ses in "${sessions[@]}"; do
-    path_template="BaBa21_openneuro/derivatives/template/sub-BaBa21/${ses}/final"
-    postprocessing/T1xT2BiasFieldCorrection.sh \
-        -t1 ${path_template}/sub-BaBa21_${ses}_desc-sharpen_T1w.nii.gz \
-        -t2 ${path_template}/sub-BaBa21_${ses}_desc-sharpen_T2w.nii.gz \
-        -b ${path_template}/sub-BaBa21_${ses}_desc-brain_mask_probseg.nii.gz \
-        -k -s 2 \
-        -os "_desc-debiased"
-done
-```
-
 <table>
 
 <tr> 
