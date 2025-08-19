@@ -72,21 +72,30 @@ done
 ```
 
 <table>
-<tr>
-    <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_beforeBiasCorrection.png" width="400" height="150" />
-    </td>
-</tr>
+
 <tr> 
-    <td align="center">T1w before Correction</td> 
+    <td align="center">T1w (before correction) </td> 
+    <td align="center">T2w (before correction) </td> 
 </tr>
 <tr>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_afterBiasCorrection.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_padded_T1w.png" width="400" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_padded_T2w.png" width="400" />
     </td>
 </tr>
 <tr> 
-    <td align="center">T1w after Correction</td> 
+    <td align="center">T1w (after correction) </td> 
+    <td align="center">T2w (after correction) </td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_padded_debiased_cropped_T1w.png" width="400" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_padded_debiased_cropped_T2w.png" width="400" />
+    </td>
 </tr>
 </table>
 
