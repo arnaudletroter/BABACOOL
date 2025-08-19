@@ -180,22 +180,56 @@ BaBa21_openneuro/
                 │   └── sub-BaBa21_ses-2_label-CSF_desc-thr0p2_probseg.json
 ```
 
+
 <table>
-<tr>
-    <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_beforeBiasCorrection.png" width="400" height="150" />
-    </td>
-</tr>
+
 <tr> 
-    <td align="center">T1w before Correction</td> 
+    <td align="center">TPM WM (average) </td> 
+    <td align="center">TPM WM corrected (average thresholded)</td> 
 </tr>
 <tr>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_afterBiasCorrection.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_WM_average.png" width="400" height="150" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_WM_thr0p2.png" width="400" height="150" />
     </td>
 </tr>
 <tr> 
-    <td align="center">T1w after Correction</td> 
+    <td align="center">TPM GM (average) </td> 
+    <td align="center">TPM GM corrected (average thresholded)</td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_GM_average.png" width="400" height="150" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_GM_thr0p2.png" width="400" height="150" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">TPM CSF (average) </td> 
+    <td align="center">TPM CSF corrected (average thresholded)</td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_CSF_average.png" width="400" height="150" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_CSF_thr0p2.png" width="400" height="150" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">TPM BM (average) </td> 
+    <td align="center">TPM BM corrected (average thresholded)</td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_BM_average.png" width="400" height="150" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_BM_thr0p2.png" width="400" height="150" />
+    </td>
 </tr>
 </table>
 
