@@ -3,6 +3,7 @@ import argparse
 import numpy as np
 import nibabel as nib
 import matplotlib.pyplot as plt
+import json
 
 def save_histogram(data, gm_mask, wm_mask, bm_mask, modality, session, output_dir,suffix,min,max,bin):
     plt.figure(figsize=(8,4))
@@ -18,6 +19,44 @@ def save_histogram(data, gm_mask, wm_mask, bm_mask, modality, session, output_di
 
     print(f"{filename} saved")
     plt.close()
+
+def write_anat_json(modality, source_fname, filepath, a, b):
+    """
+    Write a BIDS-compliant JSON sidecar for each thresholded TPM, with dry-run option.
+    """
+    json_path = filepath.replace(".nii.gz", ".json")
+
+    # Build JSON content
+    json_content = {
+        "Modality": "MR",
+        "PulseSequenceType": modality,
+        "Description": f"{modality} anatomical image after affine normalization, contrast normalization, and cropping.",
+        "SourceImage": f"{source_fname}",
+        "Derivation": [
+            "Rigid+Affine+SyN transformation applied for spatial normalization.",
+            "Intensity histogram matched for contrast normalization.",
+            "Image cropped using brainmask"
+        ],
+        "SpatialNormalization": {
+            "Type": "Rigid+Affine+SyN",
+            "Reference": "Haiko Template"
+        },
+        "IntensityNormalization": {
+            "Method": "Histogram matching",
+            "Details": f"normalized_value = a * original_value + b where a = {a:.4f}, b = {b:.4f} "
+        },
+        "Cropping": {
+            "Method": "multiplication by binary brainmask",
+            "Details": "Cropping applied to remove background outside brain"
+        },
+        "ValueType": "intensity"
+    }
+
+    # Write JSON to disk
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(json_content, f, indent=4)
+    print(f"JSON file written: {json_path}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Normalize contrast for selected sessions.")
@@ -38,7 +77,7 @@ def main():
     parser.add_argument("--template_name", default="BaBa21",
                         help="Template name (default: BaBa21).")
     parser.add_argument("--template_suffix", default="desc-average_padded_debiased",
-                        help="Template sudfix for input template (e.g., desc-average_padded_debiased).")
+                        help="Template suffix for input template (e.g., desc-average_padded_debiased).")
     parser.add_argument("--TPM_suffix",
                         help="Suffix for TPM mask files (if not set, equals template_suffix).")
     parser.add_argument("--template_path", default="final",
@@ -68,9 +107,10 @@ def main():
             continue
 
         mask_files = {
-            "WM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_suffix}_label-WM_mask_probseg.nii.gz"),
-            "GM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_suffix}_label-GM_mask_probseg.nii.gz"),
-            "BM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_suffix}_brain_mask_probseg.nii.gz")
+            "WM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-WM_{TPM_suffix}_probseg.nii.gz"),
+            "GM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-GM_{TPM_suffix}_probseg.nii.gz"),
+            "CSF": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-CSF_{TPM_suffix}_probseg.nii.gz"),
+            "BM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-BM_{TPM_suffix}_mask.nii.gz")
         }
 
         for key, mask_path in mask_files.items():
@@ -91,15 +131,19 @@ def main():
         print(f"Equation: normalized_value = a * original_value + b")
 
         img_out = os.path.join(template_path,
-                               f"sub-{args.template_name}_{ses}_{args.template_suffix}_desc-norm_{args.modality}.nii.gz")
+                               f"sub-{args.template_name}_{ses}_{args.template_suffix}_norm_{args.modality}.nii.gz")
+
         os.system(f"fslmaths {img_in} -mul {a} -add {b} {img_out}")
 
         if args.generate_cropped_template:
             bm_bin = os.path.join(template_path, "tmp_brainmask_bin.nii.gz")
             os.system(f"fslmaths {mask_files['BM']} -thr {args.brainmask_threshold} -bin {bm_bin}")
             img_out_cropped = os.path.join(template_path,
-                                           f"sub-{args.template_name}_{ses}_{args.template_suffix}_desc-norm_desc-cropped_{args.modality}.nii.gz")
+                                           f"sub-{args.template_name}_{ses}_{args.template_suffix}_cropped_norm_{args.modality}.nii.gz")
             os.system(f"fslmaths {img_out} -mul {bm_bin} {img_out_cropped}")
+
+            write_anat_json(args.modality, img_in, img_out_cropped, a, b)
+
             os.remove(bm_bin)
 
         if args.QC:

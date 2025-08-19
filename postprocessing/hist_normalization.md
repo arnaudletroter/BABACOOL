@@ -34,7 +34,7 @@ python postprocessing/normalize_contrasts.py \
   --gm-p 10 \
   --template_name BaBa21 \
   --template_suffix desc-average_padded_debiased \
-  --TPM_suffix desc-thr0p2_padded_probseg \
+  --TPM_suffix desc-thr0p2_padded \
   --template_path final \
   --generate_cropped_template \
   --brainmask_threshold 0.5 \
@@ -51,26 +51,31 @@ python postprocessing/normalize_contrasts.py \
   --wm-p 10 \
   --gm-p 90 \
   --template_name BaBa21 \
-  --template_prefix desc-symmetric-sharpen_desc-debiased \
-  --TPM_prefix desc-symmetric \
+  --template_suffix desc-average_padded_debiased \
+  --TPM_suffix desc-thr0p2_padded \
   --template_path final \
   --generate_cropped_template \
   --brainmask_threshold 0.5 \
   --QC 
 ```
-
 Example output structure
 ```
 BaBa21_openneuro/
 └── derivatives/
     └── template/
         └── sub-BaBa21/
-            └── ses-0/
+            └── ses-2/
                 └── final/
-                    ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_desc-norm_T1w.nii.gz
-                    ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
-                    ├── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_desc-norm_T2w.nii.gz
-                    └── sub-BaBa21_ses-0_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w.nii.gz
+                    ├── sub-BaBa21_ses-2_desc-average_padded_debiased_norm_T1w.nii.gz
+                    ├── sub-BaBa21_ses-2_desc-average_padded_debiased_norm_T2w.nii.gz
+                    ├── sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
+                    ├── sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_norm_T1w.json
+                    ├── sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
+                    ├── sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_norm_T2w.json  
+                    ├── T1w_ses-2_histogram_after_cor.pdf # QC OPTION
+                    ├── T1w_ses-2_histogram_before_cor.pdf # QC OPTION
+                    ├── T2w_ses-2_histogram_after_cor.pdf # QC OPTION
+                    └── T2w_ses-2_histogram_before_cor.pdf # QC OPTION        
 
 ```
 
