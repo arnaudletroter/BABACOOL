@@ -193,18 +193,13 @@ T2name=$(extract_base_name "$T2" "T2w")
 
 INpath=`extract_path $T1`
 
-echo "coucou" $T1 $T1name
+echo "Name" $T1 $T1name
 #OUT_PREFIX1="${INpath}${T1name}${OUT_SUFFIX}"
 #OUT_PREFIX2="${INpath}${T2name}${OUT_SUFFIX}"
 # change suffix position for bids compatibility
 OUT_PREFIX1="${INpath}${T1name}${OUT_SUFFIX}_T1w"
 OUT_PREFIX2="${INpath}${T2name}${OUT_SUFFIX}_T2w"
 # **************************
-
-
-
-
-
 
 cat <<REPORTPARAMETERS
 
@@ -325,8 +320,10 @@ echo Applying bias field...
 # Applying brain or BET mask to debiased images
 if [[ -n "$BRAIN" ]]; then
   echo "Applying brain mask to debiased images..."
-  "${FSLPREFIX}fslmaths" $OUT_PREFIX1 -mas $BRAIN "${OUT_PREFIX1}_brain"
-  "${FSLPREFIX}fslmaths" $OUT_PREFIX2 -mas $BRAIN "${OUT_PREFIX2}_brain"
+  OUT_PREFIX1_crop="${INpath}${T1name}${OUT_SUFFIX}_cropped_T1w"
+  OUT_PREFIX2_crop="${INpath}${T2name}${OUT_SUFFIX}_cropped_T2w"
+  "${FSLPREFIX}fslmaths" $OUT_PREFIX1 -mas $BRAIN "${OUT_PREFIX1_crop}"
+  "${FSLPREFIX}fslmaths" $OUT_PREFIX2 -mas $BRAIN "${OUT_PREFIX2_crop}"
 elif [[ $TRYBET -ne 0 ]]; then
   echo "Applying BET mask to debiased images..."
   "${FSLPREFIX}fslmaths" $OUT_PREFIX1 -mas ${TMP[T1mulT2_BET_mask]} "${OUT_PREFIX1}${BET_SUFFIX}"

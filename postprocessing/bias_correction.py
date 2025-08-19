@@ -17,14 +17,12 @@ def main():
                         help="List of session identifiers (e.g., ses-0 ses-3).")
     parser.add_argument("--template_name", default="BaBa21",
                         help="Template name (used in filenames), default is BaBa21.")
-    parser.add_argument(
-        '--template_folder', default="final",
-        help="Folder under template where final template images are located (default: final)"
-    )
+    parser.add_argument('--template_folder', default="final",
+        help="Folder under template where final template images are located (default: final)")
     parser.add_argument("--template_type", default="desc-sharpen",
                         help="Template type (e.g., desc-sharpen).")
     parser.add_argument("--brain_mask_suffix",
-                        help="Suffix for the binary brain mask filename (e.g., `desc-brain_mask`). Optional.")
+                        help="Suffix for the binary brain mask filename (e.g., `label-BM_desc-thr0p2_mask`). Optional.")
     parser.add_argument("--k", action="store_true",
                         help="Will keep temporary files (adds the -k flag).")
     parser.add_argument("--s_value", type=int, default=2,
@@ -39,7 +37,7 @@ def main():
     dry_run = args.dry_run
 
     for ses in args.sessions:
-        path_template = f"{args.bids_root}/derivatives/template/sub-{args.template_name}/{ses}/final"
+        #path_template = f"{args.bids_root}/derivatives/template/sub-{args.template_name}/{ses}/final"
 
         template_image_prefix = build_template_image(bids_root, args.template_name, ses,
                                               args.template_folder, args.template_type)
@@ -61,7 +59,7 @@ def main():
             "-t1", t1,
             "-t2", t2,
             "-s", str(args.s_value),
-            "-os", "_desc-debiased"
+            "-os", "_debiased"
         ]
 
         if args.brain_mask_suffix:

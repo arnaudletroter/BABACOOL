@@ -165,16 +165,38 @@ BaBa21_openneuro/
 └── derivatives/
     └── template/
         └── sub-BaBa21/
-            └── ses-3/
+            └── ses-2/
                 ├── final/
-                │   ├── sub-BaBa21_ses-3_label-BM_desc-thr0p2_mask.nii.gz
-                │   ├── sub-BaBa21_ses-3_label-WM_desc-thr0p2_probseg.nii.gz
-                │   ├── sub-BaBa21_ses-3_label-GM_desc-thr0p2_probseg.nii.gz
-                │   ├── sub-BaBa21_ses-3_label-CSF_desc-thr0p2_probseg.nii.gz
-                │   ├── sub-BaBa21_ses-3_label-WM_desc-thr0p2_probseg.json
-                │   ├── sub-BaBa21_ses-3_label-GM_desc-thr0p2_probseg.json
-                │   └── sub-BaBa21_ses-3_label-CSF_desc-thr0p2_probseg.json
+                │   ├── sub-BaBa21_ses-2_label-BM_desc-average_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-2_label-WM_desc-average_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-2_label-GM_desc-average_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-2_label-CSF_desc-average_probseg.nii.gz   
+                │   ├── sub-BaBa21_ses-2_label-BM_desc-thr0p2_mask.nii.gz
+                │   ├── sub-BaBa21_ses-2_label-WM_desc-thr0p2_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-2_label-GM_desc-thr0p2_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-2_label-CSF_desc-thr0p2_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-2_label-WM_desc-thr0p2_probseg.json
+                │   ├── sub-BaBa21_ses-2_label-GM_desc-thr0p2_probseg.json
+                │   └── sub-BaBa21_ses-2_label-CSF_desc-thr0p2_probseg.json
 ```
 
+<table>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_beforeBiasCorrection.png" width="400" height="150" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">T1w before Correction</td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-0_afterBiasCorrection.png" width="400" height="150" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">T1w after Correction</td> 
+</tr>
+</table>
 
 [<-- previous STEP](template_construction.md) [return menu](../pipeline3D.md) [--> next STEP](../pipeline4D.md)

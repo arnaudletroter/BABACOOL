@@ -81,6 +81,14 @@ def main():
                 print(f"ERROR: {key} mask not found: {mask_path}. Skipping session {ses}.")
                 continue
 
+        brainmask_files = {
+            "BM": os.path.join(template_path,
+                               f"sub-{args.template_name}_{ses}_label-BM_{TPM_suffix}.nii.gz")
+        }
+        cmd = ["fslmaths", f"{mask_files['CSF']}", "-add", f"{mask_files['GM']}", "-add",
+               f"{mask_files['WM']}", f"{brainmask_files['BM']}"]
+        run_command(cmd, dry_run)
+
         print(f"threshold TPM ")
 
         thr_str = f"thr{str(args.TPM_threshold).replace('.', 'p')}"
