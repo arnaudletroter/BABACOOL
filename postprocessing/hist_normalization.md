@@ -14,20 +14,13 @@ It uses tissue probability masks (WM, GM, CSF) and percentile-based scaling to n
 | `--wm-p`                      | Percentile to estimate white matter intensity from the WM mask (e.g., 90 for T1w). |
 | `--gm-p`                      | Percentile to estimate gray matter intensity from the GM mask (e.g., 10 for T1w).  |
 | `--template_name`             | Template subject name (default: `BaBa21`).                                         |
-| `--template_prefix`           | Template image prefix (e.g., `desc-symmetric-sharpen_desc-debiased`).              |
-| `--TPM_prefix`                | Prefix used for mask files (e.g., `desc-symmetric-sharpen`).                       |
+| `--template_suffix`           | Template suffix (e.g., `desc-average_padded_debiased`).                            |
+| `--TPM_suffix`                | Suffix used for mask files (e.g., `desc-thr0p2_padded_probseg`).                   |
 | `--input_template_path`       | Folder under each session where the input template is located (default: `final`).  |
 | `--output_template_path`      | Folder under each session where the normalized image is saved (default: `norm`).   |
 | `--generate_cropped_template` | Add this flag to generate a cropped version of the normalized image.               |
 | `--brainmask_threshold`       | Threshold to binarize the brain mask before cropping (default: `0.5`).             |
 | `--QC`                        | generate QC histogram before and after normalization for each tissues              |
-
-```bash
-# if needed pad binary brainmask (faster), to force that T1w, T2w and mask to have the same dimensions (else regenerate TPM using padded T1w as target)
-mri_convert -i BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-2/final/sub-BaBa21_ses-2_label-BM_desc-thr0p2_mask.nii.gz \
-  -o BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-2/final/sub-BaBa21_ses-2_label-BM_desc-thr0p2_padded_mask.nii.gz \
-  -rl BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-2/final/sub-BaBa21_ses-2_desc-average_padded_T1w.nii.gz 
-```
 
 Normalize T1w for all sessions
 ```bash
@@ -40,8 +33,8 @@ python postprocessing/normalize_contrasts.py \
   --wm-p 90 \
   --gm-p 10 \
   --template_name BaBa21 \
-  --template_prefix desc-symmetric-sharpen_desc-debiased \
-  --TPM_prefix desc-symmetric \
+  --template_suffix desc-average_padded_debiased \
+  --TPM_suffix desc-thr0p2_padded_probseg \
   --template_path final \
   --generate_cropped_template \
   --brainmask_threshold 0.5 \

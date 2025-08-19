@@ -37,10 +37,10 @@ def main():
                         help="Percentile used for GM (e.g., 10 for T1w, 90 for T2w).")
     parser.add_argument("--template_name", default="BaBa21",
                         help="Template name (default: BaBa21).")
-    parser.add_argument("--template_prefix", default="desc-symmetric-sharpen_desc-debiased",
-                        help="Template prefix for input images (e.g., desc-symmetric-sharpen_desc-debiased).")
-    parser.add_argument("--TPM_prefix",
-                        help="Prefix for TPM mask files (if not set, equals template_prefix).")
+    parser.add_argument("--template_suffix", default="desc-average_padded_debiased",
+                        help="Template sudfix for input template (e.g., desc-average_padded_debiased).")
+    parser.add_argument("--TPM_suffix",
+                        help="Suffix for TPM mask files (if not set, equals template_suffix).")
     parser.add_argument("--template_path", default="final",
                         help="Folder under template where input images are found and outputs will be saved (default: final).")
     parser.add_argument("--generate_cropped_template", action="store_true",
@@ -51,26 +51,26 @@ def main():
                         help="If set, generate QC histogram for the normalized images.")
     args = parser.parse_args()
 
-    if args.TPM_prefix is None:
-        TPM_prefix = args.template_prefix
+    if args.TPM_suffix is None:
+        TPM_suffix = args.template_suffix
     else:
-        TPM_prefix = args.TPM_prefix
+        TPM_suffix = args.TPM_suffix
 
     for ses in args.sessions:
         template_path = os.path.join(args.bids_root, "derivatives", "template",
                                   f"sub-{args.template_name}", ses, args.template_path)
 
         img_in = os.path.join(template_path,
-                              f"sub-{args.template_name}_{ses}_{args.template_prefix}_{args.modality}.nii.gz")
+                              f"sub-{args.template_name}_{ses}_{args.template_suffix}_{args.modality}.nii.gz")
 
         if not os.path.exists(img_in):
             print(f"ERROR: Input image not found: {img_in}. Skipping session {ses}.")
             continue
 
         mask_files = {
-            "WM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_label-WM_mask_probseg.nii.gz"),
-            "GM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_label-GM_mask_probseg.nii.gz"),
-            "BM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_prefix}_brain_mask_probseg.nii.gz")
+            "WM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_suffix}_label-WM_mask_probseg.nii.gz"),
+            "GM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_suffix}_label-GM_mask_probseg.nii.gz"),
+            "BM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_{TPM_suffix}_brain_mask_probseg.nii.gz")
         }
 
         for key, mask_path in mask_files.items():
@@ -91,14 +91,14 @@ def main():
         print(f"Equation: normalized_value = a * original_value + b")
 
         img_out = os.path.join(template_path,
-                               f"sub-{args.template_name}_{ses}_{args.template_prefix}_desc-norm_{args.modality}.nii.gz")
+                               f"sub-{args.template_name}_{ses}_{args.template_suffix}_desc-norm_{args.modality}.nii.gz")
         os.system(f"fslmaths {img_in} -mul {a} -add {b} {img_out}")
 
         if args.generate_cropped_template:
             bm_bin = os.path.join(template_path, "tmp_brainmask_bin.nii.gz")
             os.system(f"fslmaths {mask_files['BM']} -thr {args.brainmask_threshold} -bin {bm_bin}")
             img_out_cropped = os.path.join(template_path,
-                                           f"sub-{args.template_name}_{ses}_{args.template_prefix}_desc-norm_desc-cropped_{args.modality}.nii.gz")
+                                           f"sub-{args.template_name}_{ses}_{args.template_suffix}_desc-norm_desc-cropped_{args.modality}.nii.gz")
             os.system(f"fslmaths {img_out} -mul {bm_bin} {img_out_cropped}")
             os.remove(bm_bin)
 

@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 # Bias field correction using T1w & T2w images
 
-
-
 HELP() {
     cat <<HELP
 T1xT2BiasFieldCorrection. Bias field correction using T1w & T2w images. Provides an attempt of brain extration if wanted.
 
-Usage: 
+Usage:
     bash ${0##*/} -t1 <T1-input-file> -t2 <T2-input-file> [options]
-    
+
 Compulsory arguments:
     -t1           Whole-head T1w image
     -t2           Whole-head T2w image (use -aT2 if T2w image is not in the T1w space)
-    
+
 Optional arguments:
     -os <suffix>  Suffix for the bias field corrected images (default is "_debiased")
     -aT2          Will coregrister T2w to T1w using flirt. Output will have the suffix provided.
@@ -31,7 +29,7 @@ Optional arguments:
                   vertical gradient in fractional intensity threshold (-1->1); default=0; positive values give larger brain outline at bottom, smaller at top
     -k            Will keep temporary files.
     -p <p>        Prefix for running FSL functions (can be a path or just a prefix)
-    
+
 HELP
 }
 
@@ -343,7 +341,3 @@ fi
 
 
 exit 0
-
-
-
-
