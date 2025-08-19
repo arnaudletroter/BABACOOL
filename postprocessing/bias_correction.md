@@ -41,28 +41,28 @@ Example output structure
 └── sub-BaBa21
     ├── ses-0
     │   └── final
-    │       ├── sub-BaBa21_ses-0_desc-sharpen_debiased_cropped_T1w.nii.gz
-    │       ├── sub-BaBa21_ses-0_desc-sharpen_debiased_cropped_T2w.nii.gz
-    │       ├── sub-BaBa21_ses-0_desc-sharpen_debiased_T1w.nii.gz
-    │       ├── sub-BaBa21_ses-0_desc-sharpen_debiased_T2w.nii.gz
+    │       ├── sub-BaBa21_ses-0_desc-average_padded_debiased_cropped_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-0_desc-average_padded_debiased_cropped_T2w.nii.gz
+    │       ├── sub-BaBa21_ses-0_desc-average_padded_debiased_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-0_desc-average_padded_debiased_T2w.nii.gz
     ├── ses-1
     │   └── final
-    │       ├── sub-BaBa21_ses-1_desc-sharpen_debiased_cropped_T1w.nii.gz
-    │       ├── sub-BaBa21_ses-1_desc-sharpen_debiased_cropped_T2w.nii.gz
-    │       ├── sub-BaBa21_ses-1_desc-sharpen_debiased_T1w.nii.gz
-    │       ├── sub-BaBa21_ses-1_desc-sharpen_debiased_T2w.nii.gz
+    │       ├── sub-BaBa21_ses-1_desc-average_padded_debiased_cropped_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-1_desc-average_padded_debiased_cropped_T2w.nii.gz
+    │       ├── sub-BaBa21_ses-1_desc-average_padded_debiased_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-1_desc-average_padded_debiased_T2w.nii.gz
     ├── ses-2
     │   └── final
-    │       ├── sub-BaBa21_ses-2_desc-sharpen_debiased_cropped_T1w.nii.gz
-    │       ├── sub-BaBa21_ses-2_desc-sharpen_debiased_cropped_T2w.nii.gz
-    │       ├── sub-BaBa21_ses-2_desc-sharpen_debiased_T1w.nii.gz
-    │       ├── sub-BaBa21_ses-2_desc-sharpen_debiased_T2w.nii.gz
+    │       ├── sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_T2w.nii.gz
+    │       ├── sub-BaBa21_ses-2_desc-average_padded_debiased_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-2_desc-average_padded_debiased_T2w.nii.gz
     ├── ses-3
     │    └── final
-    │       ├── sub-BaBa21_ses-3_desc-sharpen_debiased_cropped_T1w.nii.gz
-    │       ├── sub-BaBa21_ses-3_desc-sharpen_debiased_cropped_T2w.nii.gz
-    │       ├── sub-BaBa21_ses-3_desc-sharpen_debiased_T1w.nii.gz
-    │       └── sub-BaBa21_ses-3_desc-sharpen_debiased_T2w.nii.gz
+    │       ├── sub-BaBa21_ses-3_desc-average_padded_debiased_cropped_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-3_desc-average_padded_debiased_cropped_T2w.nii.gz
+    │       ├── sub-BaBa21_ses-3_desc-average_padded_debiased_T1w.nii.gz
+    │       ├── sub-BaBa21_ses-3_desc-average_padded_debiased_T2w.nii.gz
 ```
 <table>
 
