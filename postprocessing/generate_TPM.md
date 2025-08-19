@@ -221,7 +221,7 @@ BaBa21_openneuro/
 </tr>
 <tr> 
     <td align="center">TPM BM (average) </td> 
-    <td align="center">TPM BM corrected (average thresholded)</td> 
+    <td align="center">TPM BM corrected (binary mask by thresholding)</td> 
 </tr>
 <tr>
     <td align="center">

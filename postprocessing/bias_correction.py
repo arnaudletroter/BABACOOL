@@ -6,7 +6,7 @@ def build_template_image(bids_root, template_name, template_session, template_fo
     return os.path.join(
         bids_root, "derivatives", "template",
         f"sub-{template_name}", template_session, template_folder,
-        f"sub-{template_name}_{template_session}_{reference_suffix}.nii.gz"
+        f"sub-{template_name}_{template_session}_{reference_suffix}"
     )
 
 def main():
@@ -37,9 +37,8 @@ def main():
     dry_run = args.dry_run
 
     for ses in args.sessions:
-        #path_template = f"{args.bids_root}/derivatives/template/sub-{args.template_name}/{ses}/final"
 
-        template_image_prefix = build_template_image(bids_root, args.template_name, ses,
+        template_image_prefix = build_template_image(args.bids_root, args.template_name, ses,
                                               args.template_folder, args.template_type)
 
         t1 = f"{template_image_prefix}_T1w.nii.gz"
@@ -64,7 +63,9 @@ def main():
 
         if args.brain_mask_suffix:
             #brain_mask = f"{path_template}/sub-{args.template_name}_{ses}_{args.brain_mask_suffix}.nii.gz"
-            brain_mask = f"{args.brain_mask_suffix}.nii.gz"
+            #brain_mask = f"{args.brain_mask_suffix}.nii.gz"
+            brain_mask = build_template_image(args.bids_root, args.template_name, ses,
+                                                         args.template_folder, f"{args.brain_mask_suffix}.nii.gz")
 
             if os.path.exists(brain_mask):
                 cmd.extend(["-b", brain_mask])

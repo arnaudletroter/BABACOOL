@@ -1,6 +1,6 @@
 # PART2: pipeline processing steps **(4D+t)** longitudinal template interpolation
 
-This pipeline, written mainly in bash and python, uses [Ants](#2)  and [FSL](#2)  to generate a 5D (4D+t) anatomical template from any BIDS-formatted dataset. 
+This second part of the pipeline, written mainly in bash and python, uses [Ants](#2)  and [FSL](#2)  to generate a 5D (4D+t) anatomical template from any BIDS-formatted dataset. 
 The [BaBa21](#3) dataset is used here as an example, but the pipeline can be applied to other BIDS datasets as well.
 The template can be generated across multiple ages (sessions) and in a multi-modal contrasts (e.g., T1w, T2w).
 
