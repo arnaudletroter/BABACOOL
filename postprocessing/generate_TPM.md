@@ -189,10 +189,10 @@ BaBa21_openneuro/
 </tr>
 <tr>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_WM_average.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_WM_average.png" width="400" />
     </td>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_WM_thr0p2.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_WM_thr0p2.png" width="400" />
     </td>
 </tr>
 <tr> 
@@ -201,10 +201,10 @@ BaBa21_openneuro/
 </tr>
 <tr>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_GM_average.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_GM_average.png" width="400" />
     </td>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_GM_thr0p2.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_GM_thr0p2.png" width="400" />
     </td>
 </tr>
 <tr> 
@@ -213,10 +213,10 @@ BaBa21_openneuro/
 </tr>
 <tr>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_CSF_average.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_CSF_average.png" width="400" />
     </td>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_CSF_thr0p2.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_CSF_thr0p2.png" width="400" />
     </td>
 </tr>
 <tr> 
@@ -225,10 +225,10 @@ BaBa21_openneuro/
 </tr>
 <tr>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_BM_average.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_BM_average.png" width="400" />
     </td>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_BM_thr0p2.png" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/ses-2_BM_thr0p2.png" width="400" />
     </td>
 </tr>
 </table>
