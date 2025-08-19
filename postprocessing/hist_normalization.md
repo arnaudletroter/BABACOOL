@@ -22,6 +22,13 @@ It uses tissue probability masks (WM, GM, CSF) and percentile-based scaling to n
 | `--brainmask_threshold`       | Threshold to binarize the brain mask before cropping (default: `0.5`).             |
 | `--QC`                        | generate QC histogram before and after normalization for each tissues              |
 
+```bash
+# if needed pad binary brainmask (faster), to force that T1w, T2w and mask to have the same dimensions (else regenerate TPM using padded T1w as target)
+mri_convert -i BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-2/final/sub-BaBa21_ses-2_label-BM_desc-thr0p2_mask.nii.gz \
+  -o BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-2/final/sub-BaBa21_ses-2_label-BM_desc-thr0p2_padded_mask.nii.gz \
+  -rl BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-2/final/sub-BaBa21_ses-2_desc-average_padded_T1w.nii.gz 
+```
+
 Normalize T1w for all sessions
 ```bash
 python postprocessing/normalize_contrasts.py \

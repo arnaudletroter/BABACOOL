@@ -55,6 +55,12 @@ def main():
                         help="Folder under template where input images are found and outputs will be saved (default: final).")
     parser.add_argument("--TPM_threshold", type=float, default=0.2,
                         help="Threshold used to binarize the TPM before correction (default: 0.2).")
+    parser.add_argument("--pad", action="store_true",
+                        help="If set, generate TPM padded.")
+    parser.add_argument("--padded_template_prefix", default="desc-average_padded_T1w",
+                        help="padded Template suffix (e.g., desc-average_padded_T1w).")
+
+
     parser.add_argument(
         '--dry-run', action="store_true",
         help="Print commands without executing them"
@@ -100,8 +106,7 @@ def main():
         }
 
         mask_files_corrected = {
-            "CSF": os.path.join(template_path,
-                                f"sub-{args.template_name}_{ses}_label-CSF_desc-corr_probseg.nii.gz"),
+            "CSF": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-CSF_desc-corr_probseg.nii.gz"),
             "WM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-WM_desc-corr_probseg.nii.gz"),
             "GM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-GM_desc-corr_probseg.nii.gz")
         }
@@ -144,6 +149,25 @@ def main():
 
         write_tpm_json(mask_files_thr, mask_files, args.TPM_threshold, thr_str, dry_run=args.dry_run)
 
+        mask_files_pad = {
+            "CSF": os.path.join(template_path,f"sub-{args.template_name}_{ses}_label-CSF_desc-{thr_str}_padded_probseg.nii.gz"),
+            "WM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-WM_desc-{thr_str}_padded_probseg.nii.gz"),
+            "GM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-GM_desc-{thr_str}_padded_probseg.nii.gz")
+        }
+        brainmask_files_padded = {
+            "BM": os.path.join(template_path, f"sub-{args.template_name}_{ses}_label-BM_desc-{thr_str}_padded_mask.nii.gz")
+        }
+
+        if args.pad:
+            padded_template= os.path.join(template_path, f"sub-{args.template_name}_{ses}_{args.padded_template_prefix}.nii.gz")
+            cmd = ["mri_convert", "-i", f"{mask_files_thr['WM']}", "-o", f"{mask_files_pad['WM']}", "-rl" ,f"{padded_template}"]
+            run_command(cmd, dry_run)
+            cmd = ["mri_convert", "-i", f"{mask_files_thr['GM']}", "-o", f"{mask_files_pad['GM']}", "-rl", f"{padded_template}"]
+            run_command(cmd, dry_run)
+            cmd = ["mri_convert", "-i", f"{mask_files_thr['CSF']}", "-o", f"{mask_files_pad['CSF']}", "-rl", f"{padded_template}"]
+            run_command(cmd, dry_run)
+            cmd = ["mri_convert", "-i", f"{brainmask_files_filled['BM']}", "-o", f"{brainmask_files_padded['BM']}", "-rl", f"{padded_template}"]
+            run_command(cmd, dry_run)
         print(f"done")
 
 if __name__ == "__main__":
