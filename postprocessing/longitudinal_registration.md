@@ -59,11 +59,11 @@ cd BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final
 cp -rf sub-BaBa21_ses-3_label-WM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-WM_desc-thr0p2_probseg.nii.gz
 cp -rf sub-BaBa21_ses-3_label-GM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_probseg.nii.gz
 cp -rf sub-BaBa21_ses-3_label-CSF_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_probseg.nii.gz
-cp -rf sub-BaBa21_ses-3_label-BM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_probseg.nii.gz
+cp -rf sub-BaBa21_ses-3_label-BM_desc-thr0p2_mask.nii.gz sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_mask.nii.gz
 cp -rf sub-BaBa21_ses-3_desc-average_padded_debiased_cropped_norm_T1w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
 cp -rf sub-BaBa21_ses-3_desc-average_padded_debiased_cropped_norm_T2w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
-cp -rf sub-BaBa21_ses-3_desc-symmetric-sharpen_T1w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
-cp -rf sub-BaBa21_ses-3_desc-symmetric-sharpen_T2w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
+cp -rf sub-BaBa21_ses-3_desc-sharpen_T1w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-sharpen_T1w.nii.gz
+cp -rf sub-BaBa21_ses-3_desc-sharpen_T2w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-sharpen_T2w.nii.gz
 ```
 Example output structure on 2 successive sessions
 ```
@@ -76,21 +76,21 @@ BaBa21_openneuro/
                     ├── sub-BaBa21_ses-2_space-CACP_label-WM_desc-thr0p2_probseg.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_label-GM_desc-thr0p2_probseg.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_label-CSF_desc-thr0p2_probseg.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_mask.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_desc-symmetric-sharpen_T2w.nii.gz   
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-sharpen_T1w.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-sharpen_T2w.nii.gz   
             └── ses-3/
                 └── final/
                     ├── sub-BaBa21_ses-3_space-CACP_label-WM_desc-thr0p2_probseg.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_probseg.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_probseg.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_mask.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-sharpen_T1w.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-sharpen_T2w.nii.gz
 ```
 output structure of longitudinal transformations 
 ```
@@ -116,10 +116,10 @@ python postprocessing/register_long_templates.py  \
   --sessions ses-3 ses-2 \
   --template_modalities T1w \
   --template_type desc-average_padded_debiased_cropped_norm --template_path final \
-  --brain_mask_suffix label-BM_desc-thr0p2_probseg \
+  --brain_mask_suffix label-BM_desc-thr0p2_mask \
   --contrasts_to_warp \
-      desc-symmetric-sharpen_T1w \
-      desc-symmetric-sharpen_T2w
+      desc-sharpen_T1w \
+      desc-sharpen_T2w
 ```
 
 [<-- previous STEP](hist_normalization.md) [return menu](../pipeline4D.md) [--> next STEP](symmetrize_template.md)
