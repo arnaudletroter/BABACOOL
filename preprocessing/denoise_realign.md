@@ -103,27 +103,26 @@ This script performs rigid registration of individual BIDS dataset subjects’ d
 | `--dry-run`            | Print commands without executing them.                                                            |
 | `--threads`            | Number of threads for ITK/ANTs (default: 12)                                                      |
 
-_for timepoint 3_ (register subjects @0.6mm iso from input_folder bids_root/sub/ses/anat to derivatives/warped folder)
+_for timepoint 3_ 
+register subjects @0.6mm iso from input_folder bids_root/sub/ses/anat to derivatives/warped folder
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
   --subjects_csv list_of_subjects/subjects_ses-3.csv --bids_root BaBa21_openneuro --sym --generate_brainmask --flipping_LR \
   --resolution 0.6 --output_derivatives warped
 ```
-_for timepoint 3_ (register subjects @0.4mm iso from input_folder bids_root/sub/ses/anat to derivatives/warped_HR folder)
+register subjects @0.4mm iso from input_folder bids_root/sub/ses/anat to derivatives/warped_HR folder
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
   --subjects_csv list_of_subjects/subjects_ses-3.csv --bids_root BaBa21_openneuro --sym  --padding \
   --pad_size 15 --generate_brainmask --flipping_LR \
   --resolution 0.4 --output_derivatives warped_HR
 ```
-
 _for timepoint 2_
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
   --subjects_csv list_of_subjects/subjects_ses-2.csv --bids_root BaBa21_openneuro --sym --generate_brainmask --flipping_LR \
   --resolution 0.6 --output_derivatives warped
 ```
-_for timepoint 3_ (register subjects @0.4mm iso from input_folder bids_root/sub/ses/anat to derivatives/warped_HR folder)
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
   --subjects_csv list_of_subjects/subjects_ses-2.csv --bids_root BaBa21_openneuro --sym  --padding \
@@ -136,7 +135,6 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --subjects_csv list_of_subjects/subjects_ses-1.csv --bids_root BaBa21_openneuro --sym --generate_brainmask --flipping_LR \
   --resolution 0.6 --output_derivatives warped
 ```
-_for timepoint 3_ (register subjects @0.4mm iso from input_folder bids_root/sub/ses/anat to derivatives/warped_HR folder)
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
   --subjects_csv list_of_subjects/subjects_ses-1.csv --bids_root BaBa21_openneuro --sym  --padding \
@@ -149,7 +147,6 @@ python preprocessing/realign_subjects_2_Haiko89.py \
   --subjects_csv list_of_subjects/subjects_ses-0.csv --bids_root BaBa21_openneuro --sym --generate_brainmask --flipping_LR \
   --resolution 0.6 --output_derivatives warped
 ```
-_for timepoint 3_ (register subjects @0.4mm iso from input_folder bids_root/sub/ses/anat to derivatives/warped_HR folder)
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
   --subjects_csv list_of_subjects/subjects_ses-0.csv --bids_root BaBa21_openneuro --sym  --padding \
