@@ -41,7 +41,7 @@ python postprocessing/register_long_templates.py  \
   --sessions ses-3 ses-2\
   --template_modalities T1w \
   --template_type desc-average_padded_debiased_cropped_norm --template_path final \
-  --brain_mask_suffix desc-symmetric_brain_mask_probseg \
+  --brain_mask_suffix label-BM_desc-thr0p2_mask \
   --compute-reg \
   --contrasts_to_warp \
       label-WM_desc-thr0p2_probseg \
