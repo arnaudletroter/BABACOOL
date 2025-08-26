@@ -5,10 +5,10 @@ import os
 import subprocess
 import pandas as pd
 
-def run_command(cmd, dry_run=False, env=None, workdir=None):
+def run_command(cmd, dry_run=False, env=None, workdir=None, shell=False):
     print("Running:", " ".join(map(str, cmd)))
     if not dry_run:
-        subprocess.run(cmd, check=True, env=env, shell=True, cwd=workdir)
+        subprocess.run(cmd, check=True, env=env, shell=shell, cwd=workdir)
 
 def main():
     parser = argparse.ArgumentParser(description="Two-stage multivariate template construction with ANTs, BIDS-style outputs")
@@ -18,7 +18,7 @@ def main():
     parser.add_argument("-j", "--jobs", type=int, default=12,help="Number of CPU cores to use (default: 12)")
     parser.add_argument("--modalities", nargs="+", required=True,help="List of modalities to look for (e.g., T1w T2w label-WM_mask)")
     parser.add_argument("--input-list-LR", required=True,help="CSV file with list of input NIfTI images for first stage")
-    parser.add_argument("--LH-reg-metrics", default="MI",help="Type of similarity metric used for pairwise registration (MI by default)")
+    parser.add_argument("--LR-reg-metrics", default="MI",help="Type of similarity metric used for pairwise registration (MI by default)")
     parser.add_argument("--ite1", type=int, default=1,help="Number of iterations for Stage 1 (default: 1)")
     parser.add_argument("--q1", default="50x30x15",help="Steps for Stage 1 -q option (default: 50x30x15)")
     parser.add_argument("--w1", default="0.5x0.5x1",help="Weights for Stage 1 modalities (default: 0.5x0.5x1)" )
@@ -40,6 +40,9 @@ def main():
 
     res_HR = args.res_HR
     dry_run = args.dry_run
+
+    LR_reg_metrics = args.LR_reg_metrics
+    HR_reg_metrics = args.HR_reg_metrics
 
     print(f"[INFO] Detected {modalities_count} modalities: {modalities}")
 
@@ -66,9 +69,9 @@ def main():
         f"{ants_script_path} "
         f"-d 3 -i {args.ite1} -k {modalities_count} -c 2 -j {args.jobs} "
         f"-f 4x2x1 -s 2x1x0vox -q {args.q1} "
-        f"-w {args.w1} -t SyN -A 1 -n 0 -m {args.LR_reg_metrics} "
+        f"-w {args.w1} -t SyN -A 1 -n 0 -m {LR_reg_metrics} "
         f"-o {tmp_LR}/MY {args.input_list_LR}"
-    ], dry_run, workdir='./')
+    ], dry_run, workdir='./', shell=True)
 
     print(f"[INFO] Resampling Stage 1 outputs to higher resolution at {res_HR} ")
     for i in range(modalities_count):
@@ -106,9 +109,9 @@ def main():
         f"{ants_script_path} "
         f"-d 3 -i {args.ite2} -k {modalities_count} -c 2 -j {args.jobs} "
         f"-f 4x2x1 -s 2x1x0vox -q {args.q2} "
-        f"-t SyN -w {args.w2} {z_opts} -A 1 -n 0 -m {args.HR_reg_metrics} "
+        f"-t SyN -w {args.w2} {z_opts} -A 1 -n 0 -m {HR_reg_metrics} "
         f"-o {tmp_HR}/MY {args.input_list_HR}"
-    ], dry_run , workdir='./')
+    ], dry_run , workdir='./', shell=True)
 
     # Copy final outputs with BIDS-style names
     print("[INFO] Copying final templates to BIDS-style outputs")
