@@ -58,14 +58,14 @@ python postprocessing/register_long_templates.py  \
 For next step: duplicate (for renaming) ses-3 files to ses-3_space-CACP
 ```
 cd BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final
-cp -rf sub-BaBa21_ses-2_label-WM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-2_space-CACP_label-WM_desc-thr0p2_probseg.nii.gz
-cp -rf sub-BaBa21_ses-2_label-GM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-2_space-CACP_label-GM_desc-thr0p2_probseg.nii.gz
-cp -rf sub-BaBa21_ses-2_label-CSF_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-2_space-CACP_label-CSF_desc-thr0p2_probseg.nii.gz
-cp -rf sub-BaBa21_ses-2_label-BM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_probseg.nii.gz
-cp -rf sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_norm_T1w.nii.gz sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
-cp -rf sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_norm_T2w.nii.gz sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
-cp -rf sub-BaBa21_ses-2_desc-symmetric-sharpen_T1w.nii.gz sub-BaBa21_ses-2_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
-cp -rf sub-BaBa21_ses-2_desc-symmetric-sharpen_T2w.nii.gz sub-BaBa21_ses-2_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
+cp -rf sub-BaBa21_ses-3_label-WM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-WM_desc-thr0p2_probseg.nii.gz
+cp -rf sub-BaBa21_ses-3_label-GM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_probseg.nii.gz
+cp -rf sub-BaBa21_ses-3_label-CSF_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_probseg.nii.gz
+cp -rf sub-BaBa21_ses-3_label-BM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_probseg.nii.gz
+cp -rf sub-BaBa21_ses-3_desc-average_padded_debiased_cropped_norm_T1w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
+cp -rf sub-BaBa21_ses-3_desc-average_padded_debiased_cropped_norm_T2w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
+cp -rf sub-BaBa21_ses-3_desc-symmetric-sharpen_T1w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
+cp -rf sub-BaBa21_ses-3_desc-symmetric-sharpen_T2w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
 ```
 Example output structure on 2 successive sessions
 ```
