@@ -21,9 +21,9 @@ Symmetrize template using rigid registration ( --compute-reg )
 
 ```bash
 python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_name BaBa21 \
-  --sessions ses-3 ses-2 ses-1 ses-0 \
+  --sessions ses-3 ses-2 \
   --template_modality T1w \
-  --template_type space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped --template_path final \
+  --template_type space-CACP_desc-average_padded_debiased_cropped_norm --template_path final \
   --compute-reg
 ```
 
@@ -33,15 +33,16 @@ Just apply the previous transformation to other contrasts
 python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_name BaBa21 \
   --sessions ses-3 ses-2 ses-1 ses-0 \
   --template_modality T1w \
-  --template_type space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped --template_path final \
+  --template_type space-CACP_desc-average_padded_debiased_cropped_norm --template_path final \
   --contrasts_to_sym \
-  space-CACP_desc-symmetric_label-WM_mask_probseg \
-  space-CACP_desc-symmetric_label-GM_mask_probseg \
-  space-CACP_desc-symmetric_label-CSF_mask_probseg \
-  space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w \
-  space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w \
-  space-CACP_desc-symmetric-sharpen_T1w \
-  space-CACP_desc-symmetric-sharpen_T2w
+      space-CACP_label-WM_desc-thr0p2_probseg \
+      space-CACP_label-GM_desc-thr0p2_probseg \
+      space-CACP_label-CSF_desc-thr0p2_probseg \
+      space-CACP_label-BM_desc-thr0p2_mask \
+      space-CACP_desc-average_padded_debiased_cropped_norm_T1w \
+      space-CACP_desc-average_padded_debiased_cropped_norm_T2w \
+      space-CACP_desc-sharpen_T1w \
+      space-CACP_desc-sharpen_T2w
 ```
 
 [<-- previous STEP](longitudinal_registration.md) [return menu](../pipeline4D.md) [--> next STEP](longitudinal_interpolation.md)
