@@ -66,7 +66,7 @@ def main():
         f"{ants_script_path} "
         f"-d 3 -i {args.ite1} -k {modalities_count} -c 2 -j {args.jobs} "
         f"-f 4x2x1 -s 2x1x0vox -q {args.q1} "
-        f"-w {args.w1} -t SyN -A 1 -n 0 -m {LR_reg_metrics} "
+        f"-w {args.w1} -t SyN -A 1 -n 0 -m {args.LR_reg_metrics} "
         f"-o {tmp_LR}/MY {args.input_list_LR}"
     )
     run_command(stage1_cmd, dry_run, workdir='./')
@@ -108,7 +108,7 @@ def main():
         f"{ants_script_path} "
         f"-d 3 -i {args.ite2} -k {modalities_count} -c 2 -j {args.jobs} "
         f"-f 4x2x1 -s 2x1x0vox -q {args.q2} "
-        f"-t SyN -w {args.w2} {z_opts} -A 1 -n 0 -m {HR_reg_metrics} "
+        f"-t SyN -w {args.w2} {z_opts} -A 1 -n 0 -m {args.HR_reg_metrics} "
         f"-o {tmp_HR}/MY {args.input_list_HR}"
     )
     run_command(stage2_cmd, dry_run, workdir='./')
