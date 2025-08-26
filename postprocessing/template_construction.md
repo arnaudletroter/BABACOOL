@@ -88,18 +88,18 @@ This python wrapper runs a 2-stage multivariate template construction pipeline (
 |                     |                                                                            |
 | **Stage 1 (LR)**    |                                                                            |
 | `--input-list1`     | CSV file with list of input NIfTI images for first stage (required).       |
-| `--LR_reg_metrics`  | Type of similarity metric used for pairwise registration (default: `MI`).  |
+| `--LR-reg-metrics`  | Type of similarity metric used for pairwise registration (default: `MI`).  |
 | `--ite1`            | Number of iterations for Stage 1 (default: `4`).                           |
 | `--q1`              | Steps for Stage 1 `-q` option (default: `50x30x15`).                       |
 | `--w1`              | Weights for Stage 1 modalities (default: `0.5x0.5x1`).                     |
 |                     |                                                                            |
 | **Stage 2 (HR)**    |                                                                            |
 | `--input-list2`     | CSV file with list of input NIfTI images for second stage (required).      |
-| `--HR_reg_metrics`  | Type of similarity metric used for pairwise registration (default: `CC`).  |
+| `--HR-reg-metrics`  | Type of similarity metric used for pairwise registration (default: `CC`).  |
 | `--ite2`            | Number of iterations for Stage 2 (default: `2`).                           |
 | `--q2`              | Steps for Stage 2 `-q` option (default: `70x50x30`).                       |
 | `--w2`              | Weights for Stage 2 modalities (default: `1x1x1`).                         |
-| `--res_HR`          | Pixel resolution in mm (default: `0.4`).                                   |
+| `--res-HR`          | Pixel resolution in mm (default: `0.4`).                                   |
 
 _for timepoint 3_
 ```bash
@@ -108,10 +108,10 @@ python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
 --session ses-3 \
 --modalities T1w T2w \
---input-list1 list_of_subjects/subjects_ses-3_warp_for_MM_template.csv \
+--input-list-LR list_of_subjects/subjects_ses-3_warp_for_MM_template.csv \
  --ite1 4 --q1 30x20x10 --w1 1x1 \
---input-list2 list_of_subjects/subjects_ses-3_warp_HR_for_MM_template.csv \
---ite2 2 --q2 70x50x30 --w2 1x1 --res_HR 0.4 --dry-run
+--input-list-HR list_of_subjects/subjects_ses-3_warp_HR_for_MM_template.csv \
+--ite2 2 --q2 70x50x30 --w2 1x1 --res-HR 0.4 --dry-run
 ```
 
 _for timepoint 2_
@@ -121,10 +121,10 @@ python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
 --session ses-2 \
 --modalities T1w T2w \
---input-list1 list_of_subjects/subjects_ses-2_warp_for_MM_template.csv \
+--input-list-LR list_of_subjects/subjects_ses-2_warp_for_MM_template.csv \
  --ite1 4 --q1 30x20x10 --w1 1x1 \
---input-list2 list_of_subjects/subjects_ses-2_warp_HR_for_MM_template.csv \
---ite2 2 --q2 70x50x30 --w2 1x1 --res_HR 0.4 --dry-run
+--input-list-HR list_of_subjects/subjects_ses-2_warp_HR_for_MM_template.csv \
+--ite2 2 --q2 70x50x30 --w2 1x1 --res-HR 0.4 --dry-run
 ```
 
 _for timepoint 1_
@@ -134,10 +134,10 @@ python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
 --session ses-1 \
 --modalities T1w T2w \
---input-list1 list_of_subjects/subjects_ses-1_warp_for_MM_template.csv \
+--input-list-LR list_of_subjects/subjects_ses-1_warp_for_MM_template.csv \
  --ite1 4 --q1 30x20x10 --w1 1x1 \
---input-list2 list_of_subjects/subjects_ses-1_warp_HR_for_MM_template.csv \
---ite2 2 --q2 70x50x30 --w2 1x1 --res_HR 0.4 --dry-run
+--input-list-HR list_of_subjects/subjects_ses-1_warp_HR_for_MM_template.csv \
+--ite2 2 --q2 70x50x30 --w2 1x1 --res-HR 0.4 --dry-run
 ```
 
 _for timepoint 0_
@@ -147,10 +147,10 @@ python postprocessing/MM_template_construction.py \
 --subject BaBa21 \
 --session ses-0 \
 --modalities T1w T2w label-WM_mask \
---input-list1 list_of_subjects/subjects_ses-0_warp_for_MM_template.csv \
+--input-list-LR list_of_subjects/subjects_ses-0_warp_for_MM_template.csv \
  --ite1 4 --q1 30x20x10 --w1 0.5x0.5x1 \
---input-list2 list_of_subjects/subjects_ses-0_warp_HR_for_MM_template.csv \
---ite2 2 --q2 70x50x30 --w2 1x1x1 --res_HR 0.4 --dry-run
+--input-list-HR list_of_subjects/subjects_ses-0_warp_HR_for_MM_template.csv \
+--ite2 2 --q2 70x50x30 --w2 1x1x1 --res-HR 0.4 --dry-run
 ```
 
 Example output structure for two successive timepoints
@@ -171,7 +171,8 @@ derivatives/
                 ├── sub-BaBa21_ses-0_desc-sharpen_T1w.nii.gz
                 ├── sub-BaBa21_ses-0_desc-sharpen_T2w.nii.gz
                 └── sub-BaBa21_ses-0_desc-sharpen_label-WM_probseg.nii.gz
-        └── ses-1/
+        ...
+        └── ses-3/
             └── tmp_LR/
                 ├── SyN_iteration3_MYtemplate0.nii.gz # T1w
                 └── SyN_iteration3_MYtemplate1.nii.gz # T2w
