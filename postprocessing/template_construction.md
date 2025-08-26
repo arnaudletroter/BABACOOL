@@ -52,60 +52,79 @@ python preprocessing/prepare_MM_subjects_list.py \
 ### _MM_template_construction.py_ description
 This python wrapper runs a 2-stage multivariate template construction pipeline calling _antsMultivariateTemplateConstruction2.sh_, while enforcing as output a BIDS-compatible derivatives structure.
 
-| Option              | Description                                                  |
-| ------------------- |--------------------------------------------------------------|
-| `-h`, `--help`      | Show this help message and exit                              |
-| `-s`, `--subject`   | Subject label (e.g. BaBa21)                                  |
-| `-S`, `--session`   | Session label (e.g. ses-0)                                   |
-| `--input-list`      | CSV file with list of input NIfTI images for both stages     |
-| `-b`, `--bids-root` | BIDS root folder                                             |
-| `-j`, `--jobs`      | Number of CPU cores to use (default: 12)                     |
-| `--modalities`      | List of modalities to look for (e.g., T1w T2w label-WM_mask) |
-| `--ite1`            | Number of iterations for Stage 1 (default: 1)                |
-| `--q1`              | Steps for Stage 1 `-q` option (default: 50x30x15)            |
-| `--w1`              | Weights for Stage 1 modalities (default: 0.5x0.5x1)          |
-| `--ite2`            | Number of iterations for Stage 2 (default: 1)                |
-| `--q2`              | Steps for Stage 2 `-q` option (default: 70x50x30)            |
-| `--w2`              | Weights for Stage 2 modalities (default: 1x1x1)              |
+| Option              | Description                                                                |
+|---------------------|----------------------------------------------------------------------------|
+| **General**         |                                                                            |
+| `-s`, `--subject`   | Subject label (e.g. `BaBa21`) (required).                                  |
+| `-S`, `--session`   | Session label (e.g. `ses-0`) (required).                                   |
+| `-b`, `--bids-root` | BIDS root folder (required).                                               |
+| `-j`, `--jobs`      | Number of CPU cores to use (default: `12`).                                |
+| `--modalities`      | List of modalities to look for (e.g., `T1w T2w label-WM_mask`) (required). |
+| `--dry-run`         | Print commands without executing them.                                     |
+|                     |                                                                            |
+| **Stage 1 (LR)**    |                                                                            |
+| `--input-list1`     | CSV file with list of input NIfTI images for first stage (required).       |
+| `--ite1`            | Number of iterations for Stage 1 (default: `4`).                           |
+| `--q1`              | Steps for Stage 1 `-q` option (default: `50x30x15`).                       |
+| `--w1`              | Weights for Stage 1 modalities (default: `0.5x0.5x1`).                     |
+|                     |                                                                            |
+| **Stage 2 (HR)**    |                                                                            |
+| `--input-list2`     | CSV file with list of input NIfTI images for second stage (required).      |
+| `--ite2`            | Number of iterations for Stage 2 (default: `2`).                           |
+| `--q2`              | Steps for Stage 2 `-q` option (default: `70x50x30`).                       |
+| `--w2`              | Weights for Stage 2 modalities (default: `1x1x1`).                         |
+| `--res_HR`          | Pixel resolution in mm (default: `0.4`).                                   |
 
 _for timepoint 3_
 ```bash
 python postprocessing/MM_template_construction.py \
+-b BaBa21_openneuro -j 6 \
 --subject BaBa21 \
 --session ses-3 \
 --modalities T1w T2w \ 
---input-list list_of_subjects/subjects_ses-3_warp_for_MM_template.csv \
--b BaBa21_openneuro -j 6 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
+--input-list1 list_of_subjects/subjects_ses-3_warp_for_MM_template.csv \
+ --ite1 4 --q1 30x20x10 --w1 1x1 \
+--input-list2 list_of_subjects/subjects_ses-3_warp_HR_for_MM_template.csv \
+--ite2 2 --q2 70x50x30 --w2 1x1 --res_HR 0.4 --dry-run
 ```
 
 _for timepoint 2_
 ```bash
 python postprocessing/MM_template_construction.py \
+-b BaBa21_openneuro -j 6 \
 --subject BaBa21 \
 --session ses-2 \
 --modalities T1w T2w \ 
---input-list list_of_subjects/subjects_ses-2_warp_for_MM_template.csv \
--b BaBa21_openneuro -j 6 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
+--input-list1 list_of_subjects/subjects_ses-2_warp_for_MM_template.csv \
+ --ite1 4 --q1 30x20x10 --w1 1x1 \
+--input-list2 list_of_subjects/subjects_ses-2_warp_HR_for_MM_template.csv \
+--ite2 2 --q2 70x50x30 --w2 1x1 --res_HR 0.4 --dry-run
 ```
 
 _for timepoint 1_
 ```bash
 python postprocessing/MM_template_construction.py \
+-b BaBa21_openneuro -j 6 \
 --subject BaBa21 \
 --session ses-1 \
 --modalities T1w T2w \ 
---input-list list_of_subjects/subjects_ses-1_warp_for_MM_template.csv \
--b BaBa21_openneuro -j 6 --ite1 4 --q1 30x20x10 --w1 1x1 --ite2 4 --q2 50x30x15 --w2 1x1
+--input-list1 list_of_subjects/subjects_ses-1_warp_for_MM_template.csv \
+ --ite1 4 --q1 30x20x10 --w1 1x1 \
+--input-list2 list_of_subjects/subjects_ses-1_warp_HR_for_MM_template.csv \
+--ite2 2 --q2 70x50x30 --w2 1x1 --res_HR 0.4 --dry-run
 ```
 
 _for timepoint 0_
 ```bash
 python postprocessing/MM_template_construction.py \
+-b BaBa21_openneuro -j 6 \
 --subject BaBa21 \
 --session ses-0 \
 --modalities T1w T2w label-WM_mask \ 
---input-list list_of_subjects/subjects_ses-0_warp_for_MM_template.csv \
--b BaBa21_openneuro -j 6 --ite1 4 --q1 30x20x10 --w1 0.5x0.5x1 --ite2 4 --q2 50x30x15 --w2 1x1x1
+--input-list1 list_of_subjects/subjects_ses-0_warp_for_MM_template.csv \
+ --ite1 4 --q1 30x20x10 --w1 0.5x0.5x1 \
+--input-list2 list_of_subjects/subjects_ses-0_warp_HR_for_MM_template.csv \
+--ite2 2 --q2 70x50x30 --w2 1x1x1 --res_HR 0.4 --dry-run
 ```
 
 Example output structure for two successive timepoints
@@ -114,15 +133,25 @@ derivatives/
 └── template/
     └── sub-BaBa21/
         └── ses-0/
-            ├── tmp_LR/
-            ├── tmp_HR/
+            └── tmp_LR/
+                ├── SyN_iteration3_MYtemplate0.nii.gz # T1w
+                ├── SyN_iteration3_MYtemplate1.nii.gz # T2w
+                └── SyN_iteration3_MYtemplate2.nii.gz # label-WM_probseg
+            └── tmp_HR/
+                ├── SyN_iteration1_MYtemplate0.nii.gz # T1w
+                ├── SyN_iteration1_MYtemplate1.nii.gz # T2w
+                └── SyN_iteration1_MYtemplate2.nii.gz # label-WM_probseg
             └── final/
                 ├── sub-BaBa21_ses-0_desc-sharpen_T1w.nii.gz
                 ├── sub-BaBa21_ses-0_desc-sharpen_T2w.nii.gz
                 └── sub-BaBa21_ses-0_desc-sharpen_label-WM_probseg.nii.gz
         └── ses-1/
-            ├── tmp_LR/
-            ├── tmp_HR/
+            └── tmp_LR/
+                ├── SyN_iteration3_MYtemplate0.nii.gz # T1w
+                └── SyN_iteration3_MYtemplate1.nii.gz # T2w
+            └── tmp_HR/
+                ├── SyN_iteration1_MYtemplate0.nii.gz # T1w
+                └── SyN_iteration1_MYtemplate1.nii.gz # T2w
             └── final/
                 ├── sub-BaBa21_ses-1_desc-sharpen_T1w.nii.gz
                 └── sub-BaBa21_ses-1_desc-sharpen_T2w.nii.gz
