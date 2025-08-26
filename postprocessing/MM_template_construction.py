@@ -62,14 +62,13 @@ def main():
 
     ants_script_path = os.path.join("$ANTSPATH", "antsMultivariateTemplateConstruction2.sh")
 
-    stage1_cmd = (
+    run_command([
         f"{ants_script_path} "
         f"-d 3 -i {args.ite1} -k {modalities_count} -c 2 -j {args.jobs} "
         f"-f 4x2x1 -s 2x1x0vox -q {args.q1} "
         f"-w {args.w1} -t SyN -A 1 -n 0 -m {args.LR_reg_metrics} "
         f"-o {tmp_LR}/MY {args.input_list_LR}"
-    )
-    run_command(stage1_cmd, dry_run, workdir='./')
+    ], dry_run, workdir='./')
 
     print(f"[INFO] Resampling Stage 1 outputs to higher resolution at {res_HR} ")
     for i in range(modalities_count):
@@ -103,15 +102,13 @@ def main():
     ]
 
     z_opts = " ".join([f"-z {p}" for p in paths])
-
-    stage2_cmd = (
+    run_command([
         f"{ants_script_path} "
         f"-d 3 -i {args.ite2} -k {modalities_count} -c 2 -j {args.jobs} "
         f"-f 4x2x1 -s 2x1x0vox -q {args.q2} "
         f"-t SyN -w {args.w2} {z_opts} -A 1 -n 0 -m {args.HR_reg_metrics} "
         f"-o {tmp_HR}/MY {args.input_list_HR}"
-    )
-    run_command(stage2_cmd, dry_run, workdir='./')
+    ], dry_run , workdir='./')
 
     # Copy final outputs with BIDS-style names
     print("[INFO] Copying final templates to BIDS-style outputs")
@@ -125,7 +122,7 @@ def main():
         dst_name = f"sub-{args.subject}_{args.session}_{desc}.nii.gz"
         src = os.path.join(tmp_HR, "intermediateTemplates", f"SyN_iteration{args.ite2 - 1}_MYtemplate{i}.nii.gz")
         dst = os.path.join(final_dir, dst_name)
-        run_command(f"cp -f {src} {dst}", dry_run)
+        run_command([f"cp -f {src} {dst}"], dry_run)
         print(f"{dst}")
         i += 1
 
