@@ -23,6 +23,12 @@ python preprocessing/prepare_MM_subjects_list.py \
  --modalities T1w T2w -b BaBa21_openneuro \
  --pattern warped flipped \
  --deriv-subdir warped_HR -o list_of_subjects/subjects_ses-3_warp_HR_for_MM_template.csv
+ 
+ python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-3.csv \
+ --modalities T1w T2w -b BaBa21_openneuro \
+ --pattern warped flipped \
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-3_warp_for_MM_template.csv
 ```
 _for timepoint 2_
 ```bash
@@ -31,6 +37,12 @@ python preprocessing/prepare_MM_subjects_list.py \
  --modalities T1w T2w -b BaBa21_openneuro \
  --pattern warped flipped \
  --deriv-subdir warped_HR -o list_of_subjects/subjects_ses-2_warp_HR_for_MM_template.csv
+ 
+ python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-2.csv \
+ --modalities T1w T2w -b BaBa21_openneuro \
+ --pattern warped flipped \
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-2_warp_for_MM_template.csv
 ```
 _for timepoint 1_
 ```bash
@@ -39,6 +51,12 @@ python preprocessing/prepare_MM_subjects_list.py \
  --modalities T1w T2w -b BaBa21_openneuro \
  --pattern warped flipped \
  --deriv-subdir warped_HR -o list_of_subjects/subjects_ses-1_warp_HR_for_MM_template.csv
+ 
+ python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-1.csv \
+ --modalities T1w T2w -b BaBa21_openneuro \
+ --pattern warped flipped \
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-1_warp_for_MM_template.csv
 ```
 _for timepoint 0_
 ```bash
@@ -47,10 +65,16 @@ python preprocessing/prepare_MM_subjects_list.py \
  --modalities T1w T2w label-WM_mask  -b BaBa21_openneuro \
  --pattern warped flipped \
  --deriv-subdir warped_HR -o list_of_subjects/subjects_ses-0_warp_HR_for_MM_template.csv
+ 
+ python preprocessing/prepare_MM_subjects_list.py \
+ -i list_of_subjects/subjects_ses-0.csv \
+ --modalities T1w T2w label-WM_mask  -b BaBa21_openneuro \
+ --pattern warped flipped \
+ --deriv-subdir warped -o list_of_subjects/subjects_ses-0_warp_for_MM_template.csv
 ```
 
 ### _MM_template_construction.py_ description
-This python wrapper runs a 2-stage multivariate template construction pipeline calling _antsMultivariateTemplateConstruction2.sh_, while enforcing as output a BIDS-compatible derivatives structure.
+This python wrapper runs a 2-stage multivariate template construction pipeline (LowRes + HighRes) calling _antsMultivariateTemplateConstruction2.sh_, while enforcing as output a BIDS-compatible derivatives structure.
 
 | Option              | Description                                                                |
 |---------------------|----------------------------------------------------------------------------|
@@ -81,7 +105,7 @@ python postprocessing/MM_template_construction.py \
 -b BaBa21_openneuro -j 6 \
 --subject BaBa21 \
 --session ses-3 \
---modalities T1w T2w \ 
+--modalities T1w T2w \
 --input-list1 list_of_subjects/subjects_ses-3_warp_for_MM_template.csv \
  --ite1 4 --q1 30x20x10 --w1 1x1 \
 --input-list2 list_of_subjects/subjects_ses-3_warp_HR_for_MM_template.csv \
@@ -94,7 +118,7 @@ python postprocessing/MM_template_construction.py \
 -b BaBa21_openneuro -j 6 \
 --subject BaBa21 \
 --session ses-2 \
---modalities T1w T2w \ 
+--modalities T1w T2w \
 --input-list1 list_of_subjects/subjects_ses-2_warp_for_MM_template.csv \
  --ite1 4 --q1 30x20x10 --w1 1x1 \
 --input-list2 list_of_subjects/subjects_ses-2_warp_HR_for_MM_template.csv \
@@ -107,7 +131,7 @@ python postprocessing/MM_template_construction.py \
 -b BaBa21_openneuro -j 6 \
 --subject BaBa21 \
 --session ses-1 \
---modalities T1w T2w \ 
+--modalities T1w T2w \
 --input-list1 list_of_subjects/subjects_ses-1_warp_for_MM_template.csv \
  --ite1 4 --q1 30x20x10 --w1 1x1 \
 --input-list2 list_of_subjects/subjects_ses-1_warp_HR_for_MM_template.csv \
@@ -120,7 +144,7 @@ python postprocessing/MM_template_construction.py \
 -b BaBa21_openneuro -j 6 \
 --subject BaBa21 \
 --session ses-0 \
---modalities T1w T2w label-WM_mask \ 
+--modalities T1w T2w label-WM_mask \
 --input-list1 list_of_subjects/subjects_ses-0_warp_for_MM_template.csv \
  --ite1 4 --q1 30x20x10 --w1 0.5x0.5x1 \
 --input-list2 list_of_subjects/subjects_ses-0_warp_HR_for_MM_template.csv \
