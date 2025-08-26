@@ -77,10 +77,10 @@ def propagate_symmetrization(template_name, ses_current, template_path, contrast
         base_dir = bids_root / "derivatives" / "template" / f"sub-{template_name}" / ses_current / template_path
         src_img = base_dir / f"sub-{template_name}_{ses_current}_{modality}.nii.gz"
 
-        flipped_img = base_dir / f"sub-{template_name}_{ses_current}_desc-flipped_space-CACP_{modality}.nii.gz"
-        warped_img = base_dir / f"sub-{template_name}_{ses_current}_desc-warped_space-CACP_{modality}.nii.gz"
-        warped_flipped_img = base_dir / f"sub-{template_name}_{ses_current}_desc-flipped-warped_space-CACP_{modality}.nii.gz"
-        sym_avg_img = base_dir / f"sub-{template_name}_{ses_current}_desc-sym_{modality}.nii.gz"
+        flipped_img = base_dir / f"sub-{template_name}_{ses_current}_{modality}_flipped.nii.gz"
+        warped_img = base_dir / f"sub-{template_name}_{ses_current}_{modality}.nii.gz"
+        warped_flipped_img = base_dir / f"sub-{template_name}_{ses_current}_{modality}_flipped_warped.nii.gz"
+        sym_avg_img = base_dir / f"sub-{template_name}_{ses_current}_{modality}_symmetric.nii.gz"
 
         # 1. Flip image
         run_command(["fslswapdim", str(src_img), "-x", "y", "z", str(flipped_img)], dry_run=args.dry_run)
@@ -124,8 +124,8 @@ def symmetrize_session(ses_current, args, templates, bids_root,keep_tmp=False):
     out_prefix.mkdir(parents=True, exist_ok=True)
 
     anat = templates[ses_current]
-    anat_flipped = f"{out_prefix}/{ses_current}_desc-flipped.nii.gz"
-    anat_sym_tmp = f"{out_prefix}/{ses_current}_desc-sym-tmp_mean.nii.gz"
+    anat_flipped = f"{out_prefix}/{ses_current}_flipped.nii.gz"
+    anat_sym_tmp = f"{out_prefix}/{ses_current}_sym-tmp_mean.nii.gz"
 
     print(f"anat     : {anat}")
     print(f"flipped  : {anat_flipped}")
@@ -137,7 +137,7 @@ def symmetrize_session(ses_current, args, templates, bids_root,keep_tmp=False):
 
     apply_flirt(
         anat, anat_sym_tmp,
-        f"{transfo_prefix}_desc-warped.nii.gz",
+        f"{transfo_prefix}_warped.nii.gz",
         f"{transfo_prefix}_anat2sym.mat",
         args.dry_run
     )
@@ -147,7 +147,7 @@ def symmetrize_session(ses_current, args, templates, bids_root,keep_tmp=False):
 
     apply_flirt(
         anat_flipped, anat_sym_tmp,
-        f"{transfo_prefix}_desc-flipped-warped.nii.gz",
+        f"{transfo_prefix}_flipped_warped.nii.gz",
         f"{transfo_prefix}_flip2sym.mat",
         args.dry_run
     )
@@ -156,9 +156,9 @@ def symmetrize_session(ses_current, args, templates, bids_root,keep_tmp=False):
         decompose_transformation(f"{transfo_prefix}_anat2sym.mat")
 
     average_images(
-        f"{transfo_prefix}_desc-warped.nii.gz",
-        f"{transfo_prefix}_desc-flipped-warped.nii.gz",
-        f"{transfo_prefix}_desc-sym_mean.nii.gz",
+        f"{transfo_prefix}_warped.nii.gz",
+        f"{transfo_prefix}_flipped_warped.nii.gz",
+        f"{transfo_prefix}_sym.nii.gz",
         args.dry_run
     )
 
@@ -177,10 +177,10 @@ def main():
     parser.add_argument("--bids_root", required=True, help="Root BIDS directory")
     parser.add_argument("--template_name", required=True, help="Template subject name")
     parser.add_argument("--sessions", nargs='+', required=True, help="List of sessions (ordered)")
-    parser.add_argument("--template_type", default="desc-symmetric-sharpen",required=True, help="Template type")
-    parser.add_argument("--template_modality", required=True, help="single modality to use rigid flirt registration")
+    parser.add_argument("--template_type", default="desc-average_padded_debiased_cropped_norm",required=True, help="Template type")
+    parser.add_argument("--template_modality", required=True, default="T1w", help="single modality to use rigid flirt registration (default T1w)")
     parser.add_argument("--template_path", default="final", help="Subfolder for template")
-    parser.add_argument("--contrasts_to_sym", nargs='*', help="Contrasts to symmetrize (")
+    parser.add_argument("--contrasts_to_sym", nargs='*', help="List of contrasts/maps to symmetrize (")
     parser.add_argument("--keep-tmp", action="store_true", help="Keep temporary files (flipped/warped)")
     parser.add_argument("--compute-reg", action="store_true",default=False, help="compute registration")
     parser.add_argument("--dry-run", action="store_true", help="Don't actually run commands")
