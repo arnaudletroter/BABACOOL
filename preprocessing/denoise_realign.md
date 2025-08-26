@@ -103,7 +103,7 @@ This script performs rigid registration of individual BIDS dataset subjects’ d
 | `--dry-run`            | Print commands without executing them.                                                            |
 | `--threads`            | Number of threads for ITK/ANTs (default: 12)                                                      |
 
-_for timepoint 3_ 
+_for timepoint 3_ \
 register subjects @0.6mm iso from input_folder bids_root/sub/ses/anat to derivatives/warped folder
 ```bash
 python preprocessing/realign_subjects_2_Haiko89.py \
