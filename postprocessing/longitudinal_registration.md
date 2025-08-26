@@ -48,8 +48,6 @@ python postprocessing/register_long_templates.py  \
       label-GM_desc-thr0p2_probseg \
       label-CSF_desc-thr0p2_probseg \
       label-BM_desc-thr0p2_mask \
-      desc-symmetric-sharpen_T1w \
-      desc-symmetric-sharpen_T2w \
       desc-average_padded_debiased_cropped_norm_T1w \
       desc-average_padded_debiased_cropped_norm_T2w \
   --segmentation_mask_suffix desc-symmetric_label-3axis_mask
@@ -109,21 +107,19 @@ output structure of longitudinal transformations
     └── ses-3_to_ses-2_flirt.mat
 ```
 
-Just apply the previous transformation to other contrasts (here average T1w T2w padded), skip registration step
+Just apply the previous transformation to other contrasts (here average sharpen T1w T2w templates), skip registration step
 
 ```bash
 python postprocessing/register_long_templates.py  \
   --bids_root BaBa21_openneuro \
   --template_name BaBa21 \
-  --sessions ses-3 ses-2\
+  --sessions ses-3 ses-2 \
   --template_modalities T1w \
-  --template_type desc-symmetric-sharpen_desc-padded --template_path final \
-  --brain_mask_suffix desc-symmetric_brain_mask_probseg \
+  --template_type desc-average_padded_debiased_cropped_norm --template_path final \
+  --brain_mask_suffix label-BM_desc-thr0p2_probseg \
   --contrasts_to_warp \
-      desc-symmetric_T1w_desc-padded_mean \
-      desc-symmetric_T2w_desc-padded_mean
+      desc-symmetric-sharpen_T1w \
+      desc-symmetric-sharpen_T2w
 ```
-
-
 
 [<-- previous STEP](hist_normalization.md) [return menu](../pipeline4D.md) [--> next STEP](symmetrize_template.md)
