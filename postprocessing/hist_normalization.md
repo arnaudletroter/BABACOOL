@@ -1,7 +1,7 @@
 ## STEP2: Histogram-Based Normalization 
 
 This script performs intensity normalization of T1w or T2w MRI templates across multiple sessions in a BIDS-compliant dataset. 
-It uses tissue probability masks (WM, GM, CSF) and percentile-based scaling to normalize contrast, and can optionally generate a cropped version of the normalized image using a brainmask.
+It uses tissue probability masks (WM and GM) and percentile-based scaling to normalize contrast, and can optionally generate a cropped version of the normalized image using a brainmask.
 
 ### normalize_contrasts.py description
 | Option                        | Description                                                                        |
@@ -76,7 +76,6 @@ BaBa21_openneuro/
                     ├── T1w_ses-2_histogram_before_cor.pdf # QC OPTION
                     ├── T2w_ses-2_histogram_after_cor.pdf # QC OPTION
                     └── T2w_ses-2_histogram_before_cor.pdf # QC OPTION        
-
 ```
 
 [<-- previous STEP](bias_correction.md) [return menu](../pipeline4D.md) [--> next STEP](longitudinal_registration.md)

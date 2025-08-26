@@ -2,9 +2,8 @@
 
 **Semi-automatic AC-PC Alignment Across Timepoints (OPTIONAL)** 
   - stage 1: manual segmentation of 3-axis binary mask in ses-3 space (called **sub-BaBa21_ses-3_desc-symmetric_label-3axis_mask.nii.gz** )
-  - stage 2: rigid + affine registration (ants) and descending 3-axis mask propagation ses-3 -> ses-2 -> ses-1 -> ses-0
-  - stage 3: rigid only registration (flirt) and ascending propagation ses-0 -> ses-1 -> ses-2 -> ses-3
-
+  - stage 2: Segmentation by rigid + affine registration (ants) for propagation of previous 3-axis mask (ses-3 -> ses-2 -> ses-1 -> ses-0)
+  - stage 3: rigid only registration (flirt) 3-axis masks for initial constrained re-alignment of all sessions (ses-0 <-> ses-1 <-> ses-2 <-> ses-3)
 <table>
 <tr>
     <td align="center">
@@ -24,8 +23,8 @@
 | `--bids_root`                 | Root BIDS directory (required).                                                         |
 | `--template_name`             | Template subject name (required).                                                       |
 | `--sessions`                  | List of sessions (ordered) (required). Example: `ses-3 ses-2`.                          |
-| `--template_type`             | Template type. Default: `desc-symmetric-sharpen`. (required)                            |
-| `--template_modalities`       | Modalities to use for registration (required). Example: `T1w T2w`.                      |
+| `--template_type`             | Template type. Default: `desc-average_padded_debiased_cropped_norm`. (required)                            |
+| `--template_modalities`       | List of modalities to use for registration (required). Example: `T1w T2w`.              |
 | `--template_path`             | Subfolder for template. Default: `final`.                                               |
 | `--brain_mask_suffix`         | Brain mask suffix.                                                                      |
 | `--segmentation_mask_suffix`  | Segmentation mask suffix for automatic propagation                                      |
@@ -39,64 +38,63 @@ AC-PC Alignment Across Timepoints template using 3 stages registration ( --compu
 python postprocessing/register_long_templates.py  \
   --bids_root BaBa21_openneuro \
   --template_name BaBa21 \
-  --sessions ses-3 ses-2 ses-1 ses-0\
+  --sessions ses-3 ses-2\
   --template_modalities T1w \
-  --template_type desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped --template_path final \
+  --template_type desc-average_padded_debiased_cropped_norm --template_path final \
   --brain_mask_suffix desc-symmetric_brain_mask_probseg \
   --compute-reg \
   --contrasts_to_warp \
-      desc-symmetric_label-WM_mask_probseg \
-      desc-symmetric_label-GM_mask_probseg \
-      desc-symmetric_label-CSF_mask_probseg \
-      desc-symmetric_brain_mask_probseg \
+      label-WM_desc-thr0p2_probseg \
+      label-GM_desc-thr0p2_probseg \
+      label-CSF_desc-thr0p2_probseg \
+      label-BM_desc-thr0p2_mask \
       desc-symmetric-sharpen_T1w \
       desc-symmetric-sharpen_T2w \
-      desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w \
-      desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w \
+      desc-average_padded_debiased_cropped_norm_T1w \
+      desc-average_padded_debiased_cropped_norm_T2w \
   --segmentation_mask_suffix desc-symmetric_label-3axis_mask
 ```
-Contrast warped structure
+
+For next step: duplicate (for renaming) ses-3 files to ses-3_space-CACP
+```
+cd BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final
+cp -rf sub-BaBa21_ses-2_label-WM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-2_space-CACP_label-WM_desc-thr0p2_probseg.nii.gz
+cp -rf sub-BaBa21_ses-2_label-GM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-2_space-CACP_label-GM_desc-thr0p2_probseg.nii.gz
+cp -rf sub-BaBa21_ses-2_label-CSF_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-2_space-CACP_label-CSF_desc-thr0p2_probseg.nii.gz
+cp -rf sub-BaBa21_ses-2_label-BM_desc-thr0p2_probseg.nii.gz sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_probseg.nii.gz
+cp -rf sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_norm_T1w.nii.gz sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
+cp -rf sub-BaBa21_ses-2_desc-average_padded_debiased_cropped_norm_T2w.nii.gz sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
+cp -rf sub-BaBa21_ses-2_desc-symmetric-sharpen_T1w.nii.gz sub-BaBa21_ses-2_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
+cp -rf sub-BaBa21_ses-2_desc-symmetric-sharpen_T2w.nii.gz sub-BaBa21_ses-2_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
+```
+Example output structure on 2 successive sessions
 ```
 BaBa21_openneuro/
 └── derivatives/
     └── template/
         └── sub-BaBa21/
-            └── ses-0/
+            └── ses-2/
                 └── final/
-                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric_brain_mask_probseg.nii.gz
-                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric_label-CSF_mask_probseg.nii.gz
-                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric_label-GM_mask_probseg.nii.gz
-                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric_label-WM_mask_probseg.nii.gz
-                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
-                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w.nii.gz
-                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
-                    ├── sub-BaBa21_ses-0_space-CACP_desc-symmetric-sharpen_T2w.nii.gz    
-            └── ses-1/
+                    ├── sub-BaBa21_ses-2_space-CACP_label-WM_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-GM_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-CSF_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-symmetric-sharpen_T2w.nii.gz   
+            └── ses-3/
                 └── final/
-                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric_brain_mask_probseg.nii.gz
-                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric_label-CSF_mask_probseg.nii.gz
-                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric_label-GM_mask_probseg.nii.gz
-                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric_label-WM_mask_probseg.nii.gz
-                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
-                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w.nii.gz
-                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
-                    ├── sub-BaBa21_ses-1_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
-```     
-
-For next step: duplicate ses-3 files to ses-3_space-CACP
+                    ├── sub-BaBa21_ses-3_space-CACP_label-WM_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
 ```
-cd BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-3/final
-cp -rf sub-BaBa21_ses-3_desc-symmetric_brain_mask_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric_brain_mask_probseg.nii.gz
-cp -rf sub-BaBa21_ses-3_desc-symmetric_label-CSF_mask_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric_label-CSF_mask_probseg.nii.gz
-cp -rf sub-BaBa21_ses-3_desc-symmetric_label-GM_mask_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric_label-GM_mask_probseg.nii.gz
-cp -rf sub-BaBa21_ses-3_desc-symmetric_label-WM_mask_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric_label-WM_mask_probseg.nii.gz
-cp -rf sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w.nii.gz
-cp -rf sub-BaBa21_ses-3_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w.nii.gz
-cp -rf sub-BaBa21_ses-3_desc-symmetric-sharpen_T1w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T1w.nii.gz
-cp -rf sub-BaBa21_ses-3_desc-symmetric-sharpen_T2w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-symmetric-sharpen_T2w.nii.gz
-```
-
-longitudinal transformations structure
+output structure of longitudinal transformations 
 ```
 ../BaBa21_openneuro/derivatives/transforms/sub-BaBa21
 └── long
