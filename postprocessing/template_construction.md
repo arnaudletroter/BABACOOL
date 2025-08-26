@@ -88,12 +88,14 @@ This python wrapper runs a 2-stage multivariate template construction pipeline (
 |                     |                                                                            |
 | **Stage 1 (LR)**    |                                                                            |
 | `--input-list1`     | CSV file with list of input NIfTI images for first stage (required).       |
+| `--LR_reg_metrics`  | Type of similarity metric used for pairwise registration (default: `MI`).  |
 | `--ite1`            | Number of iterations for Stage 1 (default: `4`).                           |
 | `--q1`              | Steps for Stage 1 `-q` option (default: `50x30x15`).                       |
 | `--w1`              | Weights for Stage 1 modalities (default: `0.5x0.5x1`).                     |
 |                     |                                                                            |
 | **Stage 2 (HR)**    |                                                                            |
 | `--input-list2`     | CSV file with list of input NIfTI images for second stage (required).      |
+| `--HR_reg_metrics`  | Type of similarity metric used for pairwise registration (default: `CC`).  |
 | `--ite2`            | Number of iterations for Stage 2 (default: `2`).                           |
 | `--q2`              | Steps for Stage 2 `-q` option (default: `70x50x30`).                       |
 | `--w2`              | Weights for Stage 2 modalities (default: `1x1x1`).                         |
