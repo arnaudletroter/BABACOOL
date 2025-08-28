@@ -12,7 +12,7 @@ The script performs iterative symmetrization of anatomical images and other cont
 </tr>
 <tr>
     <td align="left">
-
+<span style="font-size:12px;">
 **1. Input Validation**  
 - Check required anatomical templates and optional contrast maps.  
 - Stop execution if any required files are missing.
@@ -52,10 +52,10 @@ The script performs iterative symmetrization of anatomical images and other cont
 - Symmetrized contrast maps (if provided).  
 - Optional logging of symmetry scores.  
 - Temporary files can be kept or deleted (`--keep-tmp`).
-
+   </span>
     </td>
     <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sym_flow_chart.png" width="200" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sym_flow_chart.png" width="400" />
     </td>
 </tr>
 
