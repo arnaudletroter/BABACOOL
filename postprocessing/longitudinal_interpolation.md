@@ -20,16 +20,18 @@
 ```bash
 python postprocessing/interpolate_long_template.py  \
 --bids_root BaBa21_openneuro   --template_name BaBa21 \
---sessions ses-3 ses-2 ses-1 \
+--sessions ses-3 ses-2 \
 --registration_modalities T2w T1w \
 --registration_metrics CC CC \
 --compute-reg \
 --reg_long_type desc-MM \
 --suffix_modalities \
-    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
-    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
+    space-CACP_desc-average_padded_debiased_cropped_norm_T1w_symmetric
+    space-CACP_desc-average_padded_debiased_cropped_norm_T2w_symmetric
 --template_path final \
---dry-run
+--dry-run    
+      
+      
 ```
 ```bash
 python postprocessing/interpolate_long_template.py  \

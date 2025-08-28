@@ -12,7 +12,6 @@ The script performs iterative symmetrization of anatomical images and other cont
 </tr>
 <tr>
     <td align="left">
-<span style="font-size:10px;">
 
 **1. Input Validation**
 - Check required anatomical templates and optional contrast maps.  
@@ -31,9 +30,9 @@ The script performs iterative symmetrization of anatomical images and other cont
   - Register flipped image → same symmetric image.  
     - Save matrix → `flip2sym.mat`.  
   - Decompose matrices → Euler angles (`rx, ry, rz`) + translation.  
-  - Compute symmetry score → sum of absolute differences of rotation angles.  
+  - Compute symmetry score → absolute sum of rotation angles.  
   - Stop if:  
-    - All Euler angles < `--max-angle`.  
+    - All sum Euler angles < `--max-angle`.  
     - Iterations reach `--max-iter`.  
   - Otherwise, repeat using previous `sym-tmp_mean`.
   
@@ -53,7 +52,7 @@ The script performs iterative symmetrization of anatomical images and other cont
 - Symmetrized contrast maps (if provided).  
 - Optional logging of symmetry scores.  
 - Temporary files can be kept or deleted (`--keep-tmp`).
-   </span>
+
     </td>
     <td align="center">
     <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sym_flow_chart.png" width="400" />
@@ -65,7 +64,7 @@ The script performs iterative symmetrization of anatomical images and other cont
 ### sym_template.py description
 
 | Option                | Description                                                                                    |
-| --------------------- | ---------------------------------------------------------------------------------------------- |
+| --------------------- |------------------------------------------------------------------------------------------------|
 | `--bids_root`         | Root BIDS directory (**required**).                                                            |
 | `--template_name`     | Template subject name (**required**).                                                          |
 | `--sessions`          | List of sessions (ordered) (**required**).                                                     |
@@ -77,26 +76,25 @@ The script performs iterative symmetrization of anatomical images and other cont
 | `--compute-reg`       | Compute registration (default: False).                                                         |
 | `--dry-run`           | Don’t actually run commands.                                                                   |
 | `--flirt-opts`        | Options to pass to FSL flirt (default: `-dof 6 -searchrx -5 5 -searchry -5 5 -searchrz -5 5`). |
-| `--max-angle`         | Maximum Euler rotation angle (degrees) to stop iteration (default: 0.5).                       |
+| `--max-angle`         | Maximum sum of Euler rotation angle (degrees) to stop iteration (default: 1).                  |
 | `--max-iter`          | Maximum number of iterations for symmetrization (default: 10).                                 |
 
 First running to Symmetrize anatomical template using rigid registration ( --compute-reg )
 
 ```bash
-python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_name BaBa21 \
-  --sessions ses-3 ses-2 \
-  --template_modality T1w \
-  --template_type space-CACP_desc-average_padded_debiased_cropped_norm --template_path final \
+python postprocessing/sym_template.py --bids_root ../BaBa21_openneuro  --template_name BaBa21  \
+  --sessions ses-2 ses-3 --template_modality T1w --template_type space-CACP_desc-average_padded_debiased_cropped_norm \
+  --template_path final --max-angle 1 --max-iter 4 \
   --compute-reg
 ```
 
 Second running to just apply the previous transformation to other contrasts/maps
 
 ```bash
-python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_name BaBa21 \
-  --sessions ses-3 ses-2 \
-  --template_modality T1w \
-  --template_type space-CACP_desc-average_padded_debiased_cropped_norm --template_path final \
+python postprocessing/sym_template.py --bids_root ../BaBa21_openneuro  --template_name BaBa21  \
+  --sessions ses-2 ses-3 \
+  --template_modality T1w --template_type space-CACP_desc-average_padded_debiased_cropped_norm \
+  --template_path final \
   --contrasts_to_sym \
       space-CACP_label-WM_desc-thr0p2_probseg \
       space-CACP_label-GM_desc-thr0p2_probseg \
@@ -116,24 +114,24 @@ BaBa21_openneuro/
         └── sub-BaBa21/
             └── ses-2/
                 └── final/
-                    ├── sub-BaBa21_ses-2_space-CACP_label-WM_desc-thr0p2_probseg_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_label-GM_desc-thr0p2_probseg_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_label-CSF_desc-thr0p2_probseg_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_mask_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T1w_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T2w_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_desc-sharpen_T1w_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-2_space-CACP_desc-sharpen_T2w_symmetric.nii.gz   
+                    ├── sub-BaBa21_ses-2_space-CACP_label-WM_desc-thr0p2_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-GM_desc-thr0p2_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-CSF_desc-thr0p2_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_symmetric_mask.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T2w.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-sharpen_symmetric_T1w.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_desc-sharpen_symmetric_T2w.nii.gz   
             └── ses-3/
                 └── final/
-                    ├── sub-BaBa21_ses-3_space-CACP_label-WM_desc-thr0p2_probseg_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_probseg_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_probseg_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_mask_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T1w_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T2w_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_desc-sharpen_T1w_symmetric.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_desc-sharpen_T2w_symmetric.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-WM_desc-thr0p2_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_symmetric_mask.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T2w.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-sharpen_symmetric_T1w.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_desc-sharpen_symmetric_T2w.nii.gz
 ```
 
 [<-- previous STEP](longitudinal_registration.md) [return menu](../pipeline4D.md) [--> next STEP](longitudinal_interpolation.md)
