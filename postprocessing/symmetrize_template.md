@@ -12,8 +12,9 @@ The script performs iterative symmetrization of anatomical images and other cont
 </tr>
 <tr>
     <td align="left">
-<span style="font-size:12px;">
-**1. Input Validation**  
+<span style="font-size:10px;">
+
+**1. Input Validation**
 - Check required anatomical templates and optional contrast maps.  
 - Stop execution if any required files are missing.
 
