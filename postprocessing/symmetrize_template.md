@@ -1,4 +1,4 @@
-# STEP4: Symmetrize all volumes by L/R flipping with rigid registration step (OPTIONAL)
+## STEP4: Symmetrize all volumes by L/R flipping with rigid registration step (OPTIONAL)
 
 The script performs iterative symmetrization of anatomical images and other contrasts in a BIDS dataset, ensuring consistent left-right symmetry across sessions. It combines rigid registration, flipping, and averaging of images.
 

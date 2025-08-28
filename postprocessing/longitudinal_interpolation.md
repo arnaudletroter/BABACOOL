@@ -1,4 +1,4 @@
-## STEP4: Generation of Intermediate Timepoint Templates
+## STEP5: Generation of Intermediate Timepoint Templates
 
 ### interpolate_long_template.py description
 
