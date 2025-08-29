@@ -4,15 +4,6 @@ The script performs iterative symmetrization of anatomical images and other cont
 
 ### algorithm for symmetrization
 
-<table>
-
-<tr> 
-    <td align="center">Description</td> 
-    <td align="center">Flowchart</td> 
-</tr>
-<tr>
-    <td align="left">
-
 **1. Input Validation**
 - Check required anatomical templates and optional contrast maps.  
 - Stop execution if any required files are missing.
@@ -52,14 +43,6 @@ The script performs iterative symmetrization of anatomical images and other cont
 - Symmetrized contrast maps (if provided).  
 - Optional logging of symmetry scores.  
 - Temporary files can be kept or deleted (`--keep-tmp`).
-
-    </td>
-    <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sym_flow_chart.png" width="400" />
-    </td>
-</tr>
-
-</table>
 
 ### sym_template.py description
 
