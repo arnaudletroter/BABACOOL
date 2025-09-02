@@ -162,15 +162,15 @@ derivatives/
             └── tmp_LR/
                 ├── SyN_iteration3_MYtemplate0.nii.gz # T1w
                 ├── SyN_iteration3_MYtemplate1.nii.gz # T2w
-                └── SyN_iteration3_MYtemplate2.nii.gz # label-WM_probseg
+                └── SyN_iteration3_MYtemplate2.nii.gz # label-WM_mask
             └── tmp_HR/
                 ├── SyN_iteration1_MYtemplate0.nii.gz # T1w
                 ├── SyN_iteration1_MYtemplate1.nii.gz # T2w
-                └── SyN_iteration1_MYtemplate2.nii.gz # label-WM_probseg
+                └── SyN_iteration1_MYtemplate2.nii.gz # label-WM_mask
             └── final/
                 ├── sub-BaBa21_ses-0_desc-sharpen_T1w.nii.gz
                 ├── sub-BaBa21_ses-0_desc-sharpen_T2w.nii.gz
-                └── sub-BaBa21_ses-0_desc-sharpen_label-WM_probseg.nii.gz
+                └── sub-BaBa21_ses-0_desc-sharpen_label-WM_mask.nii.gz
         ...
         └── ses-3/
             └── tmp_LR/

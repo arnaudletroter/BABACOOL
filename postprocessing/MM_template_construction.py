@@ -125,7 +125,7 @@ def main():
         dst_name = f"sub-{args.subject}_{args.session}_{desc}.nii.gz"
         src = os.path.join(tmp_HR, "intermediateTemplates", f"SyN_iteration{args.ite2 - 1}_MYtemplate{i}.nii.gz")
         dst = os.path.join(final_dir, dst_name)
-        run_command([f"cp -f {src} {dst}"], dry_run)
+        run_command([f"cp -f {src} {dst}"], dry_run , workdir='./', shell=True)
         print(f"{dst}")
         i += 1
 
