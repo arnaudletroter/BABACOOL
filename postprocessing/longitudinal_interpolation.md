@@ -20,7 +20,7 @@
 ```bash
 python postprocessing/interpolate_long_template.py  \
 --bids_root BaBa21_openneuro   --template_name BaBa21 \
---sessions ses-3 ses-2 \
+--sessions ses-3 ses-2 ses-1 \
 --registration_modalities T2w T1w \
 --registration_metrics CC CC \
 --compute-reg \
