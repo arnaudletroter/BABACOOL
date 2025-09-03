@@ -72,12 +72,19 @@ python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_n
 ```
 
 Example part of output log on session ses-0
+
 --- Iteration 1 ---
+
 Translation (x, y, z) : 0.415651, -0.109873, -0.233874
+
 Rotation (rx Pitch, ry Roll, rz Yaw) in degree : 0.016°, -0.189°, 0.114°
+
 Translation (x, y, z) : -0.513455, 0.232538, 0.218398
+
 Rotation (rx Pitch, ry Roll, rz Yaw) in degree : 0.021°, 0.205°, -0.183°
+
 Symmetry score (sum of angle in degrees): 0.1218
+
 symmetrical criteria [0.03667483 0.0159812  0.06917499] < (1.0°). Stopping iterations.
 
 ```bash
