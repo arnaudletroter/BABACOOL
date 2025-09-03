@@ -70,7 +70,7 @@ python postprocessing/generate_TPM.py \
   --map_type contrast \
   --bids_description average padded
  ```
-**Generate _for other timepoints_ the padded template *
+**Generate _for other timepoints_ the padded template**
 ```bash
 #!/bin/bash
 
