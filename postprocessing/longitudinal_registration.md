@@ -113,7 +113,7 @@ Just apply the previous transformation to other contrasts (here average sharpen 
 python postprocessing/register_long_templates.py  \
   --bids_root BaBa21_openneuro \
   --template_name BaBa21 \
-  --sessions ses-3 ses-2 \
+  --sessions ses-3 ses-2 ses-1 ses-0 \
   --template_modalities T1w \
   --template_type desc-average_padded_debiased_cropped_norm --template_path final \
   --brain_mask_suffix label-BM_desc-thr0p2_mask \
