@@ -98,7 +98,7 @@ for ses in "${sessions[@]}"; do
       --output_tmp_folder warped_HR \
       --modalities T1w T2w \
       --map_type contrast \
-      --bids_description "average padded"
+      --bids_description average padded
     echo "=== Finished processing $ses ==="
 done
 
