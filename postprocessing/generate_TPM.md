@@ -47,7 +47,7 @@ BaBa21_openneuro/
         └── sub-BaBa21/
             └── ses-3/
                 ├── final/
-                │   ├── sub-BaBa21_ses-3_label-WM_mask_probseg.nii.gz
+                │   ├── sub-BaBa21_ses-3_label-WM_desc-average_probseg.nii.gz
                 │   ├── sub-BaBa21_ses-3_label-GM_desc-average_probseg.nii.gz
                 │   ├── sub-BaBa21_ses-3_label-CSF_desc-average_probseg.nii.gz
 ```
@@ -70,6 +70,39 @@ python postprocessing/generate_TPM.py \
   --map_type contrast \
   --bids_description average padded
  ```
+**Generate _for other timepoints_ the padded template *
+```bash
+#!/bin/bash
+
+# List of sessions
+sessions=("ses-0" "ses-1" "ses-2")
+TEMPLATE="BaBa21"
+BIDS_ROOT="BaBa21_openneuro"
+
+for ses in "${sessions[@]}"; do
+    echo "=== Processing $ses ==="
+    # Run ImageMath with PadImage
+    ImageMath 3 \
+        ${BIDS_ROOT}/derivatives/template/sub-${TEMPLATE}/${ses}/final/sub-${TEMPLATE}_${ses}_desc-sharpen_padded_T1w.nii.gz \
+        PadImage \
+        ${BIDS_ROOT}/derivatives/template/sub-${TEMPLATE}/${ses}/final/sub-${TEMPLATE}_${ses}_desc-sharpen_T1w.nii.gz 25
+    # Run Python script for TPM generation
+    python postprocessing/generate_TPM.py \
+      --bids_root ${BIDS_ROOT} \
+      --subjects_csv list_of_subjects/subjects_${ses}.csv \
+      --template_name ${TEMPLATE} \
+      --template_session ${ses} \
+      --reference_suffix desc-sharpen_padded_T1w \
+      --patterns warped flipped \
+      --template_folder final \
+      --output_tmp_folder warped_HR \
+      --modalities T1w T2w \
+      --map_type contrast \
+      --bids_description "average padded"
+    echo "=== Finished processing $ses ==="
+done
+
+```
 
 Example output structure
 ```
@@ -149,7 +182,7 @@ python postprocessing/generate_TPM.py \
   --bids_description average probseg
 ```
 
-**Generate _for all timepoints_ the corrected TPM where WM=1-(GM+CSF) with GM,CSF>thr and BM=sum(GM,WM,CSF)>thr)**
+**Generate _for all timepoints_ the corrected TPM where WM=1-(GM+CSF) with GM,CSF>thr and the brainmask where BM=sum(GM,WM,CSF)>thr)**
 ```bash
 python postprocessing/correct_TPM.py \
   --bids_root BaBa21_openneuro \
