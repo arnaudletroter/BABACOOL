@@ -26,8 +26,8 @@ python postprocessing/interpolate_long_template.py  \
 --compute-reg \
 --reg_long_type desc-MM \
 --suffix_modalities \
-    space-CACP_desc-average_padded_debiased_cropped_norm_T1w_symmetric
-    space-CACP_desc-average_padded_debiased_cropped_norm_T2w_symmetric
+    space-CACP_desc-average_padded_debiased_cropped_norm_T1w_symmetric \
+    space-CACP_desc-average_padded_debiased_cropped_norm_T2w_symmetric \
 --template_path final \
 --dry-run    
       
