@@ -66,7 +66,7 @@ First running to Symmetrize anatomical template using rigid registration ( --com
 
 ```bash
 python postprocessing/sym_template.py --bids_root ../BaBa21_openneuro  --template_name BaBa21  \
-  --sessions ses-2 ses-3 --template_modality T1w --template_type space-CACP_desc-average_padded_debiased_cropped_norm \
+  --sessions ses-0 ses-1 ses-2 ses-3 --template_modality T1w --template_type space-CACP_desc-average_padded_debiased_cropped_norm \
   --template_path final --max-angle 1 --max-iter 4 \
   --compute-reg
 ```
