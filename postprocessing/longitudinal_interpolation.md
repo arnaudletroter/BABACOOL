@@ -2,27 +2,27 @@
 
 ### interpolate_long_template.py description
 
-| Option                                                                            | Description                                                                                                    |
-|-----------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------------------------- |
-| `-h, --help`                                                                      | Show this help message and exit.                                                                               |
-| `--bids_root BIDS_ROOT`                                                           | Root BIDS directory.                                                                                           |
-| `--template_name TEMPLATE_NAME`                                                   | Template subject name.                                                                                         |
-| `--sessions SESSIONS [SESSIONS ...]`                                              | List of sessions (ordered).                                                                                    |
-| `--registration_modalities REGISTRATION_MODALITIES [REGISTRATION_MODALITIES ...]` | Modalities to use for registration, e.g. `T2w T1w`.                                                            |
-| `--template_prefix TEMPLATE_PREFIX`                                               | Template prefix used for registration (e.g. `space-CACP_desc-average_padded_debiased_cropped_norm_symmetric`). |
-| `--registration_metrics REGISTRATION_METRICS [REGISTRATION_METRICS ...]`          | Metrics corresponding to `registration_modalities`, e.g. `MI CC` or `MI[1,32] CC[1,4]`.                        |
-| `--template_path TEMPLATE_PATH`                                                   | Subfolder for template.                                                                                        |
-| `--reg_long_type REG_LONG_TYPE`                                                   | Name of registration type.                                                                                     |
-| `--output_path OUTPUT_PATH`                                                       | Subfolder for template.                                                                                        |
-| `--compute-reg`                                                                   | Compute registration.                                                                                          |
-| `--contrasts_to_interpolate [CONTRASTS_TO_INTERPOLATE ...]`                       | Contrasts to interpolate across timepoints.                                                                    |
-| `--keep-tmp`                                                                      | Keep temporary files.                                                                                          |
-| `--dry-run`                                                                       | Don't actually run commands.                                                                                   |
-| `--morph-enable`                                                                  | Enable morphing between two sessions.                                                                          |
-| `--morph-numsteps MORPH_NUMSTEPS`                                                 | Number of morphing steps (default = 10).                                                                       |
-| `--morph-step MORPH_STEP`                                                         | Morphing increment (default = 1).                                                                              |
-| `--morph-tmpdir MORPH_TMPDIR`                                                     | Temporary directory for morphing images.                                                                       |
-| `--morph-merge4d`                                                                 | Merge all morphs into one 4D file with `fslmerge`.                                                             |
+| Option                                                            | Description                                                                                                    |
+|-------------------------------------------------------------------| -------------------------------------------------------------------------------------------------------------- |
+| `-h, --help`                                                      | Show this help message and exit.                                                                               |
+| `--bids_root BIDS_ROOT`                                           | Root BIDS directory.                                                                                           |
+| `--template_name TEMPLATE_NAME`                                   | Template subject name.                                                                                         |
+| `--sessions [SESSIONS ...]`                                       | List of sessions (ordered).                                                                                    |
+| `--registration_modalities [REGISTRATION_MODALITIES ...]`         | Modalities to use for registration, e.g. `T2w T1w`.                                                            |
+| `--template_prefix TEMPLATE_PREFIX`                               | Template prefix used for registration (e.g. `space-CACP_desc-average_padded_debiased_cropped_norm_symmetric`). |
+| `--registration_metrics [REGISTRATION_METRICS ...]`               | Metrics corresponding to `registration_modalities`, e.g. `MI CC` or `MI[1,32] CC[1,4]`.                        |
+| `--template_path TEMPLATE_PATH`                                   | Subfolder for template.                                                                                        |
+| `--reg_long_type REG_LONG_TYPE`                                   | Name of registration type.                                                                                     |
+| `--output_path OUTPUT_PATH`                                       | Subfolder for template.                                                                                        |
+| `--compute-reg`                                                   | Compute registration.                                                                                          |
+| `--contrasts_to_interpolate [CONTRASTS_TO_INTERPOLATE ...]`       | Contrasts to interpolate across timepoints.                                                                    |
+| `--keep-tmp`                                                      | Keep temporary files.                                                                                          |
+| `--dry-run`                                                       | Don't actually run commands.                                                                                   |
+| `--morph-enable`                                                  | Enable morphing between two sessions.                                                                          |
+| `--morph-numsteps MORPH_NUMSTEPS`                                 | Number of morphing steps (default = 10).                                                                       |
+| `--morph-step MORPH_STEP`                                         | Morphing increment (default = 1).                                                                              |
+| `--morph-tmpdir MORPH_TMPDIR`                                     | Temporary directory for morphing images.                                                                       |
+| `--morph-merge4d`                                                 | Merge all morphs into one 4D file with `fslmerge`.                                                             |
 
 ```bash
 python postprocessing/interpolate_long_template.py  \
