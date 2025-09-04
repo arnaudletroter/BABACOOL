@@ -48,7 +48,7 @@ BaBa21. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds005424.v1.0.0
 
 integration of dMRI templates and atlas of Tract 
 <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/FAcolor_snap.gif" width="639" height="244" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/FAcolor_snap.gif" width="400" height="150" />
 </td>
 
 ## Acknowledgements
