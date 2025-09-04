@@ -44,5 +44,12 @@ under revision in Imaging Neuroscience. Longitudinal MRI template of the baboon 
 Arnaud Le Troter, David Meunier, Katherine Bryant, Julien Sein, Siham Bouziane, Adrien Meguerditchian,
 BaBa21. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds005424.v1.0.0
 
+## Work in Progress 
+
+integration of dMRI templates and atlas of Tract 
+<td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/FAcolor_snap.gif" width="400" height="150" />
+</td>
+
 ## Acknowledgements
 We are very grateful to the Station de Primatologie CNRS, particularly animal care staff, vets and technicians as well as administrative staff of the ILCB, the CRPN and the LPC: Nadia Melili, Nadera Bureau, Frederic Lombardo and Colette Pourpe respectively.
