@@ -59,7 +59,7 @@ python postprocessing/interpolate_long_template.py  \
 ```bash
 python postprocessing/interpolate_long_template.py  \
 --bids_root BaBa21_openneuro   --template_name BaBa21 \
---sessions ses-3 ses-2 ses-1 \
+--sessions ses-3 ses-2 ses-1 ses-0 \
 --registration_modalities T1w \
 --registration_metrics CC \
 --reg_long_type desc-MM \
@@ -68,7 +68,9 @@ python postprocessing/interpolate_long_template.py  \
 --contrasts_to_interpolate \
  space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w \
  space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T2w \
- space-CACP_label-WM_desc-thr0p2_symmetric_probseg \
+ space-CACP_label-WM_desc-thr0p2_padded_symmetric_probseg \
+ space-CACP_label-GM_desc-thr0p2_padded_symmetric_probseg \
+ space-CACP_label-CSF_desc-thr0p2_padded_symmetric_probseg \
  --morph-enable --morph-numsteps 10 --morph-step 1 --morph-tmpdir tmp --morph-merge4d
 ```
 
