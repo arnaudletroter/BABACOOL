@@ -92,6 +92,10 @@ python postprocessing/sym_template.py --bids_root BaBa21_openneuro  --template_n
       space-CACP_label-GM_desc-thr0p2_probseg \
       space-CACP_label-CSF_desc-thr0p2_probseg \
       space-CACP_label-BM_desc-thr0p2_mask \
+      space-CACP_label-WM_desc-thr0p2_padded_probseg \
+      space-CACP_label-GM_desc-thr0p2_padded_probseg \
+      space-CACP_label-CSF_desc-thr0p2_padded_probseg \
+      space-CACP_label-BM_desc-thr0p2_padded_mask \
       space-CACP_desc-average_padded_debiased_cropped_norm_T1w \
       space-CACP_desc-average_padded_debiased_cropped_norm_T2w \
       space-CACP_desc-sharpen_T1w \

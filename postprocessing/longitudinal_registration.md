@@ -64,6 +64,10 @@ cp -rf sub-BaBa21_ses-3_desc-average_padded_debiased_cropped_norm_T1w.nii.gz sub
 cp -rf sub-BaBa21_ses-3_desc-average_padded_debiased_cropped_norm_T2w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
 cp -rf sub-BaBa21_ses-3_desc-sharpen_T1w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-sharpen_T1w.nii.gz
 cp -rf sub-BaBa21_ses-3_desc-sharpen_T2w.nii.gz sub-BaBa21_ses-3_space-CACP_desc-sharpen_T2w.nii.gz
+cp -rf sub-BaBa21_ses-3_label-WM_desc-thr0p2_padded_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-WM_desc-thr0p2_padded_probseg.nii.gz
+cp -rf sub-BaBa21_ses-3_label-GM_desc-thr0p2_padded_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_padded_probseg.nii.gz
+cp -rf sub-BaBa21_ses-3_label-CSF_desc-thr0p2_padded_probseg.nii.gz sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_padded_probseg.nii.gz
+cp -rf sub-BaBa21_ses-3_label-BM_desc-thr0p2_padded_mask.nii.gz sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_padded_mask.nii.gz
 ```
 output structure of longitudinal transformations 
 ```
@@ -95,7 +99,8 @@ python postprocessing/register_long_templates.py  \
       desc-sharpen_T2w \
       label-WM_desc-thr0p2_padded_probseg \
       label-GM_desc-thr0p2_padded_probseg \
-      label-CSF_desc-thr0p2_padded_probseg
+      label-CSF_desc-thr0p2_padded_probseg \
+      label-BM_desc-thr0p2_padded_mask
 ```
 
 Example output structure on 2 successive sessions
@@ -113,6 +118,7 @@ BaBa21_openneuro/
                     ├── sub-BaBa21_ses-2_space-CACP_label-WM_desc-thr0p2_padded_probseg.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_label-GM_desc-thr0p2_padded_probseg.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_label-CSF_desc-thr0p2_padded_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_padded_mask.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_desc-sharpen_T1w.nii.gz
@@ -126,6 +132,7 @@ BaBa21_openneuro/
                     ├── sub-BaBa21_ses-3_space-CACP_label-WM_desc-thr0p2_padded_probseg.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_padded_probseg.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_padded_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_padded_mask.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T1w.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_T2w.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_desc-sharpen_T1w.nii.gz
