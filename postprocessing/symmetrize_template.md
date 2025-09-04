@@ -114,6 +114,10 @@ BaBa21_openneuro/
                     ├── sub-BaBa21_ses-2_space-CACP_label-GM_desc-thr0p2_symmetric_probseg.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_label-CSF_desc-thr0p2_symmetric_probseg.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_symmetric_mask.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-WM_desc-thr0p2_padded_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-GM_desc-thr0p2_padded_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-CSF_desc-thr0p2_padded_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-2_space-CACP_label-BM_desc-thr0p2_padded_symmetric_mask.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T2w.nii.gz
                     ├── sub-BaBa21_ses-2_space-CACP_desc-sharpen_symmetric_T1w.nii.gz
@@ -124,7 +128,10 @@ BaBa21_openneuro/
                     ├── sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_symmetric_probseg.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_symmetric_probseg.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_symmetric_mask.nii.gz
-                    ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-WM_desc-thr0p2_padded_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-GM_desc-thr0p2_padded_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-CSF_desc-thr0p2_padded_symmetric_probseg.nii.gz
+                    ├── sub-BaBa21_ses-3_space-CACP_label-BM_desc-thr0p2_padded_symmetric_mask.nii.gz                    ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T2w.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_desc-sharpen_symmetric_T1w.nii.gz
                     ├── sub-BaBa21_ses-3_space-CACP_desc-sharpen_symmetric_T2w.nii.gz
