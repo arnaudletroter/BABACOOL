@@ -2,82 +2,76 @@
 
 ### interpolate_long_template.py description
 
-| Option                       | Description                                                                                              |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `--bids_root`                | Root BIDS directory (**required**).                                                                      |
-| `--template_name`            | Template subject name (**required**).                                                                    |
-| `--sessions`                 | List of sessions in chronological order (**required**).                                                  |
-| `--registration_modalities`  | Modalities to use for registration, e.g., `T2w T1w` (**required**).                                      |
-| `--suffix_modalities`        | Suffix for each registration modality, in the same order as `--registration_modalities` (**required**).  |
-| `--registration_metrics`     | Metrics corresponding to each registration modality, e.g., `MI CC` or `MI[1,32] CC[1,4]` (**required**). |
-| `--template_path`            | Subfolder within the template directory containing the files (default: `final`).                         |
-| `--output_path`              | Subfolder where outputs/intermediate results are saved (default: `intermediate`).                        |
-| `--compute-reg`              | Flag to actually compute registration (if not set, registration commands are skipped).                   |
-| `--contrasts_to_interpolate` | List of contrast modalities to interpolate across timepoints.                                            |
-| `--keep-tmp`                 | Flag to keep temporary files instead of deleting them.                                                   |
-| `--dry-run`                  | If set, commands are printed but not executed.                                                           |
+| Option                                                                            | Description                                                                                                    |
+|-----------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------------------------- |
+| `-h, --help`                                                                      | Show this help message and exit.                                                                               |
+| `--bids_root BIDS_ROOT`                                                           | Root BIDS directory.                                                                                           |
+| `--template_name TEMPLATE_NAME`                                                   | Template subject name.                                                                                         |
+| `--sessions SESSIONS [SESSIONS ...]`                                              | List of sessions (ordered).                                                                                    |
+| `--registration_modalities REGISTRATION_MODALITIES [REGISTRATION_MODALITIES ...]` | Modalities to use for registration, e.g. `T2w T1w`.                                                            |
+| `--template_prefix TEMPLATE_PREFIX`                                               | Template prefix used for registration (e.g. `space-CACP_desc-average_padded_debiased_cropped_norm_symmetric`). |
+| `--registration_metrics REGISTRATION_METRICS [REGISTRATION_METRICS ...]`          | Metrics corresponding to `registration_modalities`, e.g. `MI CC` or `MI[1,32] CC[1,4]`.                        |
+| `--template_path TEMPLATE_PATH`                                                   | Subfolder for template.                                                                                        |
+| `--reg_long_type REG_LONG_TYPE`                                                   | Name of registration type.                                                                                     |
+| `--output_path OUTPUT_PATH`                                                       | Subfolder for template.                                                                                        |
+| `--compute-reg`                                                                   | Compute registration.                                                                                          |
+| `--contrasts_to_interpolate [CONTRASTS_TO_INTERPOLATE ...]`                       | Contrasts to interpolate across timepoints.                                                                    |
+| `--keep-tmp`                                                                      | Keep temporary files.                                                                                          |
+| `--dry-run`                                                                       | Don't actually run commands.                                                                                   |
+| `--morph-enable`                                                                  | Enable morphing between two sessions.                                                                          |
+| `--morph-numsteps MORPH_NUMSTEPS`                                                 | Number of morphing steps (default = 10).                                                                       |
+| `--morph-step MORPH_STEP`                                                         | Morphing increment (default = 1).                                                                              |
+| `--morph-tmpdir MORPH_TMPDIR`                                                     | Temporary directory for morphing images.                                                                       |
+| `--morph-merge4d`                                                                 | Merge all morphs into one 4D file with `fslmerge`.                                                             |
 
 ```bash
 python postprocessing/interpolate_long_template.py  \
 --bids_root BaBa21_openneuro   --template_name BaBa21 \
+--template_prefix space-CACP_desc-average_padded_debiased_cropped_norm_symmetric \
 --sessions ses-3 ses-2 ses-1 \
 --registration_modalities T2w T1w \
 --registration_metrics CC CC \
 --compute-reg \
 --reg_long_type desc-MM \
---suffix_modalities \
-    space-CACP_desc-average_padded_debiased_cropped_norm_T1w_symmetric \
-    space-CACP_desc-average_padded_debiased_cropped_norm_T2w_symmetric \
 --template_path final \
 --dry-run    
       
       
 ```
 ```bash
+## temporary copy of the WM TPM used as metric for registration
+cd BaBa21_openneuro/derivatives/template/sub-BaBa21/ses-0/final
+cp -rf sub-BaBa21_ses-0_space-CACP_label-WM_desc-thr0p2_symmetric_probseg.nii.gz sub-BaBa21_ses-0_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_WM.nii.gz
+cd ../../ses-1/final
+cp -rf sub-BaBa21_ses-1_space-CACP_label-WM_desc-thr0p2_symmetric_probseg.nii.gz sub-BaBa21_ses-1_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_WM.nii.gz
+
 python postprocessing/interpolate_long_template.py  \
 --bids_root BaBa21_openneuro   --template_name BaBa21 \
+--template_prefix space-CACP_desc-average_padded_debiased_cropped_norm_symmetric \
 --sessions ses-1 ses-0 \
---registration_modalities T2w T1w label-WM_mask_probseg \
+--registration_modalities T2w T1w WM \
 --compute-reg \
---reg_long_type desc-MM \
 --registration_metrics MI MI CC[1,4] \
---suffix_modalities \
- space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
- space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
- desc-sym_space-CACP_desc-symmetric  \
+--reg_long_type desc-MM \
 --template_path final 
 ```
 
 ```bash
 python postprocessing/interpolate_long_template.py  \
 --bids_root BaBa21_openneuro   --template_name BaBa21 \
---sessions ses-3 ses-2 ses-1 ses-0 \
+--sessions ses-3 ses-2 ses-1 \
 --registration_modalities T1w \
 --registration_metrics CC \
 --reg_long_type desc-MM \
---suffix_modalities \
- space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
+--template_prefix space-CACP_desc-average_padded_debiased_cropped_norm_symmetric \
 --template_path final \
 --contrasts_to_interpolate \
- desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T1w \
- desc-sym_space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped_T2w \
- desc-sym_space-CACP_desc-symmetric_label-WM_mask_probseg
+ space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w \
+ space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T2w \
+ space-CACP_label-WM_desc-thr0p2_symmetric_probseg \
+ --morph-enable --morph-numsteps 10 --morph-step 1 --morph-tmpdir tmp --morph-merge4d
 ```
 
-```bash
-python postprocessing/interpolate_long_template.py  \
---bids_root BaBa21_openneuro   --template_name BaBa21 \
---sessions ses-3 ses-2 \
---registration_modalities T2w T1w \
---registration_metrics CC CC \
---compute-reg \
---reg_long_type desc-MM-padded \
---suffix_modalities \
-    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
-    space-CACP_desc-symmetric-sharpen_desc-debiased_desc-norm_desc-cropped \
---template_path final \
---dry-run
-```
 
 
 
