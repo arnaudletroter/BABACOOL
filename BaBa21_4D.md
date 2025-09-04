@@ -5,14 +5,23 @@
     <td align="center">
     <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/final_T1w_snap.gif" width="639" height="244" />
     </td>
+    <td align="center">T1w</td>
+</tr>
+<tr>
     <td align="center">
     <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/final_T2w_snap.gif" width="639" height="244" />
     </td>
+    <td align="center">T2w</td>
+</tr>
+<tr>
     <td align="center">
     <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/final_WM_snap.gif" width="639" height="244" />
     </td>
+    <td align="center">WM TPM</td>
 </tr>
 </table>
+
+
 
 ```bash
 ./snap.sh ses-1_to_ses-0_desc-MM_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w_morph_4D.nii.gz 0 T1w
