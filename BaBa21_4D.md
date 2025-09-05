@@ -16,7 +16,6 @@
     <td align="center">
     <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/final_T2w_snap.gif" width="639" height="244" />
     </td>
-    <td align="center">T2w</td>
 </tr>
 <tr> 
     <td align="center">WM TPM (CACP re-oriented + symmetrized)</td>
