@@ -30,6 +30,7 @@
 
 
 
+
 ```bash
 ./snap.sh ses-1_to_ses-0_desc-MM_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w_morph_4D.nii.gz 0 T1w
 ./snap.sh ses-2_to_ses-1_desc-MM_space-CACP_desc-average_padded_debiased_cropped_norm_symmetric_T1w_morph_4D.nii.gz 10 T1w

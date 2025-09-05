@@ -8,7 +8,7 @@ This resource is made available to provide a normalization target for baboon dat
 
 [# PART2: pipeline processing steps for **(4D+t)** longitudinal template interpolation](pipeline4D.md)
 
-[# FINAL RESULTS: **(4D+t)** animation of BaBa21](BaBa21_4D.md)
+[# FINAL RESULTS: **(4D+t)** animation of BaBa21 4D](BaBa21_4D.md)
 
 <table>
 <tr>
