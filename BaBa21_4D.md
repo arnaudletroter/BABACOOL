@@ -1,11 +1,16 @@
 # FINAL RESULTS: **(4D+t)** animation of BaBa21
 
 <table>
+<tr> 
+    <td align="center">average T1w (CACP re-oriented + contrast normalized + symmetrized + skull-stripped + padded)</td>
+</tr>
 <tr>
     <td align="center">
     <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/final_T1w_snap.gif" width="639" height="244" />
     </td>
-    <td align="center">T1w</td>
+</tr>
+<tr> 
+    <td align="center">average T2w (CACP re-oriented + contrast normalized + symmetrized + skull-stripped + padded)</td>
 </tr>
 <tr>
     <td align="center">
@@ -13,11 +18,13 @@
     </td>
     <td align="center">T2w</td>
 </tr>
+<tr> 
+    <td align="center">WM TPM (CACP re-oriented + symmetrized)</td>
+</tr>
 <tr>
     <td align="center">
     <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/final_WM_snap.gif" width="639" height="244" />
     </td>
-    <td align="center">WM TPM</td>
 </tr>
 </table>
 

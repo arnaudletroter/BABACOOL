@@ -6,7 +6,7 @@ This resource is made available to provide a normalization target for baboon dat
 ## How to use ?
 [# PART1: pipeline processing steps for **3D** template construction](pipeline3D.md) 
 
-[# PART2: pipeline processing steps **(4D+t)** longitudinal template interpolation](pipeline4D.md)
+[# PART2: pipeline processing steps for **(4D+t)** longitudinal template interpolation](pipeline4D.md)
 
 [# FINAL RESULTS: **(4D+t)** animation of BaBa21](BaBa21_4D.md)
 
