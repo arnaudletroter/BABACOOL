@@ -7,6 +7,8 @@ Other twenty subjects can be retrieved on request from the authors and will be p
 ### You can use git
 ```bash
 $ git clone https://openneuro.org/git/3/ds005424
+or
+$ git clone https://github.com/OpenNeuroDatasets/ds005424.git
 ```
 ### or datalad
 ```bash
