@@ -359,8 +359,8 @@ def main():
                 cmd += ["--metric", metric_cmd]
 
             cmd += [
-                #"--convergence", "[100x60x30x10,1e-6,10]",
-                "--convergence", "[100x60x0x0,1e-6,10]",
+                "--convergence", "[100x60x30x10,1e-6,10]",
+                #"--convergence", "[100x60x0x0,1e-6,10]",
                 "--shrink-factors", "8x4x2x1",
                 "--smoothing-sigmas", "3x2x1x0vox",
             ]
