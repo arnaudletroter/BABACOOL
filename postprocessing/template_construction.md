@@ -74,7 +74,25 @@ python preprocessing/prepare_MM_subjects_list.py \
 ```
 
 ### _MM_template_construction.py_ description
-This python wrapper runs a 2-stage multivariate template construction pipeline (LowRes + HighRes) calling _antsMultivariateTemplateConstruction2.sh_, while enforcing as output a BIDS-compatible derivatives structure.
+
+This python wrapper runs a 2-stage multivariate template construction pipeline (LowRes + HighRes) calling _antsMultivariateTemplateConstruction2.sh_, while enforcing as output a BIDS-compatible derivatives structure. 
+
+The template construction was performed in two main stages using the ANTs antsMultivariateTemplateConstruction2.sh script, pooling both T1w and T2w contrasts as inputs (see also Fig. 1):
+
+Stage 1 (Low spatial Resolution)
+- T1w and T2w images were downsampled to an isotropic voxel size of (0.6 mm)³
+- Cropped to a matrix size of 180³ voxels in Haiko89 space.
+four iterations with parameters: shrink factor 4x2x1, smoothing factor 2x1x0, and cross-correlation for pairwise registration.
+- Maximum iterations were set to 30x20x10.
+- Laplacian sharpening (Xin Wang, 2007) was applied to the T1w and T2w templates at each iteration.
+- The output of the last iteration was interpolated to 0.4 mm isotropic resolution, serving as target for Stage 2.
+Stage 2  (High spatial Resolution)
+- The preprocessed T1w and T2w images were resampled to an isotropic voxel size of (0.4 mm)³ 
+- Cropped to a matrix size of 270³ voxels in Haiko89 space.
+- two iterations shrink factor 4x2x1, smoothing factor 2x1x0, and cross-correlation for pairwise registration
+- Maximum iterations were set to 70x50x30.
+- Laplacian sharpening was applied at each iteration.
+
 
 | Option              | Description                                                                |
 |---------------------|----------------------------------------------------------------------------|
