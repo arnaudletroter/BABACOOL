@@ -86,6 +86,7 @@ four iterations with parameters: shrink factor 4x2x1, smoothing factor 2x1x0, an
 - Maximum iterations were set to 30x20x10.
 - Laplacian sharpening (Xin Wang, 2007) was applied to the T1w and T2w templates at each iteration.
 - The output of the last iteration was interpolated to 0.4 mm isotropic resolution, serving as target for Stage 2.
+
 Stage 2  (High spatial Resolution)
 - The preprocessed T1w and T2w images were resampled to an isotropic voxel size of (0.4 mm)³ 
 - Cropped to a matrix size of 270³ voxels in Haiko89 space.
