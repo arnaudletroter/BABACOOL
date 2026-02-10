@@ -1,4 +1,4 @@
-## STEP1: B1 Bias correction
+## STEP1: B1 Bias correction (on template)
 
 ### bias_correction.py description
 
@@ -104,4 +104,93 @@ Example output structure
 </tr>
 </table>
 
+## STEP1b: B1 Bias correction (on subjects)
+
+### bias_correction_HCP_T1wT2w.py description
+
+This script performs bias field correction on multiple subject's sessions saving outputs in BIDS
+derivatives folder.
+
+| Option                                     | Description                                                                |
+| ------------------------------------------ | -------------------------------------------------------------------------- |
+| `-h`, `--help`                             | Show this help message and exit.                                           |
+| `-i INPUT_CSV`, `--input-csv INPUT_CSV`    | CSV file (e.g. `subjects_sessions.csv`) with columns `subject`, `session`. |
+| `-b BIDS_ROOT`, `--bids-root BIDS_ROOT`    | Path to the root of the BIDS dataset.                                      |
+| `-o OUTPUT_CSV`, `--output-csv OUTPUT_CSV` | Path to the CSV file listing output T1w and T2w unbiased images.           |
+| `--threads THREADS`                        | Number of threads for ITK/ANTs (default: 12).                              |
+| `--brain_mask_suffix BRAIN_MASK_SUFFIX`    | Suffix for the binary brain mask filename (e.g., `desc-brain_mask`).       |
+| `--s_value S_VALUE`                        | Size of Gaussian kernel in mm when performing mean filtering (default: 2). |
+| `--k`                                      | Keep temporary files (adds the `-k` flag).                                 |
+| `--dry-run`                                | Print commands without executing them.                                     |
+
+_for all timepoints_
+```bash
+python preprocessing/bias_correction_HCP_T1wT2w.py -i list_of_subjects/subjects_ses-0.csv -b BaBa21_openneuro -o list_of_subjects/subjects_ses-0_unbiased.csv --brain_mask_suffix space-orig_desc-brain_mask 
+python preprocessing/bias_correction_HCP_T1wT2w.py -i list_of_subjects/subjects_ses-1.csv -b BaBa21_openneuro -o list_of_subjects/subjects_ses-1_unbiased.csv --brain_mask_suffix space-orig_desc-brain_mask
+python preprocessing/bias_correction_HCP_T1wT2w.py -i list_of_subjects/subjects_ses-2.csv -b BaBa21_openneuro -o list_of_subjects/subjects_ses-2_unbiased.csv --brain_mask_suffix space-orig_desc-brain_mask
+python preprocessing/bias_correction_HCP_T1wT2w.py -i list_of_subjects/subjects_ses-3.csv -b BaBa21_openneuro -o list_of_subjects/subjects_ses-3_unbiased.csv --brain_mask_suffix space-orig_desc-brain_mask
+```
+ls unbiased/sub-Prune/ses-0/anat/sub-Prune_ses-0_desc-unbiased_T1w.nii.gz 
+
+Example output structure
+```
+BaBa21_openneuro/derivatives/unbiased
+└── sub-Prune
+    ├── ses-0
+    │   └── anat
+    │       ├── sub-Prune_ses-0_desc-unbiased_T1w.nii.gz
+    │       ├── sub-Prune_ses-0_desc-unbiased_T2w.nii.gz
+    ├── ses-1
+    │   └── anat
+    │       ├── sub-Prune_ses-1_desc-unbiased_T1w.nii.gz
+    │       ├── sub-Prune_ses-1_desc-unbiased_T2w.nii.gz
+    ├── ses-2
+    │   └── anat
+    │       ├── sub-Prune_ses-2_desc-unbiased_T1w.nii.gz
+    │       ├── sub-Prune_ses-2_desc-unbiased_T2w.nii.gz
+    ├── ses-3
+    │    └── anat
+    │       ├── sub-Prune_ses-3_desc-unbiased_T1w.nii.gz
+    │       ├── sub-Prune_ses-3_desc-unbiased_T2w.nii.gz
+```
+<table>
+<tr> 
+    <td align="center">sub-Prune ses-0 T1w (before correction) </td> 
+    <td align="center">sub-Prune ses-0 T2w (before correction) </td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sub-Prune_T1w.png" width="400" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sub-Prune_T2w.png" width="400" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">sub-Prune ses-0 T1w (after correction) </td> 
+    <td align="center">sub-Prune ses-0 T2w (after correction) </td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sub-Prune_T1w_debiased.png" width="400" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sub-Prune_T2w_debiased.png" width="400" />
+    </td>
+</tr>
+<tr> 
+    <td align="center">sub-Prune ses-0 T1w cropped (after correction) </td> 
+    <td align="center">sub-Prune ses-0 T2w cropped (after correction) </td> 
+</tr>
+<tr>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sub-Prune_T1w_crop_debiased.png" width="400" />
+    </td>
+    <td align="center">
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/images/sub-Prune_T2w_crop_debiased.png" width="400" />
+    </td>
+</tr>
+</table>
+
+  
 [return menu](../pipeline4D.md) [--> next STEP](../postprocessing/hist_normalization.md)
