@@ -14,7 +14,10 @@ $ pip install -r requirements.txt
 ```
 
 ### list of external dependencies
-FSL, ANTs, Freesurfer (mri_convert), c3d , mrtrix (OPTIONAL)
+FSL (fslmaths, fslstats, fslswapdim, flirt, fsleyes
+Freesurfer (mri_convert) 
+ANTs (antsMultivariateTemplateConstruction2.sh, antsRegistration, antsApplyTransforms, MultiplyImages, ImageMath, CopyImageHeaderInformation, AverageImages, DenoiseImage)
+Convert3D (c3d_affine_tool, c3d)
 
 ## How to use ?
 [# PART1: pipeline processing steps for **3D** template construction](pipeline3D.md) 
