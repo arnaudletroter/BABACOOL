@@ -21,7 +21,7 @@ $ pip install -r requirements.txt
 
 ### Docker image (WIP)
 ```bash
-$ docker pull babacool/latest
+$ docker pull macatools/baba21_env:v0.1
 ```
 
 ## How to use ?
