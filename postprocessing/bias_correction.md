@@ -123,7 +123,7 @@ derivatives folder.
 | `--k`                                      | Keep temporary files (adds the `-k` flag).                                 |
 | `--dry-run`                                | Print commands without executing them.                                     |
 
-_for ses-0 timepoints_
+_for ses-0 timepoint_
 ```bash
 python preprocessing/bias_correction_HCP_T1wT2w.py -i list_of_subjects/subjects_ses-0.csv -b BaBa21_openneuro -o list_of_subjects/subjects_ses-0_unbiased.csv --brain_mask_suffix space-orig_desc-brain_mask 
 ```
@@ -175,7 +175,7 @@ BaBa21_openneuro/derivatives/unbiased
 </tr>
 </table>
 
-_Command to generate the ses-0 average T1w template from all debiased subjects 
+_Command to generate the ses-0 average T1w template from all debiased subjects_
 ```bash
 python postprocessing/generate_TPM.py \
   --bids_root BaBa21_openneuro \
