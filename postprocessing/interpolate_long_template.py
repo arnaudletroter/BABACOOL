@@ -12,10 +12,10 @@ def relpath_from_cwd(filepath):
 def check_file(filepath, label, missing_list, bids_root):
     """Check if a file exists and print status."""
     if os.path.exists(filepath):
-        print(f"  ✅ Found {label}: {relpath_from_cwd(filepath)}")
+        print(f"  Found {label}: {relpath_from_cwd(filepath)}")
         return True
     else:
-        print(f"  ❌ Missing {label}: {relpath_from_cwd(filepath)}")
+        print(f"  Missing {label}: {relpath_from_cwd(filepath)}")
         missing_list.append(relpath_from_cwd(filepath))
         return False
 
@@ -138,7 +138,7 @@ def merge_4d(morph_files_dict, ses_from, ses_to, args, bids_root):
         # Ensure files exist
         existing_files = [str(f) for f in files if f.exists()]
         if not existing_files:
-            print(f"⚠️ No morph files found for contrast {contrast}, skipping 4D merge.")
+            print(f"No morph files found for contrast {contrast}, skipping 4D merge.")
             continue
 
         # Output 4D file
@@ -310,7 +310,7 @@ def main():
 
         # Check if templates exist for these sessions
         if ses_from not in templates or ses_to not in templates:
-            print(f"⚠️ Templates for sessions {ses_from} or {ses_to} not found. Skipping registration.")
+            print(f"Templates for sessions {ses_from} or {ses_to} not found. Skipping registration.")
             continue
 
         out_prefix = bids_root / "derivatives" / "transforms" / f"sub-{args.template_name}" / "long"
@@ -326,7 +326,7 @@ def main():
             moving = templates[ses_from].get(modality)
 
             if fixed is None or moving is None:
-                print(f"⚠️ Modality {modality} missing for {ses_from} → {ses_to}")
+                print(f"Modality {modality} missing for {ses_from} → {ses_to}")
                 missing_modalities = True
 
             fixed_images[modality] = fixed
@@ -371,7 +371,7 @@ def main():
         # --- Morphing step ---
         if args.morph_enable:
             if not args.contrasts_to_interpolate:
-                print("⚠️ --morph_enable is set but no contrasts provided. Skipping morphing.")
+                print("--morph_enable is set but no contrasts provided. Skipping morphing.")
             else:
                 print("\n=== Morphing enabled ===")
                 morph_files_dict = morph_series(ses_from, ses_to, args, bids_root, args.contrasts_to_interpolate)
