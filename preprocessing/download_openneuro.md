@@ -10,6 +10,11 @@ $ git clone https://openneuro.org/git/3/ds005424
 or
 $ git clone https://github.com/OpenNeuroDatasets/ds005424.git
 ```
+
+Note: The above command only clones the metadata skeleton of the dataset.
+To retrieve the full dataset files, including all images and segmentation masks, we recommend using DataLad.
+Detailed instructions are available here: [DataLad + OpenNeuro guide](https://handbook.datalad.org/en/latest/usecases/openneuro.html)
+
 ### or datalad
 ```bash
 $ datalad install https://openneuro.org/git/3/ds005424
