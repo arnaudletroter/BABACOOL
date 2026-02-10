@@ -130,8 +130,6 @@ python preprocessing/bias_correction_HCP_T1wT2w.py -i list_of_subjects/subjects_
 python preprocessing/bias_correction_HCP_T1wT2w.py -i list_of_subjects/subjects_ses-2.csv -b BaBa21_openneuro -o list_of_subjects/subjects_ses-2_unbiased.csv --brain_mask_suffix space-orig_desc-brain_mask
 python preprocessing/bias_correction_HCP_T1wT2w.py -i list_of_subjects/subjects_ses-3.csv -b BaBa21_openneuro -o list_of_subjects/subjects_ses-3_unbiased.csv --brain_mask_suffix space-orig_desc-brain_mask
 ```
-ls unbiased/sub-Prune/ses-0/anat/sub-Prune_ses-0_desc-unbiased_T1w.nii.gz 
-
 Example output structure
 ```
 BaBa21_openneuro/derivatives/unbiased
