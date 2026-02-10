@@ -20,7 +20,9 @@ $ pip install -r requirements.txt
 - Freesurfer (mri_convert)
 
 ### Docker image (WIP)
-docker pull babacool/latest
+```bash
+$ docker pull babacool/latest
+```
 
 ## How to use ?
 [# PART1: pipeline processing steps for **3D** template construction](pipeline3D.md) 
