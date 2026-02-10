@@ -13,11 +13,14 @@ conda activate BABACOOL
 $ pip install -r requirements.txt
 ```
 
-### list of external dependencies
+### list of external dependencies to install
 - FSL (fslmaths, fslstats, fslswapdim, flirt, fsleyes)
 -  ANTs (, antsRegistration, antsApplyTransforms, MultiplyImages, ImageMath, CopyImageHeaderInformation, AverageImages, DenoiseImage, antsMultivariateTemplateConstruction2.sh, T1xT2BiasFieldCorrection.sh)
 - Convert3D (c3d_affine_tool, c3d)
 - Freesurfer (mri_convert)
+
+### Docker image (WIP)
+docker pull babacool/latest
 
 ## How to use ?
 [# PART1: pipeline processing steps for **3D** template construction](pipeline3D.md) 
