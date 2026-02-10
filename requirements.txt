@@ -1,0 +1,13 @@
+argparse
+simplejson
+ipykernel
+matplotlib
+nibabel
+notebook
+numpy
+Pillow
+pandas
+pathlib
+scipy
+seaborn
+statannotations
