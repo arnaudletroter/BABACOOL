@@ -58,11 +58,11 @@ python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/su
 _for timepoint 2_ (N=21 subjects)
 ```bash
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-2.csv \
---age-min 600 --age-max 900  -f ses-2 \
+--age-min 600 --age-max 900  -f ses-2
 ```
 _for timepoint 3_ (N=21 subjects)
 ```bash
 python preprocessing/parse_dataset.py -i BaBa21_openneuro -o list_of_subjects/subjects_ses-3.csv \
---age-min 1500 --age-max 1800  -f ses-3 \
+--age-min 1500 --age-max 1800  -f ses-3
 ```
 [<-- previous STEP](download_openneuro.md) [return menu](../pipeline3D.md) [--> next STEP](denoise_realign.md)
