@@ -48,11 +48,11 @@ get (ok: 9)
 
 download all:
 datalad get .
-Total:   1%|▍                                                                                              | 18.0M/3.43G [00:09<30:05, 1.89M Bytes/s]
-Get derivatives/atlas/sub-Haiko89/ses-Adult/ana .. es-Adult_desc-symmetric_label-WM_probseg.nii.gz:  28%|████▌           | 1.03M/3.61M [00:00<00:01, 1.96M Bytes/s]
-Get derivatives/atlas/sub-Haiko89/ses-Adult/ana .. es-Adult_desc-symmetric_label-WM_probseg.nii.gz:  35%|████████▋                | 1.25M/3.61M [00:00<00:01, 2.05M Bytes/s]
-Get derivatives/atlas/sub-Haiko89/ses-Adult/ana .. es-Adult_desc-symmetric_label-WM_probseg.nii.gz:  41%|█████████████▎                  | 1.50M/3.61M [00:00<00:00, 2.16M Bytes/s]
-Get derivatives/atlas/sub-Haiko89/ses-Adult/ana .. es-Adult_desc-symmetric_label-WM_probseg.nii.gz:  49%|████████████████▉                  | 1.75M/3.61M [00:00<00:00, 2.28M Bytes/s]
+Total:   1%|▍                | 18.0M/3.43G [00:09<30:05, 1.89M Bytes/s]
+Get derivatives/atlas/sub-Haiko89/ses-Adult/ana ..:  28%|████▌           | 1.03M/3.61M [00:00<00:01, 1.96M Bytes/s]
+Get derivatives/atlas/sub-Haiko89/ses-Adult/ana ..:  35%|████████▋                | 1.25M/3.61M [00:00<00:01, 2.05M Bytes/s]
+Get derivatives/atlas/sub-Haiko89/ses-Adult/ana ..:  41%|█████████████▎                  | 1.50M/3.61M [00:00<00:00, 2.16M Bytes/s]
+Get derivatives/atlas/sub-Haiko89/ses-Adult/ana ..:  49%|████████████████▉                  | 1.75M/3.61M [00:00<00:00, 2.28M Bytes/s]
 ....
 waiting 10 minutes
 action summary:
