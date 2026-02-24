@@ -21,6 +21,9 @@ pip install -r requirements.txt
 docker pull arnaudletroter/babacool:1.0
 #run
 docker run -it --rm  arnaudletroter/babacool:1.0 /bin/bash
+
+#convert docker image to singularity image
+singularity build babacool_v1.sif docker://arnaudletroter/babacool:1.0
 ```
 
 ## How to use ?
