@@ -40,7 +40,7 @@ This repository provides a complete pipeline for longitudinal brain template con
 1. **Reproduction of the BaBa21 template (as presented in this study)**  
 2. **Application to other longitudinal datasets**
 ---
-### BaBa21 template construction (this study)
+### 1. BaBa21 template construction (this study)
 
 [# PART1: pipeline processing steps for **3D** template construction](pipeline3D.md) 
 
@@ -51,7 +51,7 @@ This repository provides a complete pipeline for longitudinal brain template con
 This sequence reproduces exactly the processing used for BaBa21 generation, including the dataset-specific initialization described in the manuscript.
 
 ---
-### Usage on other datasets
+### 2. Usage on other datasets
 When applying this pipeline to a new dataset, users should follow the same processing workflow described above.
 
 **Important: manual initialization step**
