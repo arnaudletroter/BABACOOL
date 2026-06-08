@@ -41,8 +41,11 @@ This repository provides a complete pipeline for longitudinal brain template con
 2. **Application to other longitudinal datasets**
 ---
 ### BaBa21 template construction (this study)
+
 [# PART1: pipeline processing steps for **3D** template construction](pipeline3D.md) 
+
 [# PART2: pipeline processing steps for **(4D+t)** longitudinal template interpolation](pipeline4D.md)
+
 [# FINAL RESULTS: **(4D+t)** animation of BaBa21 4D and growth trajectories of brain tissues](BaBa21_4D.md)
 
 This sequence reproduces exactly the processing used for BaBa21 generation, including the dataset-specific initialization described in the manuscript.
@@ -52,7 +55,7 @@ When applying this pipeline to a new dataset, users should follow the same proce
 
 **Important: manual initialization step**
 A single manual step is required before running the automated pipeline:
-- [Manual delineation of a 3-axis AC-PC](longitudinal_registration.md) binary mask in the chosen reference timepoint (equivalent to the BaBa21 ses-3 initialization)
+- [Manual delineation of a 3-axis AC-PC](postprocessing/longitudinal_registration.md) binary mask in the chosen reference timepoint (equivalent to the BaBa21 ses-3 initialization)
 This step is dataset-specific and must be performed for each new dataset. All subsequent steps of the pipeline are fully automated.
 
 ## Preview
