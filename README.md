@@ -3,7 +3,7 @@
 We present the BABACOOL (BAby Brain Atlas COnstruction for Optimized Labeled segmentation) approach for creating multi-modal developmental atlases, which we used to produce BaBa21, a population-based longitudinal developmental baboon template. BaBa21 consists of structural (T1- and T2-weighted) images and tissue probability maps from a population of 21 baboons (Papio anubis, Female=9 Male=12) scanned at 4 timepoints beginning from 2 weeks after birth and continuing to sexual maturity (5 years).
 This resource is made available to provide a normalization target for baboon data across the lifespan, and further, facilitate neuroimaging research in baboons, comparative research with humans and nonhuman primate species for which developmental templates are available (e.g., macaques). 
 
-## (Optional but recommended) Create a python environment:
+## (Optional but not recommended) Create a python environment:
 ```bash
 conda create --name BABACOOL
 conda activate BABACOOL
@@ -15,7 +15,7 @@ pip install -r requirements.txt
 - Convert3D v1.4 (c3d_affine_tool, c3d)
 - Freesurfer 8.1.0 (mri_convert)
 
-## Alternative with minimalist Docker image, including all babacool scripts, git/datalad, other software dependencies
+## Using a minimalist Docker image (recommended), including all babacool scripts, git/datalad, other software dependencies
 ```bash
 #This approach ensures full reproducibility of the computational environment, including all pinned software dependencies used for BaBa21 construction.
 
