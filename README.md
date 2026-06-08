@@ -48,8 +48,8 @@ This repository provides a complete pipeline for longitudinal brain template con
 
 [# FINAL RESULTS: **(4D+t)** animation of BaBa21 4D and growth trajectories of brain tissues](BaBa21_4D.md)
 
-_This sequence reproduces exactly the processing used for BaBa21 generation, including the dataset-specific initialization described in the manuscript.
-_
+This sequence reproduces exactly the processing used for BaBa21 generation, including the dataset-specific initialization described in the manuscript.
+
 ---
 ### Usage on other datasets
 When applying this pipeline to a new dataset, users should follow the same processing workflow described above.
