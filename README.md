@@ -59,7 +59,7 @@ A single manual step is required before running the automated pipeline:
 - [Manual delineation of a 3-axis AC-PC](postprocessing/longitudinal_registration.md) binary mask in the chosen reference timepoint (equivalent to the BaBa21 ses-3 initialization)
 This step is dataset-specific and must be performed for each new dataset. All subsequent steps of the pipeline are fully automated.
 
-## Preview
+## Preview of results
 <table>
 <tr>
     <td align="center">
