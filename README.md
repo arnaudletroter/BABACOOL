@@ -40,7 +40,7 @@ This repository provides a complete pipeline for longitudinal brain template con
 1. **Reproduction of the BaBa21 template (as presented in this study)**  
 2. **Application to other longitudinal datasets**
 ---
-### 1. BaBa21 template construction ([this dataset](https://openneuro.org/datasets/ds005424/versions/1.0.1) )
+### 1. BaBa21 template construction ([this dataset](https://openneuro.org/datasets/ds005424/versions/1.0.1))
 
 [# PART1: pipeline processing steps for **3D** template construction](pipeline3D.md) 
 
@@ -91,7 +91,7 @@ This step is dataset-specific and must be performed for each new dataset. All su
 Katherine L. Bryant, Arnaud Le Troter, David Meunier, Yannick Becker, Scott A. Love, Siham Bouziane, Kep Kee Loh, Julien Sein, Luc Renaud, Olivier Coulon, Adrien Meguerditchian, 
 under revision in Imaging Neuroscience. Longitudinal MRI template of the baboon brain from birth to adolescence
 
-Arnaud Le Troter, David Meunier, Katherine Bryant, Julien Sein, Siham Bouziane, and Adrien Meguerditchian (2025). BaBa21. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds005424.v1.0.1
+Arnaud Le Troter, David Meunier, Katherine Bryant, Julien Sein, Siham Bouziane, and Adrien Meguerditchian (2025). [BaBa21](https://openneuro.org/datasets/ds005424/versions/1.0.1). OpenNeuro doi:10.18112/openneuro.ds005424.v1.0.1
 
 ## Work in Progress 
 
