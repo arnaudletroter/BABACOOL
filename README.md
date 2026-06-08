@@ -40,7 +40,7 @@ This repository provides a complete pipeline for longitudinal brain template con
 1. **Reproduction of the BaBa21 template (as presented in this study)**  
 2. **Application to other longitudinal datasets**
 ---
-### 1. BaBa21 template construction (this study)
+### 1. BaBa21 template construction ([this dataset](https://openneuro.org/datasets/ds005424/versions/1.0.1) )
 
 [# PART1: pipeline processing steps for **3D** template construction](pipeline3D.md) 
 
