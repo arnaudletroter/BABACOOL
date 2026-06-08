@@ -10,13 +10,15 @@ conda activate BABACOOL
 pip install -r requirements.txt
 ```
 ### list of external dependencies to install
-- FSL (fslmaths, fslstats, fslswapdim, flirt, fsleyes)
-- ANTs (antsRegistration, antsApplyTransforms, MultiplyImages, ImageMath, CopyImageHeaderInformation, AverageImages, DenoiseImage, antsMultivariateTemplateConstruction2.sh, T1xT2BiasFieldCorrection.sh)
-- Convert3D (c3d_affine_tool, c3d)
-- Freesurfer (mri_convert)
+- FSL v6.0.7.6 (fslmaths, fslstats, fslswapdim, flirt, fsleyes)
+- ANTs v2.4 (antsRegistration, antsApplyTransforms, MultiplyImages, ImageMath, CopyImageHeaderInformation, AverageImages, DenoiseImage, antsMultivariateTemplateConstruction2.sh, T1xT2BiasFieldCorrection.sh)
+- Convert3D v1.4 (c3d_affine_tool, c3d)
+- Freesurfer 8.1.0 (mri_convert)
 
 ## Alternative with minimalist Docker image, including all babacool scripts, git/datalad, other software dependencies
 ```bash
+#This approach ensures full reproducibility of the computational environment, including all pinned software dependencies used for BaBa21 construction.
+
 #install
 docker pull arnaudletroter/babacool:1.0
 #run
@@ -24,15 +26,36 @@ docker run -it --rm  arnaudletroter/babacool:1.0 /bin/bash
 
 #convert docker image to singularity image
 singularity build babacool_v1.sif docker://arnaudletroter/babacool:1.0
+
+# Build (for documentation purposes only)
+# The Docker image was originally built on macOS 26.3.1 (Apple Silicon M2 Pro)
+# using Docker Desktop version 4.25.0.
+# However, the environment is fully portable and can be rebuilt from the provided Dockerfile on any system supporting Docker.
+# docker build -t babacool:1.0 .
 ```
 
 ## How to use ?
+
+This repository provides a complete pipeline for longitudinal brain template construction and analysis. The workflow can be used in two contexts:
+1. **Reproduction of the BaBa21 template (as presented in this study)**  
+2. **Application to other longitudinal datasets**
+---
+### BaBa21 template construction (this study)
 [# PART1: pipeline processing steps for **3D** template construction](pipeline3D.md) 
-
 [# PART2: pipeline processing steps for **(4D+t)** longitudinal template interpolation](pipeline4D.md)
-
 [# FINAL RESULTS: **(4D+t)** animation of BaBa21 4D and growth trajectories of brain tissues](BaBa21_4D.md)
 
+This sequence reproduces exactly the processing used for BaBa21 generation, including the dataset-specific initialization described in the manuscript.
+---
+### Usage on other datasets
+When applying this pipeline to a new dataset, users should follow the same processing workflow described above.
+
+**Important: manual initialization step**
+A single manual step is required before running the automated pipeline:
+- [Manual delineation of a 3-axis AC-PC](longitudinal_registration.md) binary mask in the chosen reference timepoint (equivalent to the BaBa21 ses-3 initialization)
+This step is dataset-specific and must be performed for each new dataset. All subsequent steps of the pipeline are fully automated.
+
+## Preview
 <table>
 <tr>
     <td align="center">
@@ -64,8 +87,7 @@ singularity build babacool_v1.sif docker://arnaudletroter/babacool:1.0
 Katherine L. Bryant, Arnaud Le Troter, David Meunier, Yannick Becker, Scott A. Love, Siham Bouziane, Kep Kee Loh, Julien Sein, Luc Renaud, Olivier Coulon, Adrien Meguerditchian, 
 under revision in Imaging Neuroscience. Longitudinal MRI template of the baboon brain from birth to adolescence
 
-Arnaud Le Troter, David Meunier, Katherine Bryant, Julien Sein, Siham Bouziane, Adrien Meguerditchian,
-BaBa21. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds005424.v1.0.0
+Arnaud Le Troter, David Meunier, Katherine Bryant, Julien Sein, Siham Bouziane, and Adrien Meguerditchian (2025). BaBa21. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds005424.v1.0.1
 
 ## Work in Progress 
 
