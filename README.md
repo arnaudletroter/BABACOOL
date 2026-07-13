@@ -97,7 +97,7 @@ Arnaud Le Troter, David Meunier, Katherine Bryant, Julien Sein, Siham Bouziane, 
 
 integration of dMRI templates 
 <td align="center">
-    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/FAcolor_snap.gif" width="400" height="150" />
+    <img src="https://github.com/arnaudletroter/BABACOOL/blob/main/animations/FA.gif" width="639" height="244" />
 </td>
 
 ## Acknowledgements
